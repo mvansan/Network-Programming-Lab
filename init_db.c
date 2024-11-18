@@ -4,7 +4,7 @@
 void init_database() {
     sqlite3 *db;
     char *err_msg = 0;
-
+    
     int rc = sqlite3_open("exam_system.db", &db);
 
     if (rc != SQLITE_OK) {
@@ -15,8 +15,8 @@ void init_database() {
 
     const char *sql = "CREATE TABLE IF NOT EXISTS users ("
                       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                      "username TEXT UNIQUE, "
-                      "password_hash TEXT);";
+                      "username TEXT NOT NULL UNIQUE, "
+                      "password TEXT NOT NULL);";
 
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
 

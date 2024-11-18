@@ -3,12 +3,14 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include "init_db.c"
 
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
 int main() {
     int server_fd, new_socket;
+    init_database();
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);

@@ -1,0 +1,451 @@
+question_text,category,difficulty,correct_answer,option_1,option_2,option_3,option_4
+Hệ điều hành nào phổ biến trên máy chủ?,IT,easy,option_2,Windows,Linux,macOS,Android
+Đơn vị nhỏ nhất của dữ liệu là gì?,IT,easy,option_1,Byte,Kilobyte,Megabyte,Gigabyte
+Phần cứng nào là bộ não của máy tính?,IT,easy,option_1,CPU,RAM,Ổ cứng,Màn hình
+Thiết bị nào dùng để nhập liệu vào máy tính?,IT,easy,option_2,Máy in,Chuột,Màn hình,Ổ cứng
+Hệ điều hành nào là mã nguồn mở?,IT,easy,option_3,Windows,macOS,Linux,iOS
+Phần mềm nào sau đây là trình duyệt web?,IT,easy,option_2,Photoshop,Chrome,Excel,Word
+Kích thước file nhỏ hơn 1MB gọi là gì?,IT,easy,option_1,Kilobyte,Byte,Megabyte,Gigabyte
+Công cụ nào dùng để tạo và chỉnh sửa văn bản?,IT,easy,option_3,Paint,Chrome,Word,Outlook
+Mạng toàn cầu Internet bắt nguồn từ dự án của quốc gia nào?,IT,easy,option_1,Mỹ,Nga,Anh,Đức
+Đâu là thiết bị lưu trữ ngoài?,IT,easy,option_3,RAM,CPU,USB,Màn hình
+Hệ điều hành nào dùng cho điện thoại iPhone?,IT,easy,option_2,Android,iOS,Windows,BlackBerry OS
+HTML được dùng để làm gì?,IT,easy,option_3,Viết phần mềm,Lập trình ứng dụng,Tạo trang web,Bảo mật mạng
+Đâu là giao thức truyền tải dữ liệu?,IT,easy,option_1,HTTP,HTML,CSS,FTP
+Đâu là phần cứng của máy tính?,IT,easy,option_2,Windows,CPU,Microsoft Word,Photoshop
+Phần mềm nào thuộc nhóm văn phòng?,IT,easy,option_2,Photoshop,Excel,Adobe Reader,Google Chrome
+Để kết nối internet ta cần thiết bị gì?,IT,easy,option_2,CPU,Modem,RAM,Ổ cứng
+Đâu là giao thức bảo mật?,IT,easy,option_3,HTTP,FTP,HTTPS,POP3
+Máy tính dùng để xử lý các phép toán học gọi là gì?,IT,easy,option_3,Máy in,Máy tính bỏ túi,Máy tính điện tử,Máy tính khoa học
+Đâu là chức năng của RAM?,IT,easy,option_1,Lưu trữ dữ liệu tạm thời,Xử lý đồ họa,Lưu trữ lâu dài,Truyền tải dữ liệu
+Phím tắt để sao chép trên Windows là gì?,IT,easy,option_2,Ctrl + A,Ctrl + C,Ctrl + V,Ctrl + X
+Mạng nội bộ (LAN) là gì?,IT,easy,option_2,Mạng kết nối Internet,Mạng nội bộ,Mạng không dây,Mạng ngoại vi
+Đâu là một phần của địa chỉ email?,IT,easy,option_1,@,#,$,&
+Thiết bị nào là thiết bị đầu ra?,IT,easy,option_1,Loa,Bàn phím,Chuột,Ổ cứng
+Đâu là công cụ tìm kiếm trên Internet?,IT,easy,option_3,Photoshop,Excel,Google,Paint
+Mạng Wi-Fi hoạt động qua đường nào?,IT,easy,option_3,Dây cáp,Vệ tinh,Sóng vô tuyến,Ánh sáng
+Đâu là hệ điều hành mã nguồn đóng?,IT,easy,option_1,Windows,Linux,Android,Ubuntu
+URL là viết tắt của gì?,IT,easy,option_2,User Registration List,Uniform Resource Locator,Ultimate Reference Link,User Resource Locator
+Email là viết tắt của gì?,IT,easy,option_1,Electronic Mail,Electric Mail,Electromagnetic Mail,Easy Mail
+Đâu là loại máy tính siêu nhỏ?,IT,easy,option_4,Siêu máy tính,Máy tính để bàn,Máy tính xách tay,Máy tính bảng
+Công cụ nào dùng để phát triển web?,IT,easy,option_2,Excel,Dreamweaver,Paint,Word
+HTML là viết tắt của gì?,IT,easy,option_1,Hyper Text Markup Language,Hyperlink Text Manager,Hyperlinking Tool Machine,High Text Mapping Layout
+Cửa sổ trong Windows được mở bằng cách nào?,IT,easy,option_1,Kích đúp vào biểu tượng,Nhấn Ctrl + W,Nhấn Alt + F4,Nhấn Shift + Tab
+Đâu là phần mở rộng của tệp ảnh?,IT,easy,option_3,.exe,.docx,.jpg,.xlsx
+Để lướt web ẩn danh ta nên dùng gì?,IT,easy,option_2,Chế độ bình thường,Chế độ ẩn danh,Chế độ ngoại tuyến,Chế độ văn bản
+Đơn vị đo dung lượng nào lớn nhất?,IT,easy,option_4,Byte,Kilobyte,Megabyte,Terabyte
+Để tăng âm lượng trong máy tính ta dùng phím nào?,IT,easy,option_3,Ctrl,Alt,Phím Tăng âm lượng,Phím Giảm âm lượng
+Đâu là phần mềm chống virus?,IT,easy,option_3,Microsoft Word,Excel,Norton,Google Chrome
+Lệnh in trên Windows là gì?,IT,easy,option_2,Ctrl + C,Ctrl + P,Ctrl + S,Ctrl + V
+Máy tính dùng để tính toán thời gian gọi là gì?,IT,easy,option_3,Máy in,Đồng hồ,Máy tính thời gian,Máy tính
+Ngôn ngữ nào phổ biến cho lập trình web?,IT,easy,option_3,Java,Python,JavaScript,HTML
+Để đăng xuất tài khoản Google ta vào phần nào?,IT,easy,option_3,Hồ sơ,Đăng nhập,Đăng xuất,Tài khoản
+Chế độ ""máy bay"" trong điện thoại có tác dụng gì?,IT,easy,option_1,Chặn sóng,Tăng sóng,Tắt âm thanh,Tăng âm lượng
+Một máy tính được kết nối với Internet qua mạng không dây gọi là gì?,IT,easy,option_2,Mạng có dây,Wi-Fi,Ethernet,Mạng dây
+Phần mềm nào là trình duyệt?,IT,easy,option_1,Firefox,Paint,Word,Excel
+Google là gì?,IT,easy,option_2,Một phần mềm,Một trang web,Một hệ điều hành,Một máy tính
+Đơn vị nào lớn hơn Gigabyte?,IT,easy,option_2,Megabyte,Terabyte,Byte,Kilobyte
+Để tìm kiếm thông tin trên web ta cần gì?,IT,easy,option_2,Bộ xử lý,Trình duyệt,RAM,Bộ nhớ
+Máy in dùng để làm gì?,IT,easy,option_1,In tài liệu,Lưu trữ tài liệu,Xóa tài liệu,Quét tài liệu
+Internet Explorer là sản phẩm của công ty nào?,IT,easy,option_2,Google,Microsoft,Apple,Mozilla
+Để lưu tệp trong Word ta dùng lệnh gì?,IT,easy,option_2,Ctrl + P,Ctrl + S,Ctrl + C,Ctrl + V
+Tính năng chính của hệ điều hành Linux là gì?,IT,medium,option_2,Dễ sử dụng,Mã nguồn mở,Đóng phí,Không có bảo mật
+JavaScript chủ yếu được sử dụng để làm gì?,IT,medium,option_3,Thiết kế cơ sở dữ liệu,Lập trình ứng dụng,Tạo hiệu ứng trang web,Quản lý hệ điều hành
+Mô hình nào là cơ sở cho giao thức TCP/IP?,IT,medium,option_1,OSI,HTML,CSS,ISO
+Phần mềm nào giúp quản lý cơ sở dữ liệu?,IT,medium,option_2,Windows,MySQL,Photoshop,Dreamweaver
+Câu lệnh SELECT * FROM dùng trong ngôn ngữ nào?,IT,medium,option_3,Python,HTML,SQL,JavaScript
+Đâu là một phần mềm thiết kế đồ họa?,IT,medium,option_3,SQL,Excel,Illustrator,Word
+Địa chỉ IP dùng để làm gì?,IT,medium,option_1,Định danh thiết bị mạng,Lưu trữ dữ liệu,Tăng tốc máy tính,Lập trình web
+Một byte bằng bao nhiêu bit?,IT,medium,option_1,8,16,24,32
+Mục đích của lệnh ping trong mạng là gì?,IT,medium,option_2,Tắt máy,Kiểm tra kết nối mạng,Xóa bộ nhớ đệm,Khởi động lại mạng
+Phần mềm nào là hệ quản trị cơ sở dữ liệu?,IT,medium,option_3,Excel,Word,MySQL,PowerPoint
+Công cụ nào dùng để lập trình Python?,IT,medium,option_2,Dreamweaver,Visual Studio Code,Photoshop,Adobe XD
+JSON là viết tắt của gì?,IT,medium,option_1,JavaScript Object Notation,JavaScript Over Network,Java Session Node,Java System Over Network
+Phần cứng lưu trữ dữ liệu lâu dài là gì?,IT,medium,option_3,RAM,CPU,Ổ cứng,GPU
+Đâu là hệ điều hành phổ biến cho máy chủ web?,IT,medium,option_2,Windows 10,Linux,macOS,Android
+HTTP là viết tắt của gì?,IT,medium,option_1,Hyper Text Transfer Protocol,Hyper Transfer Text Protocol,Hyper Text Type Protocol,Hyper Type Transfer Protocol
+Đâu là một phần mềm máy ảo?,IT,medium,option_2,Chrome,Oracle VirtualBox,MS Word,FileZilla
+Bộ vi xử lý CPU nào phổ biến nhất hiện nay?,IT,medium,option_1,Intel,ATI,Nvidia,Xerox
+Ngôn ngữ nào là ngôn ngữ lập trình hướng đối tượng?,IT,medium,option_3,HTML,CSS,Python,SQL
+IDE nào phổ biến cho lập trình Java?,IT,medium,option_1,Eclipse,Photoshop,Paint,PowerPoint
+Giao thức bảo mật nào sau đây bảo vệ dữ liệu qua mạng?,IT,medium,option_3,FTP,HTTP,HTTPS,POP3
+Đâu là một ví dụ của phần mềm mã nguồn mở?,IT,medium,option_3,Microsoft Office,Adobe Photoshop,LibreOffice,iTunes
+Để tạo ứng dụng Android ngôn ngữ nào thường được sử dụng?,IT,medium,option_2,Python,Java,Ruby,C++
+Đơn vị đo dung lượng nào lớn nhất?,IT,medium,option_4,Megabyte,Gigabyte,Kilobyte,Terabyte
+Dùng cổng nào để giao tiếp FTP?,IT,medium,option_1,21,22,80,443
+IDE nào được dùng nhiều nhất cho lập trình Python?,IT,medium,option_2,NetBeans,PyCharm,Photoshop,Illustrator
+Cloud computing là gì?,IT,medium,option_2,Máy tính cá nhân,Lưu trữ và xử lý dữ liệu trực tuyến,Mạng nội bộ,Lưu trữ dữ liệu ngoại tuyến
+API là viết tắt của gì?,IT,medium,option_2,Application Program Integration,Application Programming Interface,Application Process Interface,Application Process Integration
+Đâu là một giao thức mạng không dây?,IT,medium,option_2,TCP/IP,Wi-Fi,Ethernet,FTP
+Đâu là một hệ quản trị cơ sở dữ liệu quan hệ?,IT,medium,option_2,Microsoft Word,MySQL,Adobe Reader,Photoshop
+Hệ thống gì sử dụng ngôn ngữ lập trình SQL để quản lý dữ liệu?,IT,medium,option_2,Quản lý file hệ thống,Cơ sở dữ liệu,Hệ thống mạng,Hệ điều hành
+Trong cơ sở dữ liệu PRIMARY KEY là gì?,IT,medium,option_3,Một bảng mới,Một kiểu dữ liệu,Một cột duy nhất,Một loại truy vấn
+Đâu là một công cụ phát triển phần mềm của Microsoft?,IT,medium,option_3,Xcode,Eclipse,Visual Studio,NetBeans
+Python là ngôn ngữ gì?,IT,medium,option_3,Lập trình bậc thấp,Lập trình bậc trung,Lập trình bậc cao,Hệ điều hành
+Trong mạng máy tính DNS có chức năng gì?,IT,medium,option_2,Lưu trữ dữ liệu,Tìm kiếm địa chỉ IP,Lập trình ứng dụng,Quản lý tài nguyên
+Để thiết kế website động ngôn ngữ nào thường được sử dụng?,IT,medium,option_2,HTML,JavaScript,SQL,CSS
+Đâu là một phần mềm quản lý phiên bản?,IT,medium,option_3,Notepad,FileZilla,Git,Blender
+Trong SQL DELETE và TRUNCATE khác nhau như thế nào?,IT,medium,option_2,DELETE nhanh hơn,TRUNCATE nhanh hơn,DELETE luôn xóa tất cả,TRUNCATE giữ lại dữ liệu
+AI là viết tắt của từ gì?,IT,medium,option_1,Artificial Intelligence,Advanced Interface,Application Integration,Artificial Information
+Chức năng chính của giao thức HTTP là gì?,IT,medium,option_2,Gửi email,Truyền tải tài liệu,Tải dữ liệu xuống,Chia sẻ phần cứng
+Đâu là một loại mã nguồn mở dành cho hệ điều hành di động?,IT,medium,option_2,iOS,Android,Windows Mobile,Blackberry
+Đơn vị tốc độ truyền dữ liệu là gì?,IT,medium,option_4,Hertz,Bits,Bytes,Bitrate
+Cấu trúc dữ liệu nào sử dụng nguyên tắc “Last In First Out” (LIFO)?,IT,medium,option_3,Hàng đợi,Danh sách liên kết,Ngăn xếp,Mảng
+Giao thức nào thường được sử dụng để gửi email?,IT,medium,option_3,HTTP,FTP,SMTP,TCP
+JSON thường được sử dụng trong loại ứng dụng nào?,IT,medium,option_2,Trò chơi,Ứng dụng web,Xử lý ảnh,Thiết kế đồ họa
+Đâu là công cụ phổ biến để quản lý máy chủ?,IT,medium,option_4,Illustrator,Photoshop,MySQL,cPanel
+HTML là viết tắt của gì?,IT,medium,option_3,Hyper Text Machine Language,Hyperlink Text Machine Language,Hyper Text Markup Language,Hyperlink Text Markup Language
+Ngôn ngữ nào phổ biến nhất trong phát triển hệ điều hành?,IT,medium,option_3,Python,Java,C,Ruby
+Trong CSS thuộc tính nào để thay đổi màu nền?,IT,medium,option_1,background-color,color,border-color,font-color
+Đâu là một giao thức truyền file?,IT,medium,option_1,FTP,DNS,HTTP,POP
+Một tính năng chính của các hệ điều hành UNIX là gì?,IT,medium,option_3,Giao diện người dùng dễ dùng,Khả năng đa nhiệm,Bảo mật cao,Chạy trên mọi thiết bị
+Cấu trúc dữ liệu nào tối ưu cho việc tìm kiếm nhanh?,IT,hard,option_3,Mảng,Danh sách liên kết,Cây nhị phân,Ngăn xếp
+Chức năng chính của thuật toán mã hóa RSA là gì?,IT,hard,option_1,Bảo mật dữ liệu,Tăng tốc xử lý,Nén file,Tạo backup
+Trong lập trình hướng đối tượng tính đa hình là gì?,IT,hard,option_4,Định nghĩa nhiều lớp,Chạy song song,Tính kế thừa,Gọi phương thức theo ngữ cảnh
+Docker là gì?,IT,hard,option_2,Một loại ngôn ngữ lập trình,Một nền tảng ảo hóa,Một hệ điều hành,Một phương pháp mã hóa
+AWS là viết tắt của gì?,IT,hard,option_1,Amazon Web Service,Android Web Service,Adobe Web Service,Apple Web Service
+Trong máy tính RAID là gì?,IT,hard,option_3,Hệ điều hành,Cấu trúc dữ liệu,Kỹ thuật lưu trữ dữ liệu,Ngôn ngữ lập trình
+SQL Injection là gì?,IT,hard,option_3,Lỗi phần cứng,Lỗi phần mềm,Lỗ hổng bảo mật,Loại cơ sở dữ liệu
+Ngôn ngữ nào là ngôn ngữ lập trình hàm?,IT,hard,option_2,Java,Haskell,SQL,HTML
+Đâu là một phương pháp mã hóa bất đối xứng?,IT,hard,option_1,RSA,SHA,MD5,DES
+Docker giúp tạo ra môi trường nào?,IT,hard,option_3,Cloud,Server,Container,Hardware
+Big-O Notation mô tả điều gì?,IT,hard,option_1,Độ phức tạp thời gian,Dung lượng RAM,Dung lượng ổ cứng,Tốc độ xử lý CPU
+Trong cơ sở dữ liệu JOIN làm gì?,IT,hard,option_2,Xóa dữ liệu,Kết nối các bảng,Tạo bảng mới,Thay đổi bảng hiện tại
+Lambda trong Python được sử dụng để gì?,IT,hard,option_1,Tạo hàm ẩn danh,Chạy chương trình,Ghi đè hàm,Tạo lớp mới
+Tính năng nào không phải của OOP?,IT,hard,option_4,Đa hình,Kế thừa,Đóng gói,Tạo bảng
+Loại mã nào cần thiết để tạo ứng dụng phân tán?,IT,hard,option_2,Đồng bộ,Bất đồng bộ,Định danh,Nhị phân
+Tấn công SQL Injection chủ yếu nhằm mục đích gì?,IT,hard,option_2,Tăng tốc hệ thống,Truy cập trái phép dữ liệu,Tạo lỗi ứng dụng,Giảm băng thông
+Đâu là một framework JavaScript phổ biến cho phát triển front-end?,IT,hard,option_2,Laravel,React.js,Django,Ruby on Rails
+Trong mạng “DHCP” là viết tắt của gì?,IT,hard,option_1,Dynamic Host Configuration Protocol,Data Hosting Control Protocol,Dynamic Hosting Configuration Port,Dynamic Host Control Protocol
+Lệnh nào trong Git để đưa toàn bộ thay đổi lên máy chủ?,IT,hard,option_4,git fetch,git merge,git pull,git push
+Hệ thống lưu trữ nào nhanh hơn: SSD hay HDD?,IT,hard,option_2,HDD,SSD,Giống nhau,Tùy thuộc vào hệ điều hành
+Trong hệ điều hành Linux lệnh ls có chức năng gì?,IT,hard,option_2,Xóa file,Hiển thị danh sách file,Tạo file mới,Sao chép file
+Sự khác biệt chính giữa TCP và UDP là gì?,IT,hard,option_3,UDP đáng tin cậy hơn,TCP có tốc độ cao hơn,UDP không có xác nhận,TCP không dùng cổng
+HTTPS sử dụng giao thức bảo mật nào?,IT,hard,option_1,SSL/TLS,SSH,DNS,POP3
+Hệ điều hành Linux là ví dụ của hệ điều hành gì?,IT,hard,option_2,Độc quyền,Mã nguồn mở,Đóng phí,Thương mại hóa
+Bảo mật nào cần thiết khi truyền dữ liệu nhạy cảm qua mạng?,IT,hard,option_2,Giao thức UDP,Mã hóa,Nén,Truy cập mở
+Trong Python biến nào toàn cục?,IT,hard,option_4,Biến cục bộ,Biến dùng chung,Biến duy nhất,Biến global
+Để phân tích dữ liệu lớn công cụ nào thường được sử dụng?,IT,hard,option_2,GIMP,Hadoop,Notepad++,Blender
+Chức năng của Firewall là gì?,IT,hard,option_2,Tăng tốc mạng,Ngăn chặn truy cập trái phép,Quản lý cơ sở dữ liệu,Tăng hiệu suất CPU
+Trong cấu trúc dữ liệu đồ thị có đặc điểm gì?,IT,hard,option_3,Chỉ có nút,Chỉ có cạnh,Gồm nút và cạnh,Chỉ có trọng số
+Điều gì đúng khi nói về Docker Container?,IT,hard,option_2,Một phần của hệ điều hành,Độc lập với hệ điều hành,Chỉ chạy trên Linux,Chỉ chạy trên Windows
+Một trong các lợi ích của NoSQL là gì?,IT,hard,option_1,Linh hoạt trong xử lý dữ liệu không có cấu trúc,Tốc độ truy xuất chậm,Không hỗ trợ phân tán,Đắt hơn RDBMS
+Công cụ nào dùng để kiểm thử phần mềm?,IT,hard,option_3,Photoshop,JIRA,Selenium,After Effects
+Trong lập trình tính đóng gói dùng để làm gì?,IT,hard,option_1,Bảo vệ dữ liệu,Tăng dung lượng bộ nhớ,Giảm hiệu suất,Tăng tốc xử lý
+Tấn công DDoS thường nhằm mục đích gì?,IT,hard,option_2,Phân tích mạng,Làm chậm hệ thống,Tăng tốc độ xử lý,Bảo vệ dữ liệu
+Để phát triển ứng dụng AI ngôn ngữ nào phổ biến nhất?,IT,hard,option_1,Python,Java,HTML,CSS
+Cơ sở dữ liệu nào thường dùng cho hệ thống phân tán?,IT,hard,option_2,MySQL,MongoDB,Excel,SQLite
+Các thuộc tính margin và padding trong CSS dùng để làm gì?,IT,hard,option_3,Thêm nội dung,Định dạng chữ,Căn chỉnh khoảng cách,Tạo bảng
+Giao thức ""NTP"" trong mạng dùng để gì?,IT,hard,option_1,Đồng bộ hóa thời gian,Bảo mật hệ thống,Quản lý tài khoản,Nén dữ liệu
+Đâu là công cụ mã nguồn mở để quản lý container?,IT,hard,option_1,Kubernetes,Photoshop,Blender,After Effects
+Loại thuật toán tìm kiếm nào có độ phức tạp là O(log n)?,IT,hard,option_2,Tìm kiếm tuyến tính,Tìm kiếm nhị phân,Tìm kiếm băm,Tìm kiếm tuần tự
+Trong lập trình khái niệm “recursion” (đệ quy) là gì?,IT,hard,option_1,Một hàm tự gọi lại chính nó,Một hàm gọi hàm khác,Một hàm không kết thúc,Một vòng lặp
+Kỹ thuật nào thường dùng để bảo vệ mật khẩu trong cơ sở dữ liệu?,IT,hard,option_3,Nén,Mã hóa,Hash,Phân mảnh
+Đâu là công cụ dùng để triển khai và quản lý ứng dụng Kubernetes?,IT,hard,option_4,Git,Jenkins,Ansible,Helm
+Trong lập trình hướng đối tượng tính đa hình (polymorphism) cho phép làm gì?,IT,hard,option_2,Sử dụng nhiều loại dữ liệu,Định nghĩa nhiều hàm khác nhau cho cùng một tên,Chỉ dùng một kiểu dữ liệu,Định nghĩa một kiểu duy nhất
+Trong thuật toán sắp xếp ""Quick Sort"" có độ phức tạp thời gian trung bình là gì?,IT,hard,option_3,O(n),O(n^2),O(n log n),O(log n)
+Trong hệ điều hành ""thrashing"" là gì?,IT,hard,option_4,Khi bộ nhớ bị đầy,Khi CPU quá tải,Khi hệ thống ngừng hoạt động,Khi có quá nhiều truy cập vào bộ nhớ
+Trong Python *args được dùng để làm gì?,IT,hard,option_1,Truyền nhiều tham số,Truyền một tham số,Truyền đối tượng duy nhất,Truyền kiểu dữ liệu
+Trong lập trình mạng giao thức ICMP thường dùng để làm gì?,IT,hard,option_1,Kiểm tra kết nối mạng,Truyền tệp tin,Bảo mật dữ liệu,Tải dữ liệu
+Chức năng chính của giao thức ARP trong mạng là gì?,IT,hard,option_2,Xác định địa chỉ IP,Xác định địa chỉ MAC,Xác định địa chỉ cổng,Kết nối với DNS
+Hệ điều hành Windows được viết chủ yếu bằng ngôn ngữ lập trình nào?,IT,hard,option_4,C,Python,Java,C++
+Nước có công thức hóa học là gì?,Science,easy,option_1,H2O,CO2,NaCl,O2
+Trái Đất quay quanh thiên thể nào?,Science,easy,option_2,Mặt Trăng,Mặt Trời,Sao Hỏa,Sao Kim
+Mắt người có thể phân biệt được màu sắc nhờ loại tế bào nào?,Science,easy,option_2,Tế bào que,Tế bào hình nón,Tế bào da,Tế bào xương
+Nguyên tố hóa học nào có ký hiệu là O?,Science,easy,option_1,Oxy,Vàng,Bạc,Đồng
+Động vật nào được gọi là “vua của rừng rậm”?,Science,easy,option_2,Hổ,Sư tử,Gấu,Voi
+Mặt Trăng là vệ tinh của hành tinh nào?,Science,easy,option_4,Sao Thổ,Sao Mộc,Sao Kim,Trái Đất
+Đơn vị đo lường khối lượng là gì?,Science,easy,option_2,Mét,Kilogram,Giây,Nhiệt độ
+Loại thực vật nào là nguồn gốc của oxy trong quá trình quang hợp?,Science,easy,option_2,Cỏ,Thực vật xanh,Nấm,Tảo
+Loại khí nào chiếm phần lớn trong khí quyển của Trái Đất?,Science,easy,option_3,Oxy,Carbon dioxide,Nitơ,Hydro
+Kim loại nào có tính dẫn điện tốt nhất?,Science,easy,option_2,Nhôm,Đồng,Sắt,Gỗ
+Quá trình nào giúp cây tạo ra thức ăn và oxy từ ánh sáng?,Science,easy,option_1,Quang hợp,Hô hấp,Tiêu hóa,Phân hủy
+Trái Đất có bao nhiêu lục địa chính?,Science,easy,option_3,5,6,7,8
+Chất nào là thành phần chính của xương và răng?,Science,easy,option_2,Sắt,Canxi,Đồng,Kẽm
+Nhiệt độ nước đóng băng là bao nhiêu độ C?,Science,easy,option_1,0°C,100°C,-10°C,50°C
+Tế bào là đơn vị cơ bản của loại cấu trúc nào?,Science,easy,option_3,Thực vật,Động vật,Cơ thể sống,Đá
+Tầng nào của khí quyển có chứa phần lớn khí oxy và nitơ?,Science,easy,option_1,Tầng đối lưu,Tầng bình lưu,Tầng trung lưu,Tầng nhiệt
+Nước là hợp chất của hai nguyên tố nào?,Science,easy,option_2,Oxy và Carbon,Hydro và Oxy,Nitơ và Oxy,Hydro và Nitơ
+Loại nào sau đây không phải là một loại đá?,Science,easy,option_4,Đá trầm tích,Đá magma,Đá biến chất,Đá rừng
+Nguyên tố nào là thành phần chính của mặt trời?,Science,easy,option_3,Nitơ,Carbon,Hydro,Sắt
+Động vật nào có thể bay được?,Science,easy,option_3,Cá,Chó,Chim,Mèo
+Trong thực vật lá cây thường có màu gì?,Science,easy,option_1,Xanh,Đỏ,Tím,Vàng
+Nguyên tố nào là thành phần chính của khí thở vào?,Science,easy,option_2,Carbon dioxide,Oxy,Argon,Metan
+Đại lượng nào dùng để đo khoảng cách?,Science,easy,option_2,Kilogram,Mét,Giây,Lít
+Ai là nhà khoa học nổi tiếng với phát minh về bóng đèn điện?,Science,easy,option_3,Isaac Newton,Albert Einstein,Thomas Edison,Nikola Tesla
+Loại động vật nào sống cả trên cạn và dưới nước?,Science,easy,option_1,Rùa,Chim,Cá,Khỉ
+Thực vật nào sản xuất ra hạt cà phê?,Science,easy,option_3,Cây cacao,Cây chè,Cây cà phê,Cây điều
+Đơn vị nào đo lường thời gian?,Science,easy,option_3,Lít,Mét,Giây,Kilogram
+Cấu trúc nào trong cơ thể người bơm máu đi khắp cơ thể?,Science,easy,option_4,Gan,Phổi,Dạ dày,Tim
+Nguyên tố nào được ký hiệu là H trong bảng tuần hoàn?,Science,easy,option_2,Helium,Hydro,Liti,Sắt
+Nhà vật lý nào đã phát hiện ra định luật vạn vật hấp dẫn?,Science,easy,option_2,Albert Einstein,Isaac Newton,Marie Curie,Galileo Galilei
+Sét là hiện tượng liên quan đến loại năng lượng nào?,Science,easy,option_2,Nhiệt,Điện,Cơ,Hóa
+Cây cối cần loại khí nào để quang hợp?,Science,easy,option_1,Carbon dioxide,Oxy,Nitơ,Khí metan
+Hành tinh nào gần Mặt Trời nhất?,Science,easy,option_2,Sao Kim,Sao Thủy,Trái Đất,Sao Hỏa
+Bộ phận nào của cây giúp cây hấp thụ nước và khoáng chất từ đất?,Science,easy,option_4,Thân,Lá,Hoa,Rễ
+Trong sinh học đơn vị cơ bản của sự sống là gì?,Science,easy,option_2,Nguyên tử,Tế bào,Mô,Hệ cơ quan
+Nguyên tố nào là thành phần chính của vỏ Trái Đất?,Science,easy,option_1,Sắt,Silic,Nhôm,Magiê
+Đại lượng nào dùng để đo lượng nước?,Science,easy,option_1,Lít,Kilogram,Giây,Mét
+Tầng nào của Trái Đất chứa phần lớn lớp đất và đá?,Science,easy,option_2,Tầng thủy quyển,Tầng thạch quyển,Tầng nhiệt quyển,Tầng trung lưu
+Nguyên tố nào có số nguyên tử là 6?,Science,easy,option_1,Carbon,Nitơ,Oxy,Hydro
+Năng lượng nào giúp chúng ta nhìn thấy mọi vật xung quanh?,Science,easy,option_3,Điện năng,Năng lượng âm thanh,Năng lượng ánh sáng,Năng lượng hóa học
+Sắt là loại nguyên tố có tính chất nào nổi bật?,Science,easy,option_4,Dẫn nhiệt,Dẫn điện,Có từ tính,Cả ba đáp án đều đúng
+Đại lượng nào đo cường độ dòng điện?,Science,easy,option_2,Vôn,Ampe,Ôm,Watt
+Quá trình phân hủy các chất hữu cơ nhờ vi khuẩn gọi là gì?,Science,easy,option_4,Phân giải,Lên men,Phân hủy,Cả ba đáp án đều đúng
+Tế bào nào có chức năng bảo vệ cơ thể khỏi vi khuẩn và vi rút?,Science,easy,option_2,Hồng cầu,Bạch cầu,Tế bào da,Tế bào thần kinh
+Năng lượng trong thực phẩm chủ yếu là dạng nào?,Science,easy,option_1,Năng lượng hóa học,Năng lượng nhiệt,Năng lượng cơ học,Năng lượng điện
+Trái Đất quay quanh trục của nó với chu kỳ bao lâu?,Science,easy,option_1,24 giờ,12 giờ,6 giờ,48 giờ
+Bộ phận nào trong cơ thể chịu trách nhiệm lọc máu?,Science,easy,option_3,Gan,Phổi,Thận,Tim
+Khu vực nào trên Trái Đất nhận được nhiều ánh sáng Mặt Trời nhất?,Science,easy,option_2,Vùng cực,Vùng nhiệt đới,Vùng ôn đới,Vùng biển
+Tế bào nào giúp máu lưu thông trong cơ thể?,Science,easy,option_1,Hồng cầu,Tế bào da,Bạch cầu,Tế bào xương
+Thành phần chính của khí quyển Trái Đất là gì?,Science,easy,option_1,Nitơ,Oxy,Carbon dioxide,Hydro
+Nguyên tố nào là thành phần chính của khí quyển Trái Đất?,Science,medium,option_1,Sắt,Silic,Nhôm,Magiê
+Tế bào nào là đơn vị cơ bản của hệ thần kinh?,Science,medium,option_1,Lít,Kilogram,Giây,Mét
+Nhà khoa học nào đã phát minh ra thuyết tương đối?,Science,medium,option_2,Tầng thủy quyển,Tầng thạch quyển,Tầng nhiệt quyển,Tầng trung lưu
+Tầng nào của khí quyển có vai trò quan trọng trong việc bảo vệ Trái Đất khỏi tia cực tím?,Science,medium,option_1,Carbon,Nitơ,Oxy,Hydro
+Trong sinh học cấu trúc nào được gọi là “nhà máy năng lượng” của tế bào?,Science,medium,option_3,Điện năng,Năng lượng âm thanh,Năng lượng ánh sáng,Năng lượng hóa học
+Nguyên tố nào có số nguyên tử bằng 1?,Science,medium,option_4,Dẫn nhiệt,Dẫn điện,Có từ tính,Cả ba đáp án đều đúng
+Ai là người đầu tiên quan sát và ghi chép các tế bào bằng kính hiển vi?,Science,medium,option_2,Vôn,Ampe,Ôm,Watt
+Đơn vị đo điện trở là gì?,Science,medium,option_4,Phân giải,Lên men,Phân hủy,Cả ba đáp án đều đúng
+Quá trình nào trong sinh học liên quan đến việc truyền đạt thông tin di truyền?,Science,medium,option_2,Hồng cầu,Bạch cầu,Tế bào da,Tế bào thần kinh
+Nguyên tố nào là thành phần chính của xương và răng trong cơ thể?,Science,medium,option_1,Năng lượng hóa học,Năng lượng nhiệt,Năng lượng cơ học,Năng lượng điện
+Ánh sáng là dạng nào của năng lượng?,Science,medium,option_1,24 giờ,12 giờ,6 giờ,48 giờ
+Nguyên tố hóa học nào được ký hiệu là ""Fe""?,Science,medium,option_3,Gan,Phổi,Thận,Tim
+Đại lượng nào đo lượng chất trong vật?,Science,medium,option_2,Vùng cực,Vùng nhiệt đới,Vùng ôn đới,Vùng biển
+Hệ đơn vị đo lường nào phổ biến nhất trong khoa học?,Science,medium,option_1,Hồng cầu,Tế bào da,Bạch cầu,Tế bào xương
+Người nào được mệnh danh là ""Cha đẻ của Hóa học Hiện đại""?,Science,medium,option_1,Nitơ,Oxy,Carbon dioxide,Hydro
+Kính hiển vi là công cụ để quan sát đối tượng nào?,Science,medium,option_2,Oxy,Nitơ,Carbon dioxide,Argon
+Khí nào là sản phẩm chính của quá trình quang hợp?,Science,medium,option_3,Tế bào biểu mô,Tế bào hồng cầu,Tế bào thần kinh,Tế bào cơ
+Thiết bị nào đo cường độ dòng điện?,Science,medium,option_1,Albert Einstein,Isaac Newton,Galileo Galilei,Marie Curie
+Loại hạt nào cấu tạo nên nguyên tử?,Science,medium,option_2,Tầng đối lưu,Tầng bình lưu,Tầng trung lưu,Tầng nhiệt
+Đơn vị đo nhiệt độ nào phổ biến trong hệ đo lường quốc tế?,Science,medium,option_2,Ribosome,Ty thể,Nhân tế bào,Bộ máy Golgi
+Nhà khoa học nào được coi là người sáng lập lý thuyết tiến hóa?,Science,medium,option_2,Helium,Hydro,Liti,Oxy
+Tế bào nào trong cơ thể có nhiệm vụ mang oxy?,Science,medium,option_3,Louis Pasteur,Alexander Fleming,Robert Hooke,Charles Darwin
+Lực nào giữ các hành tinh di chuyển xung quanh Mặt Trời?,Science,medium,option_1,Ohm,Volt,Ampere,Watt
+Trong toán học Pi là tỉ lệ giữa chu vi và đường kính của hình nào?,Science,medium,option_2,Phân bào,Di truyền,Phiên mã,Giải mã
+Ai là nhà bác học người Ba Lan, phát hiện ra nguyên tố phóng xạ?,Science,medium,option_2,Sắt,Canxi,Magiê,Natri
+Chất nào là dẫn điện tốt nhất trong các vật liệu sau?,Science,medium,option_4,Nhiệt,Hóa,Điện,Sóng
+Năng lượng được lưu trữ trong thực phẩm chủ yếu là dạng nào?,Science,medium,option_3,Vàng,Đồng,Sắt,Bạc
+Đơn vị đo áp suất trong hệ đo lường quốc tế là gì?,Science,medium,option_1,Khối lượng,Trọng lực,Áp suất,Nhiệt độ
+Chuyển động của chất lỏng bị ảnh hưởng bởi lực nào?,Science,medium,option_3,Hệ đo lường Anh,Hệ đo lường Pháp,Hệ đo lường SI,Hệ đo lường Mỹ
+Nhà vật lý học người Anh nào đã phát hiện ra định luật vạn vật hấp dẫn?,Science,medium,option_1,Antoine Lavoisier,Dmitri Mendeleev,Niels Bohr,Marie Curie
+Chất nào sau đây là một hợp chất?,Science,medium,option_2,Các hành tinh,Các tế bào nhỏ,Đá quý,Động vật lớn
+Đơn vị nào đo lường cường độ ánh sáng?,Science,medium,option_1,Oxy,Cacbon dioxit,Nitơ,Khí metan
+Hiện tượng nào là kết quả của sự gấp nếp các lớp đá ở lớp vỏ Trái Đất?,Science,medium,option_1,Ampe kế,Vôn kế,Ôm kế,Watt kế
+Quá trình nào giúp các sinh vật tiêu hóa thức ăn để tạo năng lượng?,Science,medium,option_4,Electron,Proton,Neutron,Tất cả đều đúng
+Nhà khoa học nào được mệnh danh là ""cha đẻ của di truyền học""?,Science,medium,option_3,Độ F,Độ C,Kelvin,Độ R
+Phản ứng hóa học nào tạo ra nước?,Science,medium,option_3,Isaac Newton,Albert Einstein,Charles Darwin,Nikola Tesla
+Đơn vị đo cường độ âm thanh là gì?,Science,medium,option_2,Tế bào thần kinh,Tế bào hồng cầu,Tế bào cơ,Tế bào mỡ
+Trạng thái nào của vật chất có hình dạng và thể tích không đổi?,Science,medium,option_2,Lực điện,Lực hấp dẫn,Lực từ,Lực ma sát
+Tế bào có thể sản xuất năng lượng ATP qua quá trình nào?,Science,medium,option_2,Hình vuông,Hình tròn,Hình tam giác,Hình chữ nhật
+Động cơ nào có vai trò chuyển đổi điện năng thành cơ năng?,Science,medium,option_2,Albert Einstein,Marie Curie,Nikola Tesla,Dmitri Mendeleev
+Nhóm động vật nào không có xương sống?,Science,medium,option_2,Nhôm,Đồng,Sắt,Gỗ
+Nhân vật nào đã phát minh ra điện thoại?,Science,medium,option_1,Năng lượng hóa học,Năng lượng điện,Năng lượng cơ học,Năng lượng nhiệt
+Các enzyme là loại chất gì?,Science,medium,option_1,Pascal,Kilogram,Newton,Watt
+Phản ứng nào liên quan đến việc tách phân tử lớn thành phân tử nhỏ hơn?,Science,medium,option_2,Lực hấp dẫn,Lực ma sát,Lực căng bề mặt,Lực tĩnh điện
+Mặt Trăng có ảnh hưởng lớn nhất lên điều gì trên Trái Đất?,Science,medium,option_2,Albert Einstein,Isaac Newton,Galileo Galilei,Michael Faraday
+Thành phần nào không thể thiếu để cây cối quang hợp?,Science,medium,option_3,Natri,Oxy,Nước,Vàng
+Nhà vật lý học người Ý nào đã phát minh ra kính thiên văn?,Science,medium,option_2,Lux,Candela,Kelvin,Volt
+Loại đá nào hình thành do núi lửa phun trào?,Science,medium,option_3,Động đất,Núi lửa,Núi,Sóng thần
+Tại sao nước biển có vị mặn?,Science,medium,option_4,Hô hấp,Quang hợp,Hấp thụ,Tiêu hóa
+Ai là nhà khoa học phát hiện ra penicillin?,Science,medium,option_1,Gregor Mendel,Charles Darwin,Isaac Newton,Louis Pasteur
+Nguyên tố nào có điểm nóng chảy cao nhất?,Science,hard,option_2,Carbon,Wolfram (Tungsten),Sắt,Vàng
+Lượng nước biển nào chiếm khoảng bao nhiêu phần trăm trên tổng diện tích bề mặt Trái Đất?,Science,hard,option_2,50%,70%,80%,90%
+Hạt cơ bản nào không có điện tích?,Science,hard,option_3,Electron,Proton,Neutron,Photon
+Đơn vị đo lường cường độ âm thanh là gì?,Science,hard,option_1,Decibel,Pascal,Hertz,Joule
+Hóa học hữu cơ chủ yếu nghiên cứu các hợp chất của nguyên tố nào?,Science,hard,option_3,Nitơ,Hydro,Carbon,Oxy
+Hạt nhân của nguyên tử chứa những hạt nào?,Science,hard,option_2,Electron và Proton,Proton và Neutron,Electron và Neutron,Electron và Proton
+Động vật nào là một trong những sinh vật cổ đại nhất còn tồn tại trên Trái Đất?,Science,hard,option_3,Cá mập,Cá sấu,Rùa,Cá voi
+Vật lý lượng tử bắt đầu với khám phá nào?,Science,hard,option_2,Phân rã phóng xạ,Hiệu ứng quang điện,Lý thuyết tương đối,Hạt nhân nguyên tử
+Áp suất khí quyển tiêu chuẩn tại mực nước biển là bao nhiêu?,Science,hard,option_1,760 mmHg,1013 mmHg,1000 mmHg,1500 mmHg
+Loại đá nào được hình thành qua quá trình biến chất?,Science,hard,option_4,Đá trầm tích,Đá phun trào,Đá mác ma,Đá biến chất
+Nhà khoa học nào phát hiện ra electron?,Science,hard,option_2,Niels Bohr,J.J. Thomson,Albert Einstein,James Chadwick
+Cơ thể người trưởng thành có bao nhiêu xương?,Science,hard,option_2,200,206,210,220
+Phân tử nào là thành phần chính của lớp màng tế bào?,Science,hard,option_2,Protein,Lipid,Carbohydrate,Nucleic acid
+Đơn vị đo điện trở là gì?,Science,hard,option_3,Ampe,Volt,Ôm,Watt
+Sự phân chia của tế bào sinh dục để tạo ra tế bào giao tử gọi là gì?,Science,hard,option_3,Nguyên phân,Phân bào,Giảm phân,Thụ tinh
+Nguyên tố nào chiếm tỷ lệ lớn nhất trong vỏ Trái Đất?,Science,hard,option_4,Sắt,Silic,Nhôm,Oxy
+Loài động vật có hệ thần kinh phát triển nhất trong giới động vật?,Science,hard,option_3,Chimpanzee,Cá voi,Con người,Cá heo
+Nhà vật lý nào đã phát triển mô hình nguyên tử có các quỹ đạo điện tử?,Science,hard,option_2,J.J. Thomson,Niels Bohr,Ernest Rutherford,James Chadwick
+Cơ thể người có bao nhiêu loại mô cơ bản?,Science,hard,option_3,2,3,4,5
+Nguyên tố nào có mật độ cao nhất?,Science,hard,option_2,Vàng,Osmium,Bạc,Đồng
+Hành tinh nào có nhiều vệ tinh tự nhiên nhất trong hệ Mặt Trời?,Science,hard,option_3,Trái Đất,Sao Thổ,Sao Mộc,Sao Hỏa
+Sự kiện nào đã kết thúc kỷ nguyên khủng long?,Science,hard,option_1,Va chạm thiên thạch,Biến đổi khí hậu,Núi lửa phun trào,Nước biển dâng
+Chất nào được xem là “chất mang năng lượng” trong tế bào?,Science,hard,option_2,Glucose,ATP,DNA,Enzyme
+Phần nào của não bộ chịu trách nhiệm về ngôn ngữ và tư duy?,Science,hard,option_2,Tiểu não,Vỏ não,Hồi hải mã,Thùy trán
+Nhà khoa học nào được coi là “cha đẻ” của hóa học hiện đại?,Science,hard,option_1,Antoine Lavoisier,Dmitri Mendeleev,Robert Hooke,Louis Pasteur
+Lý thuyết nào giải thích hiện tượng không thể đo đồng thời vị trí và động lượng của một hạt?,Science,hard,option_1,Nguyên lý bất định Heisenberg,Hiệu ứng Doppler,Lý thuyết tương đối,Hiệu ứng quang điện
+Loài động vật có số lượng chân nhiều nhất hiện nay là gì?,Science,hard,option_2,Con rết,Con cuốn chiếu,Nhện,Châu chấu
+Quá trình nào sản sinh ra năng lượng trong lõi Mặt Trời?,Science,hard,option_1,Phản ứng hạt nhân,Phân rã phóng xạ,Đốt cháy,Tách hạt nhân
+Đơn vị đo tần số là gì?,Science,hard,option_2,Ampe,Hertz,Volt,Joule
+Chất nào sau đây có khả năng truyền nhiệt tốt nhất?,Science,hard,option_3,Không khí,Nước,Đồng,Gỗ
+Loại tế bào nào trong máu có khả năng tiêu diệt vi khuẩn và vi rút?,Science,hard,option_3,Hồng cầu,Tiểu cầu,Bạch cầu,Tế bào da
+Thành phần chính của khí tự nhiên là gì?,Science,hard,option_3,Nitơ,Oxy,Metan,Carbon dioxide
+Lớp nào trong khí quyển chứa tầng ozone?,Science,hard,option_2,Tầng đối lưu,Tầng bình lưu,Tầng trung lưu,Tầng nhiệt
+Quá trình nào giúp cây chuyển đổi năng lượng ánh sáng thành năng lượng hóa học?,Science,hard,option_2,Hô hấp,Quang hợp,Trao đổi chất,Tiêu hóa
+Ai là người phát hiện ra phóng xạ?,Science,hard,option_4,Albert Einstein,Antoine Lavoisier,Marie Curie,Henri Becquerel
+Nguyên tố nào được dùng trong sản xuất bóng đèn huỳnh quang?,Science,hard,option_1,Thủy ngân,Chì,Sắt,Đồng
+Phần lớn năng lượng của Mặt Trời được truyền đến Trái Đất dưới dạng nào?,Science,hard,option_3,Bức xạ hồng ngoại,Bức xạ tử ngoại,Ánh sáng khả kiến,Năng lượng điện từ
+Đơn vị nào dùng để đo công suất điện?,Science,hard,option_3,Ôm,Vôn,Watt,Ampe
+Trong các loại đá sau loại nào thường chứa hóa thạch?,Science,hard,option_1,Đá trầm tích,Đá phun trào,Đá biến chất,Đá mác ma
+Nguyên tố nào có số nguyên tử là 92 và được sử dụng làm nhiên liệu hạt nhân?,Science,hard,option_2,Plutonium,Uranium,Thorium,Californium
+Phát biểu nào mô tả đúng tính chất của sóng âm?,Science,hard,option_2,Sóng âm là sóng ngang,Sóng âm là sóng dọc,Sóng âm có thể lan truyền qua chân không,Sóng âm chỉ có trong không khí
+Tế bào nào trong cơ thể có khả năng sinh sản các tế bào con?,Science,hard,option_2,Tế bào sinh dục,Tế bào gốc,Tế bào mô,Tế bào xương
+Phát minh nào đã thay đổi phương thức giao tiếp của loài người?,Science,hard,option_2,Radio,Điện thoại,Máy in,Máy tính
+Phần nào của mắt giúp điều chỉnh lượng ánh sáng đi vào mắt?,Science,hard,option_1,Mống mắt,Thủy tinh thể,Giác mạc,Tận cùng mắt
+Năng lượng hạt nhân được giải phóng trong các phản ứng gì?,Science,hard,option_1,Phản ứng phân hạch,Phản ứng tổng hợp,Phản ứng hóa học,Phản ứng oxi hóa
+Vật liệu nào được sử dụng làm vật liệu chế tạo tàu vũ trụ?,Science,hard,option_3,Nhôm,Thép không gỉ,Composite,Gỗ
+Dung dịch nào được sử dụng để điều trị ngộ độc khí carbon monoxide?,Science,hard,option_2,Natri clorua,Oxy,H2O2,Axit acetic
+Vi khuẩn nào gây ra bệnh lao?,Science,hard,option_2,Bacillus anthracis,Mycobacterium tuberculosis,Escherichia coli,Staphylococcus aureus
+Những tế bào nào có chức năng truyền tải thông tin trong cơ thể?,Science,hard,option_2,Tế bào da,Tế bào thần kinh,Tế bào cơ,Tế bào mỡ
+Hiện tượng nào sau đây xảy ra khi ánh sáng mặt trời chiếu vào mặt nước?,Science,hard,option_2,Phản xạ,Khúc xạ,Tán xạ,Nhiệt đới
+Blockchain là gì?,Blockchain,easy,option_3,Cơ sở dữ liệu,Công nghệ lưu trữ,Sổ cái phân tán,Hệ điều hành
+Web3 là viết tắt của gì?,Blockchain,easy,option_1,Web 3.0,World Wide Web 3,Web Decentralized,Web Modern
+Loại tiền điện tử đầu tiên được phát triển là gì?,Blockchain,easy,option_2,Ethereum,Bitcoin,Dogecoin,Ripple
+Smart contract được triển khai trên blockchain nào phổ biến nhất?,Blockchain,easy,option_3,Solana,Cardano,Ethereum,Binance Smart Chain
+DApp là viết tắt của gì?,Blockchain,easy,option_1,Decentralized App,Distributed App,Digital App,Development App
+Solidity là gì?,Blockchain,easy,option_1,Ngôn ngữ lập trình,Loại tiền điện tử,Một blockchain,Công cụ bảo mật
+Địa chỉ ví blockchain thường được viết dưới dạng gì?,Blockchain,easy,option_2,Số điện thoại,Hash,Email,Tên miền
+Ethereum sử dụng cơ chế đồng thuận nào?,Blockchain,easy,option_2,Proof of Stake,Proof of Work,Delegated Proof of Stake,Byzantine Fault Tolerance
+Token ERC-20 trên Ethereum là gì?,Blockchain,easy,option_2,Loại stablecoin,Tiêu chuẩn token,Loại ví điện tử,Giao dịch
+Cơ chế đồng thuận giúp đảm bảo điều gì trong blockchain?,Blockchain,easy,option_3,Tính phi tập trung,Tính bảo mật,Tính nhất quán,Tính nhanh chóng
+Công nghệ blockchain ra đời năm nào?,Blockchain,easy,option_2,2005,2008,2010,2015
+NFT viết tắt của cụm từ gì?,Blockchain,easy,option_1,Non-Fungible Token,Non-Functional Token,New Finance Token,Non-Fixed Token
+Token ERC-721 chủ yếu được dùng cho gì?,Blockchain,easy,option_2,Lưu trữ dữ liệu,Tài sản số duy nhất,Giao dịch thông thường,Phân quyền
+Gas fee trên blockchain là gì?,Blockchain,easy,option_1,Chi phí giao dịch,Thuế chính phủ,Phí lưu trữ,Phí sử dụng API
+Ai là người sáng lập Bitcoin?,Blockchain,easy,option_2,Vitalik Buterin,Satoshi Nakamoto,Elon Musk,Charlie Lee
+Stablecoin được thiết kế để làm gì?,Blockchain,easy,option_1,Giữ giá ổn định,Tăng giá trị,Lưu trữ tạm thời,Đầu cơ
+Công cụ phổ biến để phát triển hợp đồng thông minh trên Ethereum?,Blockchain,easy,option_4,Hardhat,Ganache,Remix,Tất cả đáp án
+Block trong blockchain chứa gì?,Blockchain,easy,option_4,Dữ liệu giao dịch,Hash của block trước,Hash hiện tại,Tất cả đáp án
+Khóa riêng (private key) dùng để làm gì?,Blockchain,easy,option_3,Tạo giao dịch,Mở khóa ví,Cả hai đáp án trên,Lưu trữ dữ liệu
+Hợp đồng thông minh chạy tự động dựa trên điều kiện gì?,Blockchain,easy,option_3,Do người dùng kích hoạt,Do lập trình sẵn,Cả hai đáp án trên,Do blockchain quyết định
+Blockchain có thể được phân loại thành mấy loại chính?,Blockchain,easy,option_2,2,3,4,5
+Blockchain công khai (public blockchain) có đặc điểm gì?,Blockchain,easy,option_1,Ai cũng có thể tham gia,Chỉ dành cho người được cấp quyền,Không thay đổi dữ liệu,Không có phí giao dịch
+Private blockchain thường được sử dụng trong lĩnh vực nào?,Blockchain,easy,option_4,Ngân hàng,Chính phủ,Doanh nghiệp,Cả ba đáp án trên
+Hợp đồng thông minh có thể làm gì?,Blockchain,easy,option_4,Tự động hóa giao dịch,Xác minh hợp đồng,Lưu trữ dữ liệu,Cả ba đáp án trên
+Thời gian tạo block trung bình trên Bitcoin là bao lâu?,Blockchain,easy,option_2,10 giây,10 phút,1 giờ,24 giờ
+Một node trong blockchain là gì?,Blockchain,easy,option_1,Máy tính kết nối,Dữ liệu giao dịch,Địa chỉ ví,Một block
+Ethereum chuyển từ Proof of Work sang Proof of Stake vào năm nào?,Blockchain,easy,option_3,2020,2021,2022,2023
+Ví Metamask thường dùng cho blockchain nào?,Blockchain,easy,option_2,Bitcoin,Ethereum,Solana,Cardano
+Từ khóa “pragma” trong Solidity dùng để làm gì?,Blockchain,easy,option_2,Khai báo biến,Khai báo phiên bản,Gọi hàm,Tạo giao dịch
+Token BEP-20 thuộc blockchain nào?,Blockchain,easy,option_2,Ethereum,Binance Smart Chain,Solana,Avalanche
+Khóa công khai (public key) dùng để làm gì?,Blockchain,easy,option_2,Mở khóa ví,Xác minh giao dịch,Lưu trữ token,Tạo block
+Khối đầu tiên của một blockchain gọi là gì?,Blockchain,easy,option_2,Main Block,Genesis Block,Initial Block,Root Block
+Blockchain nào có phí giao dịch thấp nhất hiện nay?,Blockchain,easy,option_2,Ethereum,Solana,Cardano,Binance Smart Chain
+DAO là viết tắt của gì trong blockchain?,Blockchain,easy,option_1,Decentralized Autonomous Organization,Data Access Object,Decentralized Algorithm Organization,Digital Asset Operation
+Web3 chủ yếu tập trung vào khái niệm gì?,Blockchain,easy,option_1,Internet phân quyền,Tăng tốc độ web,Cải thiện giao diện,Quản lý tập trung
+Một giao dịch trong blockchain có thể bị hủy không?,Blockchain,easy,option_2,Có,Không,Tùy loại blockchain,Tùy vào gas fee
+DeFi là gì?,Blockchain,easy,option_1,Tài chính phi tập trung,Nền tảng giao dịch,Loại token mới,Mạng blockchain
+Ngôn ngữ nào sau đây không dùng để lập trình hợp đồng thông minh?,Blockchain,easy,option_4,Solidity,Rust,Python,PHP
+Trong Web3 “wallet” thường được dùng để làm gì?,Blockchain,easy,option_4,Lưu trữ tài sản,Ký giao dịch,Xác minh danh tính,Cả ba đáp án trên
+Cơ chế đồng thuận nào phổ biến trên Cardano?,Blockchain,easy,option_1,Proof of Stake,Proof of Work,Delegated Proof of Stake,Byzantine Fault Tolerance
+Đặc điểm nào làm cho blockchain không thể thay đổi dữ liệu?,Blockchain,easy,option_4,Sử dụng hash,Phi tập trung,Cơ chế đồng thuận,Cả ba đáp án trên
+Những gì có thể lưu trữ trên blockchain?,Blockchain,easy,option_4,Tiền điện tử,Dữ liệu y tế,Thông tin hợp đồng,Tất cả đáp án trên
+Trong Solidity từ khóa “address” đại diện cho gì?,Blockchain,easy,option_1,Địa chỉ ví,Địa chỉ IP,Tên miền,Public key
+Giao dịch trên blockchain được lưu trong cấu trúc gì?,Blockchain,easy,option_2,Array,Block,Tree,Map
+Gas fee được tính bằng đơn vị nào trên Ethereum?,Blockchain,easy,option_1,Gwei,Ether,Wei,Sat
+Blockchain có thể giải quyết vấn đề gì trong tài chính?,Blockchain,easy,option_4,Tính minh bạch,Giảm chi phí trung gian,Tăng tốc độ xử lý,Tất cả đáp án trên
+Ai quản lý dữ liệu trên blockchain?,Blockchain,easy,option_3,Chính phủ,Cá nhân tham gia,Các node mạng,Không ai quản lý
+Một ứng dụng phi tập trung (DApp) cần có gì để hoạt động?,Blockchain,easy,option_4,Blockchain backend,Smart contract,Frontend,Tất cả đáp án trên
+Trong Ethereum EVM viết tắt của gì?,Blockchain,easy,option_1,Ethereum Virtual Machine,Ethereum Verification Module,Ethereum Virtual Management,Ethereum Value Machine
+Tính phi tập trung của blockchain giúp đảm bảo điều gì?,Blockchain,easy,option_1,Không có điểm lỗi duy nhất,Tăng chi phí hoạt động,Giảm tốc độ giao dịch,Tăng sự phụ thuộc
+Ưu điểm lớn nhất của Proof of Stake so với Proof of Work là gì?,Blockchain,medium,option_1,Tiết kiệm năng lượng,Tăng tốc độ giao dịch,Đảm bảo tính ẩn danh,Dễ triển khai
+ERC-20 là tiêu chuẩn token dành cho blockchain nào?,Blockchain,medium,option_1,Ethereum,Binance Smart Chain,Solana,Avalanche
+Nguyên tắc hoạt động chính của blockchain là gì?,Blockchain,medium,option_3,Lưu trữ tập trung,Sao chép dữ liệu,Đồng thuận phi tập trung,Quản lý bởi một tổ chức
+Hash trong blockchain là gì?,Blockchain,medium,option_2,Một loại ví,Một hàm băm,Một block mới,Một giao dịch
+Solidity hỗ trợ kiểu dữ liệu nào để lưu trữ số nguyên không dấu?,Blockchain,medium,option_1,uint,int,float,double
+Tính năng nào của smart contract đảm bảo rằng nó tự động thực thi?,Blockchain,medium,option_2,Immutable,Self-executing,Transparent,Decentralized
+Trong blockchain block chứa thông tin gì?,Blockchain,medium,option_4,Dữ liệu giao dịch,Hash của block trước,Timestamp,Tất cả đáp án trên
+Lợi ích chính của DAO là gì?,Blockchain,medium,option_2,Tăng tốc giao dịch,Quản lý phi tập trung,Tăng bảo mật,Giảm chi phí hoạt động
+Gas limit trong Ethereum là gì?,Blockchain,medium,option_2,Phí tối thiểu,Số lượng gas tối đa có thể sử dụng,Dung lượng block,Số lượng giao dịch tối đa
+Phương thức trong Solidity có thể trả về nhiều giá trị không?,Blockchain,medium,option_1,Có,Không,Tùy loại dữ liệu,Chỉ với uint
+Layer 2 trong blockchain dùng để làm gì?,Blockchain,medium,option_2,Lưu trữ dữ liệu,Tăng khả năng mở rộng,Giảm phí gas,Tăng tính minh bạch
+Trong Proof of Stake “staking” có nghĩa là gì?,Blockchain,medium,option_2,Đào coin,Giữ coin để xác thực giao dịch,Tạo block mới,Lưu trữ dữ liệu
+Tên miền “.eth” trong Ethereum được quản lý bởi dịch vụ nào?,Blockchain,medium,option_1,ENS,DNS,IPFS,ZK-Rollup
+Thời gian xử lý trung bình của một giao dịch trên Solana là bao lâu?,Blockchain,medium,option_1,0.4 giây,1 phút,10 phút,1 giờ
+Wrapped token (ví dụ WBTC) là gì?,Blockchain,medium,option_2,Token mới phát hành,Token đại diện cho coin khác,Token đa năng,Token phi tập trung
+Rollup trong blockchain có tác dụng gì?,Blockchain,medium,option_4,Bảo mật dữ liệu,Tăng hiệu năng xử lý,Giảm phí giao dịch,Tất cả đáp án trên
+Trong Solidity modifier dùng để làm gì?,Blockchain,medium,option_3,Khai báo biến,Gọi hàm,Kiểm tra điều kiện,Thay đổi giá trị
+Công nghệ IPFS trong Web3 dùng để làm gì?,Blockchain,medium,option_1,Lưu trữ phi tập trung,Tăng tốc giao dịch,Xác minh danh tính,Tạo smart contract
+Một block có thể chứa tối đa bao nhiêu giao dịch?,Blockchain,medium,option_2,Không giới hạn,Tùy thuộc vào kích thước block,100 giao dịch,"10,000 giao dịch"
+Tại sao smart contract không thể chỉnh sửa sau khi triển khai?,Blockchain,medium,option_3,Tăng bảo mật,Tăng tính minh bạch,Do tính bất biến của blockchain,Để giảm chi phí
+Trong blockchain nonce có vai trò gì?,Blockchain,medium,option_2,Xác minh chữ ký,Chống tấn công lặp lại,Tăng bảo mật block,Tạo địa chỉ mới
+Hàm nào trong Solidity có thể giúp đảm bảo rằng phép toán không gây tràn số (overflow) khi cộng hai số?,Blockchain,medium,option_1,SafeMath.add(),add(),increment(),Math.add()
+Tính năng nào của blockchain làm cho dữ liệu khó bị giả mạo?,Blockchain,medium,option_2,Phi tập trung,Bất biến,Ẩn danh,Độc lập
+Hệ thống mạng nào phổ biến nhất dùng để kết nối các node trong blockchain?,Blockchain,medium,option_2,LAN,P2P,VPN,WAN
+Đặc điểm nào giúp phân biệt token fungible và non-fungible?,Blockchain,medium,option_2,Tính ẩn danh,Tính duy nhất,Tính bảo mật,Tính minh bạch
+Một lợi ích của Zero-Knowledge Proof trong blockchain là gì?,Blockchain,medium,option_2,Tiết kiệm chi phí,Không tiết lộ thông tin,Tăng kích thước block,Tăng tốc độ giao dịch
+Trong Solidity cấu trúc dữ liệu nào được dùng để lưu key-value?,Blockchain,medium,option_2,Array,Mapping,Struct,Enum
+Việc lưu trữ dữ liệu off-chain thường sử dụng công nghệ gì?,Blockchain,medium,option_1,IPFS,Blockchain,Database tập trung,Mạng VPN
+Các giao thức Layer 2 như Optimistic Rollup có ưu điểm gì?,Blockchain,medium,option_2,Tăng khả năng bảo mật,Giảm phí gas,Tăng kích thước block,Tăng decentralization
+Trong Web3 DApp là viết tắt của gì?,Blockchain,medium,option_1,Decentralized Application,Digital Application,Distributed Application,Dynamic Application
+Ưu điểm chính của Interoperability trong blockchain là gì?,Blockchain,medium,option_3,Tăng bảo mật,Tăng tính minh bạch,Cho phép các blockchain tương tác,Tăng tốc độ xử lý
+Stablecoin có vai trò gì trong hệ sinh thái crypto?,Blockchain,medium,option_2,Tăng bảo mật,Giảm rủi ro biến động giá,Tăng tốc độ giao dịch,Bảo mật tài sản
+Trong Solidity constructor được dùng để làm gì?,Blockchain,medium,option_1,Khởi tạo giá trị ban đầu,Gọi hàm khác,Tạo biến mới,Xóa dữ liệu
+Multisig wallet trong blockchain có ưu điểm gì?,Blockchain,medium,option_2,Giảm chi phí giao dịch,Tăng tính bảo mật,Tăng tốc độ xử lý,Bảo vệ tài sản khỏi hacker
+Trong Proof of Work mục đích của mining là gì?,Blockchain,medium,option_4,Tạo coin mới,Xác minh giao dịch,Đảm bảo tính bảo mật,Tất cả đáp án trên
+Cross-chain bridge giúp làm gì?,Blockchain,medium,option_1,Kết nối các mạng blockchain,Tăng tốc giao dịch,Bảo mật thông tin,Giảm phí gas
+Các ví crypto thường cung cấp seed phrase để làm gì?,Blockchain,medium,option_2,Tăng tốc giao dịch,Backup tài khoản,Bảo mật khóa cá nhân,Lưu trữ token
+Hard fork là gì?,Blockchain,medium,option_3,Bản nâng cấp nhỏ,Thay đổi quy tắc mạng,Tách chuỗi mới,Xóa bỏ dữ liệu cũ
+Consensus algorithm nào được sử dụng bởi Bitcoin?,Blockchain,medium,option_3,Proof of Stake,Delegated Proof of Stake,Proof of Work,Practical Byzantine Fault Tolerance
+Trong ERC-20 hàm “transfer” có chức năng gì?,Blockchain,medium,option_1,Chuyển token,Kiểm tra số dư,Tạo token mới,Xóa token
+Zero-Knowledge Proof (ZKP) là gì?,Blockchain,medium,option_2,Một loại hợp đồng thông minh,Một kỹ thuật mã hóa,Một thuật toán đồng thuận,Một loại token
+Hàm nào trong Solidity được sử dụng để thực hiện phép cộng hai số?,Blockchain,medium,option_1,add(),sum(),addNumbers(),toán tử cộng
+Khi thực hiện phép toán trong hợp đồng thông minh Ethereum, gas fee chủ yếu phụ thuộc vào yếu tố nào?,Blockchain,medium,option_1,Số lượng tính toán và dữ liệu lưu trữ,Số lượng người tham gia giao dịch,Loại mạng blockchain,Số lượng token chuyển giao
+Chức năng chính của IPFS trong blockchain là gì?,Blockchain,medium,option_1,Lưu trữ dữ liệu phi tập trung,Tăng tốc giao dịch,Bảo mật hợp đồng thông minh,Kết nối ví tiền điện tử
+Blockchain có thể đạt được cả ba yếu tố ""phi tập trung"", ""bảo mật"", và ""mở rộng"" không?,Blockchain,medium,option_2,Có,Không,Chỉ trong một số trường hợp,Chưa xác định
+BIP-32 là gì?,Blockchain,medium,option_1,Một tiêu chuẩn ví đa chữ ký,Một giao thức bảo mật,Một loại token,Một cơ chế đồng thuận
+Sharding trong blockchain nhằm mục đích gì?,Blockchain,medium,option_1,Phân tách mạng lưới để tăng hiệu suất,Tăng tính bảo mật,Lưu trữ dữ liệu lớn,Quản lý token
+Một giao dịch trên blockchain cần có điều kiện gì để hợp lệ?,Blockchain,medium,option_1,Được mạng lưới xác minh,Không yêu cầu điều kiện nào,Chỉ cần có chữ ký của người gửi,Phụ thuộc vào thuật toán đồng thuận
+Solidity có kiểu dữ liệu nào không?,Blockchain,medium,option_4,Integer,Boolean,Address,Tất cả các đáp án trên
+Blockchain hoạt động dựa trên gì để đảm bảo tính bất biến?,Blockchain,medium,option_4,Thuật toán mã hóa,Thuật toán PoW,Công nghệ phân tán,Cả ba đáp án trên
+ZK-Rollups có ưu điểm nào so với Optimistic Rollups?,Blockchain,hard,option_1,Không cần chờ xác thực,Phí thấp hơn,Tương thích hơn,Hỗ trợ smart contract phức tạp
+Tính bảo mật của Ethereum 2.0 được cải thiện nhờ cơ chế gì?,Blockchain,hard,option_2,Sharding,Beacon Chain,BFT Consensus,Randomness
+Gas fee trên Ethereum được tính theo công thức nào?,Blockchain,hard,option_3,Gas price × Gas limit,Gas limit ÷ Gas price,Gas used × Gas price,Gas limit × Gas used
+EIP-1559 cải thiện vấn đề gì trong Ethereum?,Blockchain,hard,option_2,Tăng kích thước block,Cải thiện cơ chế tính phí gas,Giảm latency giao dịch,Tăng bảo mật
+Trong blockchain thuật toán PBFT phù hợp nhất với loại ứng dụng nào?,Blockchain,hard,option_2,Ứng dụng công khai,Ứng dụng permissioned,Ứng dụng tập trung,Ứng dụng không xác định
+Vai trò của Beacon Chain trong Ethereum 2.0 là gì?,Blockchain,hard,option_2,Tăng tốc độ giao dịch,Đảm bảo phân bổ validator,Thực thi hợp đồng thông minh,Tăng kích thước block
+""State Channel"" trong blockchain là gì?,Blockchain,hard,option_1,Giao thức xử lý ngoài chuỗi,Giao dịch cross-chain,Tăng bảo mật cho blockchain,Loại consensus mới
+Ứng dụng của hashing trong Merkle Tree là gì?,Blockchain,hard,option_1,Xác minh dữ liệu nhanh chóng,Lưu trữ thông tin,Tăng tốc độ giao dịch,Bảo mật địa chỉ ví
+Tại sao PoS tiêu thụ ít năng lượng hơn PoW?,Blockchain,hard,option_1,Không cần khai thác vật lý,Ít node hơn,Ít giao dịch hơn,Ít token hơn
+Chức năng của “time-lock” trong smart contract là gì?,Blockchain,hard,option_2,Bảo mật private key,Xác định thời gian giải phóng giá trị,Tăng tốc giao dịch,Giới hạn người dùng
+Cơ chế nào giúp IPFS duy trì tính toàn vẹn dữ liệu?,Blockchain,hard,option_1,Hashing,Encryption,Sharding,State Channel
+Lightning Network giúp cải thiện vấn đề gì trong Bitcoin?,Blockchain,hard,option_3,Giảm phí giao dịch,Tăng tốc độ giao dịch,Cả A và B,Tăng tính bảo mật
+Một điểm yếu của Proof of Stake là gì?,Blockchain,hard,option_1,Dễ bị tấn công Sybil,Phí giao dịch cao,Tốn tài nguyên,Khó mở rộng
+Để thực hiện atomic swap cần công nghệ gì?,Blockchain,hard,option_3,Smart contract,Cross-chain bridge,Hash Time-Locked Contracts (HTLC),Decentralized Exchange
+Công nghệ nào cho phép tương tác giữa các blockchain khác nhau?,Blockchain,hard,option_1,Interledger Protocol,Beacon Chain,Sidechain,Plasma
+Trong zk-SNARKs ""ZK"" viết tắt của gì?,Blockchain,hard,option_1,Zero Knowledge,Zone Key,Zero Key,Zero Kinematics
+Sidechain chủ yếu được sử dụng để làm gì?,Blockchain,hard,option_2,Tăng tính bảo mật,Giảm tải cho blockchain chính,Tăng decentralization,Tăng kích thước block
+Mục tiêu chính của “Elliptic Curve Cryptography” trong blockchain là gì?,Blockchain,hard,option_1,Tăng bảo mật giao dịch,Tăng tốc độ xử lý,Giảm chi phí tính toán,Giảm dung lượng lưu trữ
+Hợp đồng thông minh sử dụng loại chữ ký nào để xác thực giao dịch?,Blockchain,hard,option_3,RSA,DSA,ECDSA,HMAC
+Delegated Proof of Stake (DPoS) khác PoS ở điểm nào?,Blockchain,hard,option_2,Tăng decentralization,Bầu chọn đại biểu,Tăng tốc độ mining,Giảm số lượng node
+""Slashing"" trong PoS có vai trò gì?,Blockchain,hard,option_2,Thưởng cho validator,Phạt hành vi xấu của validator,Tăng tốc độ giao dịch,Tăng số lượng node
+Công nghệ nào dưới đây giúp bảo vệ danh tính trong blockchain?,Blockchain,hard,option_1,Zero-Knowledge Proof,Public Key,Elliptic Curve,State Channel
+Rollup khác Sidechain ở điểm nào?,Blockchain,hard,option_4,Xử lý trên layer 1,Phí thấp hơn,Không cần validator độc lập,Cả A và C
+Trong BFT tối đa bao nhiêu phần trăm node có thể bị lỗi mà hệ thống vẫn hoạt động?,Blockchain,hard,option_1,33%,50%,25%,66%
+Mục tiêu chính của công nghệ “Tokenization” là gì?,Blockchain,hard,option_1,Tăng tính thanh khoản,Tăng bảo mật,Tăng phí giao dịch,Giảm decentralization
+Cơ chế nào giúp Ethereum shard chain hoạt động hiệu quả?,Blockchain,hard,option_1,Beacon Chain,Plasma,zk-SNARKs,Layer 3 Protocol
+Thuật toán nào hiệu quả hơn khi triển khai đồng thuận permissioned blockchain?,Blockchain,hard,option_1,PBFT,PoW,PoS,DPoS
+Trong zk-SNARK vai trò của ""trusted setup"" là gì?,Blockchain,hard,option_2,Tăng tốc độ giao dịch,Xác thực dữ liệu ban đầu,Giảm phí gas,Tăng decentralization
+Cross-shard communication trong blockchain thường sử dụng gì?,Blockchain,hard,option_1,Merkle Proof,Beacon Chain,State Channel,Rollup
+Công nghệ nào sau đây không phải là Layer 2?,Blockchain,hard,option_4,Plasma,Rollup,State Channel,Sharding
+Trong blockchain ""MEV"" viết tắt của gì?,Blockchain,hard,option_1,Maximum Extractable Value,Minimal Energy Validation,Multi Exchange Value,Managed Ethereum Validation
+Khả năng tương thích EVM cho phép blockchain làm gì?,Blockchain,hard,option_1,Hỗ trợ smart contract Ethereum,Tăng phí gas,Giảm decentralization,Tăng tốc độ block
+Chain ID được sử dụng để làm gì trong Ethereum?,Blockchain,hard,option_1,Xác định chain,Bảo mật giao dịch,Tăng tốc độ xử lý,Giảm phí gas
+Merkle Root trong một block đại diện cho điều gì?,Blockchain,hard,option_1,Tất cả giao dịch trong block,Hash của header,Hash của nonce,Hash của timestamp
+Flash Loan thường được sử dụng trong loại giao dịch nào?,Blockchain,hard,option_1,Arbitrage,Staking,Mining,Delegation
+DEX dựa trên AMM khác DEX truyền thống ở điểm nào?,Blockchain,hard,option_2,Sử dụng sổ lệnh,Tự động cung cấp thanh khoản,Tăng bảo mật,Tăng tốc độ xử lý
+Trong blockchain thuật ngữ ""re-org"" đề cập đến điều gì?,Blockchain,hard,option_2,Tạo block mới,Tái cấu trúc chain,Fork hard,Giảm số lượng validator
+Công nghệ nào cải thiện khả năng mở rộng mà không làm thay đổi blockchain chính?,Blockchain,hard,option_1,Rollup,Hard fork,Cross-chain bridge,Plasma
+“Flashbots” chủ yếu giải quyết vấn đề nào trong Ethereum?,Blockchain,hard,option_1,MEV,Phí giao dịch cao,Chậm trễ giao dịch,Bảo mật smart contract
+Delegation trong DPoS được thực hiện như thế nào?,Blockchain,hard,option_1,Bằng bầu cử,Random Selection,Node Rotation,Smart Contract Execution
+Hợp đồng thông minh có thể tự hủy bằng cách nào?,Blockchain,hard,option_1,Hàm selfDestruct,Hàm terminate,Hàm killContract,Hàm deleteState
+Vai trò của “block time” là gì?,Blockchain,hard,option_2,Quy định thời gian xác thực,Quy định thời gian thêm block,Quy định thời gian chuyển trạng thái,Tăng tốc độ xử lý
+Hard fork trong blockchain chủ yếu được sử dụng để làm gì?,Blockchain,hard,option_4,Nâng cấp tính năng mới,Thay đổi node chủ chốt,Xử lý lỗi phần mềm,Cả A và C
+Ứng dụng của công nghệ “Atomicity” trong blockchain là gì?,Blockchain,hard,option_1,Đảm bảo tất cả hoặc không giao dịch nào được thực hiện,Tăng bảo mật giao dịch,Giảm chi phí giao dịch,Cải thiện tốc độ xử lý
+Oracles trong blockchain được dùng để làm gì?,Blockchain,hard,option_1,Cung cấp dữ liệu ngoài chuỗi,Thực thi smart contract,Tăng tốc độ giao dịch,Giảm phí gas
+""Nonce"" trong giao dịch Ethereum đại diện cho điều gì?,Blockchain,hard,option_1,Số thứ tự giao dịch của tài khoản,Mã hóa bảo mật,Chỉ số hiệu năng của block,Hash của transaction
+Cơ chế đồng thuận nào phù hợp nhất cho mạng lưới IoT?,Blockchain,hard,option_1,PoA,PBFT,DPoS,PoW
+Rollup sử dụng Zero-Knowledge Proof có lợi ích gì so với Optimistic Rollup?,Blockchain,hard,option_1,Không cần chờ xác thực,Dễ dàng triển khai,Phí thấp hơn,Hỗ trợ smart contract
+ERC-721 trong Ethereum đại diện cho loại token nào?,Blockchain,hard,option_1,Non-fungible token,Fungible token,Stablecoin,Utility token
+Trong mô hình UTXO “unspent transaction output” có vai trò gì?,Blockchain,hard,option_1,Xác định phần tiền chưa được sử dụng,Bảo mật giao dịch,Lưu trữ thông tin blockchain,Giảm phí giao dịch

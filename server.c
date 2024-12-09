@@ -10,7 +10,7 @@
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
-void create_exam_room(int client_socket, const char *name, int num_questions, int time_limit) {
+void create_exam_room(int client_socket, const char *name, int num_questions, int time_limit, const char *category, const char *difficulty) {
     sqlite3 *db;
     char *err_msg = 0;
 
@@ -55,16 +55,49 @@ void create_exam_room(int client_socket, const char *name, int num_questions, in
     // Lấy room_id tự động tăng vừa tạo
     int last_room_id = sqlite3_last_insert_rowid(db);
 
-    // Trả về thông tin phòng thi đã tạo
-    char response[256];
-    snprintf(response, sizeof(response), "Room created successfully with ROOM_ID: %d (status: not_started)", last_room_id);
-    send(client_socket, response, strlen(response), 0);
+    // Lấy câu hỏi cho phòng thi từ cơ sở dữ liệu
+    sqlite3_stmt *question_stmt;
+    const char *sql_select = "SELECT id, question_text, option_1, option_2, option_3, option_4 FROM questions WHERE category = ? AND difficulty = ? ORDER BY RANDOM() LIMIT ?;";
 
-    // Dọn dẹp
+    rc = sqlite3_prepare_v2(db, sql_select, -1, &question_stmt, 0);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        send(client_socket, "Failed to get questions", strlen("Failed to get questions"), 0);
+        return;
+    }
+
+    sqlite3_bind_text(question_stmt, 1, category, -1, SQLITE_STATIC);
+    sqlite3_bind_text(question_stmt, 2, difficulty, -1, SQLITE_STATIC);
+    sqlite3_bind_int(question_stmt, 3, num_questions);
+
+    // Trả về câu hỏi cho người dùng
+    char response[1024];
+    int question_count = 0;
+    while ((rc = sqlite3_step(question_stmt)) == SQLITE_ROW) {
+        int question_id = sqlite3_column_int(question_stmt, 0);
+        const char *question_text = (const char *)sqlite3_column_text(question_stmt, 1);
+        const char *option_1 = (const char *)sqlite3_column_text(question_stmt, 2);
+        const char *option_2 = (const char *)sqlite3_column_text(question_stmt, 3);
+        const char *option_3 = (const char *)sqlite3_column_text(question_stmt, 4);
+        const char *option_4 = (const char *)sqlite3_column_text(question_stmt, 5);
+
+        // Tạo câu trả lời
+        snprintf(response, sizeof(response), "Question %d: %s\n1. %s\n2. %s\n3. %s\n4. %s\n",
+                 question_id, question_text, option_1, option_2, option_3, option_4);
+        send(client_socket, response, strlen(response), 0);
+        question_count++;
+    }
+
+    if (question_count < num_questions) {
+        send(client_socket, "Not enough questions available.", strlen("Not enough questions available."), 0);
+    }
+
+    // Thực hiện bước dọn dẹp
+    sqlite3_finalize(question_stmt);
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 }
-
 
 void list_exam_rooms(int client_socket) {
     sqlite3 *db;
@@ -123,9 +156,13 @@ void handle_client_request(int client_socket) {
     char buffer[BUFFER_SIZE] = {0};
     read(client_socket, buffer, BUFFER_SIZE);
 
-    char command[50], username[50], password[50], name[50];
+    char command[50], username[50], password[50], name[50], category[50], difficulty[50];
     int num_questions, time_limit;
 
+    // In ra nội dung buffer để debug
+    printf("Received buffer: %s\n", buffer);
+
+    // Đọc lệnh đầu tiên từ client
     int n = sscanf(buffer, "%s", command);
     if (n < 1) {
         send(client_socket, "Invalid command", strlen("Invalid command"), 0);
@@ -161,20 +198,22 @@ void handle_client_request(int client_socket) {
             send(client_socket, "Login failed", strlen("Login failed"), 0);
         }
     } else if (buffer[0] == 0x01) {
-        n = sscanf(buffer + 1, "%s %d %d", name, &num_questions, &time_limit);
-        if (n != 3) {
+        n = sscanf(buffer + 1, "%s %d %d %s %s", name, &num_questions, &time_limit, category, difficulty);
+        if (n != 5) {
             send(client_socket, "Invalid CREATE_ROOM command format", strlen("Invalid CREATE_ROOM command format"), 0);
             return;
         }
 
-        printf("Creating exam room: %s with %d questions and %d minutes time limit\n", name, num_questions, time_limit);
-        create_exam_room(client_socket, name, num_questions, time_limit);
+        printf("Creating exam room: %s with %d questions and %d minutes time limit, Category: %s, Difficulty: %s\n",
+               name, num_questions, time_limit, category, difficulty);
+        create_exam_room(client_socket, name, num_questions, time_limit, category, difficulty);
     } else if (buffer[0] == 0x02) {
         list_exam_rooms(client_socket);
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }
 }
+
 
 int main() {
     int server_fd, new_socket;

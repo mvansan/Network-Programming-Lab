@@ -18,6 +18,7 @@ int main() {
 
     char name[50];
     int num_questions, time_limit;
+    char category[20], difficulty[20];
 
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("Socket creation error\n");
@@ -55,21 +56,27 @@ int main() {
         scanf("%s", password);
         snprintf(message, sizeof(message), "LOGIN %s %s", username, password);
     } else if (choice == 3) {
+        // Nhập thông tin phòng thi
         printf("Enter room name: ");
         scanf("%s", name);
         printf("Enter number of questions: ");
         scanf("%d", &num_questions);
         printf("Enter time limit (minutes): ");
         scanf("%d", &time_limit);
+        printf("Select exam category (IT, Science, Blockchain): ");
+        scanf("%s", category);
+        printf("Select difficulty (easy, medium, hard): ");
+        scanf("%s", difficulty);
 
         time_limit *= 60;
 
         unsigned char message[BUFFER_SIZE];
         message[0] = 0x01;
 
-        snprintf((char *)message + 1, sizeof(message) - 1, "%s %d %d", name, num_questions, time_limit);
+        snprintf((char *)message + 1, sizeof(message) - 1, " %s %d %d %s %s", name, num_questions, time_limit, category, difficulty);
 
         send_request(sock, (char *)message);
+
     } else if (choice == 4) {
         unsigned char message[BUFFER_SIZE];
         message[0] = 0x02;

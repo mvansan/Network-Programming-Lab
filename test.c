@@ -11,6 +11,9 @@ typedef struct {
 // List to store rooms
 GList *room_list = NULL;
 
+
+
+
 // Function to display a dialog for registration or login
 static void on_auth_button_clicked(GtkWidget *widget, gpointer user_data) {
     const gchar *title = (const gchar *)user_data;

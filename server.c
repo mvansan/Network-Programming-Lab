@@ -189,11 +189,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    #ifdef SO_REUSEPORT
-        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
-    #else
-        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
-    #endif
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
         perror("setsockopt");
         close(server_fd);
         exit(EXIT_FAILURE);

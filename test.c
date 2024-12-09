@@ -1,5 +1,5 @@
 #include <gtk/gtk.h>
-
+#include<arpa/inet.h>
 // Data structure for room information
 typedef struct {
     gchar *room_name;
@@ -11,7 +11,47 @@ typedef struct {
 // List to store rooms
 GList *room_list = NULL;
 
+GtkWidget *window;
+GtkWidget *main_box;
+int sock;
+struct sockaddr_in server_addr;
+char buffer[1024] = {0};
 
+void send_request(int sock, const char *message) {
+    send(sock, message, strlen(message), 0);
+}
+
+
+static void create_app_socket() {
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        g_print("Socket creation error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(8080);
+
+    if (inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr) <= 0) {
+        g_print("Invalid address/ Address not supported\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if(connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        g_print("Connection Failed\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+static void remove_all_children(GtkWidget *widget) {
+    GList *children, *iter;
+
+    children = gtk_container_get_children(GTK_CONTAINER(widget));
+    for (iter = children; iter != NULL; iter = g_list_next(iter)) {
+        gtk_widget_destroy(GTK_WIDGET(iter->data));
+    }
+    g_list_free(children);
+}
 
 
 // Function to display a dialog for registration or login
@@ -89,6 +129,19 @@ static void show_room_list(GtkWidget *widget, gpointer user_data) {
     gtk_widget_destroy(dialog);
 }
 
+void on_create_room_request(GtkDialog *dialog, gint response_id, gpointer user_data) {
+    gpointer *data = (gpointer *)user_data;
+    GtkEntry *name_entry = (GtkEntry*) data[0];
+    GtkEntry *questions_entry = (GtkEntry*) data[1];
+    GtkEntry *duration_entry = (GtkEntry*) data[2];
+    g_print("Create room request\n");
+    const gchar *room_name = gtk_entry_get_text(GTK_ENTRY(name_entry));
+    const gchar *num_questions = gtk_entry_get_text(GTK_ENTRY(questions_entry));
+    const gchar *test_duration = gtk_entry_get_text(GTK_ENTRY(duration_entry));
+    g_print("Room name: %s, Questions: %s, Duration: %s\n", room_name, num_questions, test_duration);
+    send_request(sock, "CREATE_ROOM");
+}
+
 // Function to create a room
 static void on_create_room_clicked(GtkWidget *widget, gpointer user_data) {
     GtkWindow *parent_window = GTK_WINDOW(user_data);
@@ -127,6 +180,14 @@ static void on_create_room_clicked(GtkWidget *widget, gpointer user_data) {
 
     gtk_box_pack_start(GTK_BOX(content_area), dialog_box, TRUE, TRUE, 0);
     gtk_widget_show_all(dialog);
+    
+
+    gpointer *data = g_new(gpointer, 3);
+    data[0] = name_entry;
+    data[1] = questions_entry;
+    data[2] = duration_entry;
+    
+    g_signal_connect(dialog, "response", G_CALLBACK(on_create_room_request), data);
 
     gint response = gtk_dialog_run(GTK_DIALOG(dialog));
     if (response == GTK_RESPONSE_OK) {
@@ -152,8 +213,9 @@ static void on_create_room_clicked(GtkWidget *widget, gpointer user_data) {
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
-    GtkWidget *window, *overlay, *background;
-    GtkWidget *button_box, *create_room_button, *view_room_button;
+
+    GtkWidget  *overlay, *background;
+    GtkWidget  *create_room_button, *view_room_button;
     GtkWidget *register_button, *login_button;
 
     window = gtk_application_window_new(app);
@@ -166,18 +228,18 @@ static void activate(GtkApplication *app, gpointer user_data) {
     background = gtk_image_new_from_file("bg.jpg");
     gtk_overlay_add_overlay(GTK_OVERLAY(overlay), background);
 
-    button_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_widget_set_halign(button_box, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(button_box, GTK_ALIGN_CENTER);
-    gtk_overlay_add_overlay(GTK_OVERLAY(overlay), button_box);
+    main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_widget_set_halign(main_box, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(main_box, GTK_ALIGN_CENTER);
+    gtk_overlay_add_overlay(GTK_OVERLAY(overlay), main_box);
 
     create_room_button = gtk_button_new_with_label("Create Room");
     g_signal_connect(create_room_button, "clicked", G_CALLBACK(on_create_room_clicked), window);
-    gtk_box_pack_start(GTK_BOX(button_box), create_room_button, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(main_box), create_room_button, TRUE, FALSE, 0);
 
     view_room_button = gtk_button_new_with_label("Show Room");
     g_signal_connect(view_room_button, "clicked", G_CALLBACK(show_room_list), window);
-    gtk_box_pack_start(GTK_BOX(button_box), view_room_button, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(main_box), view_room_button, TRUE, FALSE, 0);
 
     register_button = gtk_button_new_with_label("Register");
     gtk_widget_set_halign(register_button, GTK_ALIGN_END);
@@ -192,10 +254,12 @@ static void activate(GtkApplication *app, gpointer user_data) {
     g_signal_connect(login_button, "clicked", G_CALLBACK(on_auth_button_clicked), "Login");
 
     gtk_widget_show_all(window);
+
+    create_app_socket();
 }
 
 int main(int argc, char **argv) {
-    GtkApplication *app = gtk_application_new("com.example.room_manager", G_APPLICATION_FLAGS_NONE);
+    GtkApplication *app = gtk_application_new("com.example.room_manager", G_APPLICATION_DEFAULT_FLAGS);
     int status;
 
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);

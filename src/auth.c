@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <string.h>
-#include "auth.h"
+#include "include/auth.h"
 
 int register_user(const char *username, const char *password) {
     sqlite3 *db;
     char *err_msg = 0;
-    int rc = sqlite3_open("exam_system.db", &db);
+    int rc = sqlite3_open("database/exam_system.db", &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));

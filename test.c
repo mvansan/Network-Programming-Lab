@@ -98,9 +98,33 @@ static void on_auth_button_clicked(GtkWidget *widget, gpointer user_data) {
 }
 
 // Function to display the room list
+// Function to display the room list as a table
+// Function to display the room list as a table
+static void on_join_button_clicked(GtkWidget *widget, gpointer user_data) {
+    Room *room = (Room *)user_data;
+
+    // Create a new window for the test
+    GtkWidget *test_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(test_window), room->room_name);
+    gtk_window_set_default_size(GTK_WINDOW(test_window), 400, 300);
+
+    GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_container_add(GTK_CONTAINER(test_window), main_box);
+
+    GtkWidget *label = gtk_label_new("Welcome to the test room!");
+    gtk_box_pack_start(GTK_BOX(main_box), label, TRUE, FALSE, 0);
+
+    GtkWidget *start_test_button = gtk_button_new_with_label("Start Test");
+    gtk_box_pack_start(GTK_BOX(main_box), start_test_button, TRUE, FALSE, 0);
+
+    // Example: Handle "Start Test" button (update this logic as needed)
+    g_signal_connect(start_test_button, "clicked", G_CALLBACK(gtk_widget_destroy), test_window);
+
+    gtk_widget_show_all(test_window);
+}
 static void show_room_list(GtkWidget *widget, gpointer user_data) {
     GtkWindow *parent_window = GTK_WINDOW(user_data);
-    GtkWidget *dialog, *content_area, *list_box, *room_label;
+    GtkWidget *dialog, *content_area, *grid;
 
     dialog = gtk_dialog_new_with_buttons("Room List",
                                          parent_window,
@@ -109,26 +133,50 @@ static void show_room_list(GtkWidget *widget, gpointer user_data) {
                                          NULL);
 
     content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-    list_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    grid = gtk_grid_new();
 
-    for (GList *iter = room_list; iter != NULL; iter = iter->next) {
+    // Set grid spacing
+    gtk_grid_set_row_spacing(GTK_GRID(grid), 10);
+    gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
+
+    // Add headers to the grid
+    GtkWidget *header1 = gtk_label_new("Room Name");
+    GtkWidget *header2 = gtk_label_new("Questions");
+    GtkWidget *header3 = gtk_label_new("Duration (min)");
+    GtkWidget *header4 = gtk_label_new("Status");
+    GtkWidget *header5 = gtk_label_new("Action");
+
+    gtk_grid_attach(GTK_GRID(grid), header1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), header2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), header3, 2, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), header4, 3, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), header5, 4, 0, 1, 1);
+
+    // Populate the grid with room data and JOIN buttons
+    int row = 1; // Start after header
+    for (GList *iter = room_list; iter != NULL; iter = iter->next, row++) {
         Room *room = (Room *)iter->data;
-        gchar *room_info = g_strdup_printf("Room: %s | Questions: %d | Duration: %d min | Status: %s",
-                                           room->room_name,
-                                           room->num_questions,
-                                           room->test_duration,
-                                           room->status);
-        room_label = gtk_label_new(room_info);
-        gtk_box_pack_start(GTK_BOX(list_box), room_label, FALSE, FALSE, 0);
-        g_free(room_info);
+
+        GtkWidget *room_name_label = gtk_label_new(room->room_name);
+        GtkWidget *num_questions_label = gtk_label_new(g_strdup_printf("%d", room->num_questions));
+        GtkWidget *duration_label = gtk_label_new(g_strdup_printf("%d", room->test_duration));
+        GtkWidget *status_label = gtk_label_new(room->status);
+
+        gtk_grid_attach(GTK_GRID(grid), room_name_label, 0, row, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), num_questions_label, 1, row, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), duration_label, 2, row, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), status_label, 3, row, 1, 1);
+
+        GtkWidget *join_button = gtk_button_new_with_label("JOIN");
+        g_signal_connect(join_button, "clicked", G_CALLBACK(on_join_button_clicked), room);
+        gtk_grid_attach(GTK_GRID(grid), join_button, 4, row, 1, 1);
     }
 
-    gtk_box_pack_start(GTK_BOX(content_area), list_box, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(content_area), grid, TRUE, TRUE, 0);
     gtk_widget_show_all(dialog);
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
-
 void on_create_room_request(GtkDialog *dialog, gint response_id, gpointer user_data) {
     gpointer *data = (gpointer *)user_data;
     GtkEntry *name_entry = (GtkEntry*) data[0];

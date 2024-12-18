@@ -5,7 +5,12 @@
 #include <arpa/inet.h>
 
 #define PORT 8080
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 8000
+
+// Define message types
+#define CREATE_EXAM_ROOM 0x01
+#define VIEW_EXAM_ROOMS  0x02
+#define JOIN_EXAM_ROOM   0x03
 
 void send_request(int sock, const char *message) {
     send(sock, message, strlen(message), 0);
@@ -49,12 +54,14 @@ int main() {
         printf("Enter password: ");
         scanf("%s", password);
         snprintf(message, sizeof(message), "REGISTER %s %s", username, password);
+        send_request(sock, message);
     } else if (choice == 2) {
         printf("Login - Enter username: ");
         scanf("%s", username);
         printf("Enter password: ");
         scanf("%s", password);
         snprintf(message, sizeof(message), "LOGIN %s %s", username, password);
+        send_request(sock, message);
     } else if (choice == 3) {
         // Nhập thông tin phòng thi
         printf("Enter room name: ");
@@ -71,15 +78,14 @@ int main() {
         time_limit *= 60;
 
         unsigned char message[BUFFER_SIZE];
-        message[0] = 0x01;
+        message[0] = CREATE_EXAM_ROOM;  // Sử dụng mã 0x01 cho tạo phòng thi
 
-        snprintf((char *)message + 1, sizeof(message) - 1, " %s %d %d %s %s", name, num_questions, time_limit, category, difficulty);
+        snprintf((char *)message + 1, sizeof(message) - 1, "%s %d %d %s %s", name, num_questions, time_limit, category, difficulty);
 
         send_request(sock, (char *)message);
-
     } else if (choice == 4) {
         unsigned char message[BUFFER_SIZE];
-        message[0] = 0x02;
+        message[0] = VIEW_EXAM_ROOMS;  // Sử dụng mã 0x02 cho xem danh sách phòng thi
 
         send_request(sock, (char *)message);
     } else {
@@ -88,9 +94,11 @@ int main() {
         return 0;
     }
 
-    // Nhận phản hồi từ server
-    read(sock, buffer, BUFFER_SIZE);
-    printf("Server response: %s\n", buffer);
+    int bytes_received;
+    while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
+        buffer[bytes_received] = '\0';
+        printf("Received: %s\n", buffer);
+    }
 
     close(sock);
     return 0;

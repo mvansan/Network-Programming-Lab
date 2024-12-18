@@ -209,13 +209,59 @@ void handle_client_request(int client_socket) {
         create_exam_room(client_socket, name, num_questions, time_limit, category, difficulty);
     } else if (buffer[0] == 0x02) {
         list_exam_rooms(client_socket);
-    } else {
+    } else if (strncmp(buffer, "GET_ROOMS", 9) == 0) {
+    get_room_list(client_socket);
+} else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }
 }
 
+void get_room_list(int client_socket) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    const char *sql_select = "SELECT name, num_questions, time_limit, status FROM exam_rooms;";
+    
+    if (sqlite3_open("exam_system.db", &db) != SQLITE_OK) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        send(client_socket, "Database connection failed", strlen("Database connection failed"), 0);
+        return;
+    }
+
+    if (sqlite3_prepare_v2(db, sql_select, -1, &stmt, 0) != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        send(client_socket, "Failed to fetch rooms", strlen("Failed to fetch rooms"), 0);
+        return;
+    }
+
+    char buffer[BUFFER_SIZE] = "[";
+    int first = 1;
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        if (!first) strcat(buffer, ",");
+        first = 0;
+
+        char room[256];
+        snprintf(room, sizeof(room),
+            "{\"name\":\"%s\",\"num_questions\":%d,\"time_limit\":%d,\"status\":\"%s\"}",
+            sqlite3_column_text(stmt, 0),
+            sqlite3_column_int(stmt, 1),
+            sqlite3_column_int(stmt, 2),
+            sqlite3_column_text(stmt, 3));
+        
+        strcat(buffer, room);
+    }
+
+    strcat(buffer, "]");
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    send(client_socket, buffer, strlen(buffer), 0);
+}
 
 int main() {
+    
     int server_fd, new_socket;
     struct sockaddr_in address;
     int opt = 1;

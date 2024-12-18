@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <json-glib/json-glib.h>
 #include<arpa/inet.h>
 // Data structure for room information
 typedef struct {
@@ -122,10 +123,54 @@ static void on_join_button_clicked(GtkWidget *widget, gpointer user_data) {
 
     gtk_widget_show_all(test_window);
 }
+void fetch_room_list() {
+    // Gửi yêu cầu tới server
+    send_request(sock, "GET_ROOMS");
+
+    // Nhận dữ liệu từ server
+    int bytes_received = recv(sock, buffer, sizeof(buffer), 0);
+    if (bytes_received <= 0) {
+        g_print("Failed to fetch room list\n");
+        return;
+    }
+    buffer[bytes_received] = '\0';
+
+    // Parse JSON từ server
+    GList *new_room_list = NULL;
+    JsonParser *parser = json_parser_new();
+    GError *error = NULL;
+
+    if (json_parser_load_from_data(parser, buffer, -1, &error)) {
+        JsonNode *root = json_parser_get_root(parser);
+        JsonArray *rooms = json_node_get_array(root);
+
+        for (guint i = 0; i < json_array_get_length(rooms); i++) {
+            JsonObject *room_obj = json_array_get_object_element(rooms, i);
+
+            Room *room = g_malloc(sizeof(Room));
+            room->room_name = g_strdup(json_object_get_string_member(room_obj, "name"));
+            room->num_questions = json_object_get_int_member(room_obj, "num_questions");
+            room->test_duration = json_object_get_int_member(room_obj, "time_limit");
+            room->status = g_strdup(json_object_get_string_member(room_obj, "status"));
+
+            new_room_list = g_list_append(new_room_list, room);
+        }
+    } else {
+        g_print("Error parsing JSON: %s\n", error->message);
+        g_clear_error(&error);
+    }
+
+    g_object_unref(parser);
+
+    // Cập nhật room_list và giao diện
+    g_list_free_full(room_list, (GDestroyNotify)g_free);
+    room_list = new_room_list;
+}
+
 static void show_room_list(GtkWidget *widget, gpointer user_data) {
     GtkWindow *parent_window = GTK_WINDOW(user_data);
     GtkWidget *dialog, *content_area, *grid;
-
+  fetch_room_list();
     dialog = gtk_dialog_new_with_buttons("Room List",
                                          parent_window,
                                          GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

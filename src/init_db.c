@@ -5,7 +5,7 @@ void init_database() {
     sqlite3 *db;
     char *err_msg = 0;
     
-    int rc = sqlite3_open("exam_system.db", &db);
+    int rc = sqlite3_open("database/exam_system.db", &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));

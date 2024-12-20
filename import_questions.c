@@ -5,7 +5,6 @@
 
 #define MAX_LINE 1024
 
-// Hàm đọc file CSV và nhập dữ liệu vào cơ sở dữ liệu
 void import_questions(const char *csv_file, const char *db_file) {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -23,7 +22,6 @@ void import_questions(const char *csv_file, const char *db_file) {
         return;
     }
 
-    // Câu lệnh SQL để chèn dữ liệu
     const char *sql = "INSERT INTO questions (question_text, category, difficulty, correct_answer, option_1, option_2, option_3, option_4) "
                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -34,10 +32,8 @@ void import_questions(const char *csv_file, const char *db_file) {
         return;
     }
 
-    // Bỏ qua dòng đầu tiên (header)
     fgets(line, MAX_LINE, file);
 
-    // Đọc từng dòng của file CSV
     while (fgets(line, MAX_LINE, file)) {
         char *question_text, *category, *difficulty, *correct_answer;
         char *option_1, *option_2, *option_3, *option_4;
@@ -51,7 +47,6 @@ void import_questions(const char *csv_file, const char *db_file) {
         option_3 = strtok(NULL, ",");
         option_4 = strtok(NULL, ",");
 
-        // Gán giá trị vào statement
         sqlite3_bind_text(stmt, 1, question_text, -1, SQLITE_STATIC);
         sqlite3_bind_text(stmt, 2, category, -1, SQLITE_STATIC);
         sqlite3_bind_text(stmt, 3, difficulty, -1, SQLITE_STATIC);
@@ -62,10 +57,9 @@ void import_questions(const char *csv_file, const char *db_file) {
         sqlite3_bind_text(stmt, 8, option_4, -1, SQLITE_STATIC);
 
         if (sqlite3_step(stmt) != SQLITE_DONE) {
-            fprintf(stderr, "Không thể chèn dữ liệu: %s\n", sqlite3_errmsg(db));
+            fprintf(stderr, "Cannot insert data: %s\nLine: %s\n", sqlite3_errmsg(db), line);
         }
 
-        // Reset statement để tái sử dụng
         sqlite3_reset(stmt);
     }
 
@@ -74,12 +68,4 @@ void import_questions(const char *csv_file, const char *db_file) {
     fclose(file);
     sqlite3_finalize(stmt);
     sqlite3_close(db);
-}
-
-int main() {
-    const char *csv_file = "questions.csv";
-    const char *db_file = "exam_system.db";
-
-    import_questions(csv_file, db_file);
-    return 0;
 }

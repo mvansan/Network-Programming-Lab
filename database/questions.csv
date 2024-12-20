@@ -223,7 +223,7 @@ Nhà khoa học nào được coi là người sáng lập lý thuyết tiến h
 Tế bào nào trong cơ thể có nhiệm vụ mang oxy?,Science,medium,option_3,Louis Pasteur,Alexander Fleming,Robert Hooke,Charles Darwin
 Lực nào giữ các hành tinh di chuyển xung quanh Mặt Trời?,Science,medium,option_1,Ohm,Volt,Ampere,Watt
 Trong toán học Pi là tỉ lệ giữa chu vi và đường kính của hình nào?,Science,medium,option_2,Phân bào,Di truyền,Phiên mã,Giải mã
-Ai là nhà bác học người Ba Lan, phát hiện ra nguyên tố phóng xạ?,Science,medium,option_2,Sắt,Canxi,Magiê,Natri
+Ai là nhà bác học người Ba Lan phát hiện ra nguyên tố phóng xạ?,Science,medium,option_2,Sắt,Canxi,Magiê,Natri
 Chất nào là dẫn điện tốt nhất trong các vật liệu sau?,Science,medium,option_4,Nhiệt,Hóa,Điện,Sóng
 Năng lượng được lưu trữ trong thực phẩm chủ yếu là dạng nào?,Science,medium,option_3,Vàng,Đồng,Sắt,Bạc
 Đơn vị đo áp suất trong hệ đo lường quốc tế là gì?,Science,medium,option_1,Khối lượng,Trọng lực,Áp suất,Nhiệt độ
@@ -391,9 +391,9 @@ Consensus algorithm nào được sử dụng bởi Bitcoin?,Blockchain,medium,o
 Trong ERC-20 hàm “transfer” có chức năng gì?,Blockchain,medium,option_1,Chuyển token,Kiểm tra số dư,Tạo token mới,Xóa token
 Zero-Knowledge Proof (ZKP) là gì?,Blockchain,medium,option_2,Một loại hợp đồng thông minh,Một kỹ thuật mã hóa,Một thuật toán đồng thuận,Một loại token
 Hàm nào trong Solidity được sử dụng để thực hiện phép cộng hai số?,Blockchain,medium,option_1,add(),sum(),addNumbers(),toán tử cộng
-Khi thực hiện phép toán trong hợp đồng thông minh Ethereum, gas fee chủ yếu phụ thuộc vào yếu tố nào?,Blockchain,medium,option_1,Số lượng tính toán và dữ liệu lưu trữ,Số lượng người tham gia giao dịch,Loại mạng blockchain,Số lượng token chuyển giao
+Khi thực hiện phép toán trong hợp đồng thông minh Ethereum gas fee chủ yếu phụ thuộc vào yếu tố nào?,Blockchain,medium,option_1,Số lượng tính toán và dữ liệu lưu trữ,Số lượng người tham gia giao dịch,Loại mạng blockchain,Số lượng token chuyển giao
 Chức năng chính của IPFS trong blockchain là gì?,Blockchain,medium,option_1,Lưu trữ dữ liệu phi tập trung,Tăng tốc giao dịch,Bảo mật hợp đồng thông minh,Kết nối ví tiền điện tử
-Blockchain có thể đạt được cả ba yếu tố ""phi tập trung"", ""bảo mật"", và ""mở rộng"" không?,Blockchain,medium,option_2,Có,Không,Chỉ trong một số trường hợp,Chưa xác định
+Blockchain có thể đạt được cả ba yếu tố "phi tập trung"; "bảo mật"; và "mở rộng" không?,Blockchain,medium,option_2,Có,Không,Chỉ trong một số trường hợp,Chưa xác định
 BIP-32 là gì?,Blockchain,medium,option_1,Một tiêu chuẩn ví đa chữ ký,Một giao thức bảo mật,Một loại token,Một cơ chế đồng thuận
 Sharding trong blockchain nhằm mục đích gì?,Blockchain,medium,option_1,Phân tách mạng lưới để tăng hiệu suất,Tăng tính bảo mật,Lưu trữ dữ liệu lớn,Quản lý token
 Một giao dịch trên blockchain cần có điều kiện gì để hợp lệ?,Blockchain,medium,option_1,Được mạng lưới xác minh,Không yêu cầu điều kiện nào,Chỉ cần có chữ ký của người gửi,Phụ thuộc vào thuật toán đồng thuận

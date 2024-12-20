@@ -7,6 +7,7 @@
 #include "include/init_db.h"
 #include "include/auth.h"
 #include "include/exam_room.h"
+#include "include/import_questions.h"
 
 #define PORT 8080
 #define BUFFER_SIZE 8000

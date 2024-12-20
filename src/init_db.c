@@ -1,5 +1,6 @@
 #include <sqlite3.h>
 #include <stdio.h>
+#include "import_questions.h"  
 
 void init_database() {
     sqlite3 *db;
@@ -24,6 +25,18 @@ void init_database() {
                             "num_questions INTEGER NOT NULL, "
                             "time_limit INTEGER NOT NULL, "
                             "status TEXT NOT NULL DEFAULT 'not_started');";
+
+    const char *questions = "CREATE TABLE IF NOT EXISTS questions ("
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "question_text TEXT NOT NULL, "
+                            "category TEXT NOT NULL, "
+                            "difficulty TEXT CHECK(difficulty IN ('easy','medium','hard')) NOT NULL, "
+                            "correct_answer TEXT CHECK(correct_answer IN ('option_1','option_2','option_3','option_4')) NOT NULL, "
+                            "option_1 TEXT NOT NULL, "
+                            "option_2 TEXT NOT NULL, "
+                            "option_3 TEXT NOT NULL, "
+                            "option_4 TEXT NOT NULL);";
+
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
@@ -39,6 +52,16 @@ void init_database() {
         sqlite3_close(db);
         return;
     }
+
+    rc = sqlite3_exec(db, questions, 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        sqlite3_close(db);
+        return;
+    }
+
+    import_questions("database/questions.csv", "database/exam_system.db");
 
     printf("Database initialized successfully\n");
 

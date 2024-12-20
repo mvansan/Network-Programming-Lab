@@ -6,7 +6,7 @@ INCLUDE_DIR = include
 BUILD_DIR = build
 
 # Các file nguồn
-SRC = $(SRC_DIR)/auth.c $(SRC_DIR)/exam_room.c $(SRC_DIR)/init_db.c
+SRC = $(SRC_DIR)/auth.c $(SRC_DIR)/exam_room.c $(SRC_DIR)/init_db.c import_questions.c
 
 # Các file đối tượng (object files)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)

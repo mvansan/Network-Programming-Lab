@@ -1,0 +1,8 @@
+window {
+  background-image: url("bg.jpg");
+}
+#create-room-button {
+  color: white;
+  background: #4caf50;
+  border: none;
+}

@@ -12,7 +12,9 @@ GtkWidget *window;
 GtkWidget *main_box;
 
 void render_login_page(GtkWidget *widget);
-
+void render_view_room_page(GtkWidget *widget);
+void render_create_room_dialog(GtkWidget* widget);
+void on_create_room_response(GtkDialog *dialog, gint response_id, gpointer *room_data);
 
 void register_request(GtkWidget *widget, gpointer *data) {
     GtkWidget *username_entry = data[0];
@@ -28,12 +30,11 @@ void register_request(GtkWidget *widget, gpointer *data) {
     memset(buffer, 0, BUFFER_SIZE);
     sprintf(buffer, "REGISTER %s %s", username, password);
     send(sock, buffer, strlen(buffer), 0);
-    read(sock, response, BUFFER_SIZE);
+    memset(buffer, 0, BUFFER_SIZE);
+    read(sock, buffer, BUFFER_SIZE);
 
     
-    if (strcmp(response, "Registration successful") == 0) {
-        render_login_page(NULL);
-    }
+    g_print("Response: %s\n", buffer);
 }
 
 void login_request(GtkWidget *widget, gpointer *data) {
@@ -49,16 +50,22 @@ void login_request(GtkWidget *widget, gpointer *data) {
     username = gtk_entry_get_text(GTK_ENTRY(username_entry));
     password = gtk_entry_get_text(GTK_ENTRY(password_entry));
 
-
+printf("username: %s\n", username);
+printf("password: %s\n", password);
     memset(buffer, 0, BUFFER_SIZE);
     sprintf(buffer, "LOGIN %s %s", username, password);
     send(sock, buffer, strlen(buffer), 0);
-    read(sock, response, BUFFER_SIZE);
+    memset(buffer, 0, BUFFER_SIZE);
+    read(sock, buffer, BUFFER_SIZE);
 
-    if (strcmp(response, "success") == 0) {
-        g_print("Login success\n");
+    g_print("Response: %s\n", buffer);
+    if (strcmp(buffer, "Login successful") == 0) {
+        render_view_room_page(NULL);
     } else {
-        g_print("Login failed\n");
+        GtkWidget *dialog;
+        dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "Login failed");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
     }
 }
 
@@ -176,6 +183,7 @@ void render_view_room_page (GtkWidget *widget) {
     gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
     gtk_grid_set_row_spacing(GTK_GRID(grid), 10);
     create_room_button = gtk_button_new_with_label("Create Room");
+    g_signal_connect(create_room_button, "clicked", G_CALLBACK(render_create_room_dialog), NULL);
     gtk_widget_set_name(create_room_button, "create-room-button");
 GtkWidget *title_name = gtk_label_new("Name");
     GtkWidget *title_time = gtk_label_new("Time");
@@ -212,6 +220,111 @@ GtkWidget *title_name = gtk_label_new("Name");
   
 }
 
+void render_create_room_dialog(GtkWidget* widget) {
+    GtkWidget *dialog;
+    GtkWidget *grid;
+    GtkWidget *name_label;
+    GtkWidget *name_entry;
+    GtkWidget *time_label;
+    GtkWidget *time_entry;
+    GtkWidget *topic_label;
+    GtkWidget *topic_entry;
+    GtkWidget *num_questions_label;
+    GtkWidget *num_questions_entry;
+    GtkWidget *easy_label;
+    GtkWidget *easy_entry;
+    GtkWidget *medium_label;
+    GtkWidget *medium_entry;
+    GtkWidget *hard_label;
+    GtkWidget *hard_entry;
+    GtkWidget *privacy_label;
+    GtkWidget *privacy_entry;
+    GtkWidget *num_candidates_label;
+    GtkWidget *num_candidates_entry;
+
+    dialog = gtk_dialog_new_with_buttons("Create Room", GTK_WINDOW(window), GTK_DIALOG_MODAL, "Create", GTK_RESPONSE_ACCEPT, "Cancel", GTK_RESPONSE_CANCEL, NULL);
+     GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+    grid = gtk_grid_new();
+    name_label = gtk_label_new("Name");
+    name_entry = gtk_entry_new();
+    time_label = gtk_label_new("Time");
+    time_entry = gtk_entry_new();
+    topic_label = gtk_label_new("Topic");
+    topic_entry = gtk_entry_new();
+    num_questions_label = gtk_label_new("Number of Questions");
+    num_questions_entry = gtk_entry_new();
+    easy_label = gtk_label_new("Easy");
+    easy_entry = gtk_entry_new();
+    medium_label = gtk_label_new("Medium");
+    medium_entry = gtk_entry_new();
+    hard_label = gtk_label_new("Hard");
+    hard_entry = gtk_entry_new();
+    privacy_label = gtk_label_new("Privacy");
+    privacy_entry = gtk_entry_new();
+    num_candidates_label = gtk_label_new("Number of Candidates");
+    num_candidates_entry = gtk_entry_new();
+
+    gtk_grid_attach(GTK_GRID(grid), name_label, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), name_entry, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), time_label, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), time_entry, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), topic_label, 0, 2, 1,1);
+    gtk_grid_attach(GTK_GRID(grid), topic_entry, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), num_questions_label, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), num_questions_entry, 1, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), easy_label, 0, 4, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), easy_entry, 1, 4, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), medium_label, 0, 5, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), medium_entry, 1, 5, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), hard_label, 0, 6, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), hard_entry, 1, 6, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), privacy_label, 0, 7, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), privacy_entry, 1, 7, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), num_candidates_label, 0, 8, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), num_candidates_entry, 1, 8, 1, 1);
+
+    gtk_container_add(GTK_CONTAINER(content_area), grid);
+
+
+    gtk_widget_show_all(content_area);
+    gtk_widget_show_all(dialog);
+    gpointer *data = g_new(gpointer, 9);
+    data[0] = name_entry;
+    data[1] = time_entry;
+    data[2] = topic_entry;
+    data[3] = num_questions_entry;
+    data[4] = easy_entry;
+    data[5] = medium_entry;
+    data[6] = hard_entry;
+    data[7] = privacy_entry;
+    data[8] = num_candidates_entry;
+
+    g_signal_connect(dialog, "response", G_CALLBACK(on_create_room_response), data);
+}
+
+void on_create_room_response(GtkDialog *dialog, gint response_id, gpointer *room_data) {
+    if (response_id == GTK_RESPONSE_ACCEPT) {
+       const char * room_name =  gtk_entry_get_text(GTK_ENTRY(room_data[0]));
+         const char * time =  gtk_entry_get_text(GTK_ENTRY(room_data[1]));
+            const char * topic =  gtk_entry_get_text(GTK_ENTRY(room_data[2]));
+            const char * num_questions =  gtk_entry_get_text(GTK_ENTRY(room_data[3]));
+            const char * easy =  gtk_entry_get_text(GTK_ENTRY(room_data[4]));
+            const char * medium =  gtk_entry_get_text(GTK_ENTRY(room_data[5]));
+            const char * hard =  gtk_entry_get_text(GTK_ENTRY(room_data[6]));
+            const char * privacy =  gtk_entry_get_text(GTK_ENTRY(room_data[7]));
+            const char * num_candidates =  gtk_entry_get_text(GTK_ENTRY(room_data[8]));
+            memset(buffer, 0, BUFFER_SIZE);
+            buffer[0] = 0x01;
+            sprintf(buffer + 1, "%s %s %s %s %s %s %s %s %s", room_name, time, topic, num_questions, easy, medium, hard, privacy, num_candidates);
+            send(sock, buffer, BUFFER_SIZE, 0);
+       g_print("Room name: %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n ", room_name, time, topic, num_questions, easy, medium, hard, privacy, num_candidates);
+       gtk_widget_destroy(GTK_WIDGET(dialog));
+    } else {
+        gtk_widget_destroy(GTK_WIDGET(dialog));
+    }
+    g_free(room_data);
+    
+}
 
 void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *header_bar;
@@ -247,7 +360,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     loginBtn = gtk_button_new_with_label("Login");
     registerBtn = gtk_button_new_with_label("Register");
 
-    g_signal_connect(loginBtn, "clicked", G_CALLBACK(render_view_room_page), NULL);
+    g_signal_connect(loginBtn, "clicked", G_CALLBACK(render_login_page), NULL);
     g_signal_connect(registerBtn, "clicked", G_CALLBACK(render_register_page), NULL);
 
 

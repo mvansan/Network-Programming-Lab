@@ -96,7 +96,7 @@ void handle_client_request(int client_socket) {
 int main() {
     int server_fd, new_socket;
     struct sockaddr_in address;
-    int opt = 1;
+    // int opt = 1;
     int addrlen = sizeof(address);
 
     init_database();
@@ -106,15 +106,15 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    #ifdef SO_REUSEPORT
-        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
-    #else
-        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
-    #endif
-        perror("setsockopt");
-        close(server_fd);
-        exit(EXIT_FAILURE);
-    }
+    // #ifdef SO_REUSEPORT
+    //     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+    // #else
+    //     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+    // #endif
+    //     perror("setsockopt");
+    //     close(server_fd);
+    //     exit(EXIT_FAILURE);
+    // }
 
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;

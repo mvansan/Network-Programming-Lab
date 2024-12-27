@@ -15,6 +15,7 @@
 #define CREATE_ROOM 0x01
 #define LIST_ROOMS 0x02
 #define JOIN_ROOM 0x03
+#define LOGOUT 0x04
 
 #include "exam_room.h"  // Đảm bảo đã include header file chứa khai báo join_exam_room
 
@@ -87,12 +88,16 @@ void handle_client_request(int client_socket) {
 
         printf("Client requested to join exam room with ID: %d\n", room_id);
         join_exam_room(client_socket, room_id);  // Gọi hàm join_exam_room
+    } else if (buffer[0] == LOGOUT) {
+        // Xử lý logout
+        printf("Client logged out\n");
+        send(client_socket, "Logout successful", strlen("Logout successful"), 0);
+        close(client_socket);
+        return;
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }
 }
-
-
 
 int main() {
     int server_fd, new_socket;

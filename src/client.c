@@ -12,6 +12,7 @@
 #define VIEW_EXAM_ROOMS  0x02
 #define JOIN_EXAM_ROOM   0x03
 #define LOGOUT           0x04
+#define START_EXAM       0x05
 
 void send_request(int sock, const char *message) {
     send(sock, message, strlen(message), 0);
@@ -31,6 +32,36 @@ int connect_to_server(struct sockaddr_in *serv_addr) {
     }
 
     return sock;
+}
+
+void start_exam(int sock, int room_id) {
+    unsigned char message[BUFFER_SIZE];
+    message[0] = JOIN_EXAM_ROOM;
+    snprintf((char *)message + 1, sizeof(message) - 1, "%d", room_id); // Send room_id
+
+    send_request(sock, (char *)message); // Send JOIN_EXAM_ROOM request to server
+
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes_received;
+
+    // Receive questions from the server and send answers
+    while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
+        buffer[bytes_received] = '\0';
+        printf("Received exam questions:\n%s\n", buffer);
+
+        // Client processes each question and sends an answer
+        char answer[2];
+        printf("Enter your answer (1-4): ");
+        scanf("%s", answer);  // User enters answer
+
+        send(sock, answer, strlen(answer), 0); // Send the answer to the server
+    }
+
+    if (bytes_received == 0) {
+        printf("Exam finished.\n");
+    } else {
+        printf("Error during exam.\n");
+    }
 }
 
 int main() {
@@ -97,7 +128,7 @@ int main() {
             return -1;
         }
 
-        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Logout\nChoose an option: ");
+        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Start Exam\n6. Logout\nChoose an option: ");
         scanf("%d", &choice);
 
         if (choice == 3) {
@@ -139,6 +170,11 @@ int main() {
 
             send_request(sock, (char *)message);
         } else if (choice == 5) {
+            int room_id;
+            printf("Enter the room ID to start the exam: ");
+            scanf("%d", &room_id);
+            start_exam(sock, room_id);  // Gọi hàm start_exam để bắt đầu thi
+        } else if (choice == 6) {
             unsigned char message[BUFFER_SIZE];
             message[0] = LOGOUT;  // Sử dụng mã 0x04 cho logout
 

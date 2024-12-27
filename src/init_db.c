@@ -1,6 +1,5 @@
 #include <sqlite3.h>
 #include <stdio.h>
-#include "import_questions.h"  
 
 void init_database() {
     sqlite3 *db;
@@ -41,7 +40,6 @@ void init_database() {
                             "option_2 TEXT NOT NULL, "
                             "option_3 TEXT NOT NULL, "
                             "option_4 TEXT NOT NULL);";
-
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
@@ -65,8 +63,6 @@ void init_database() {
         sqlite3_close(db);
         return;
     }
-
-    import_questions("database/questions.csv", "database/exam_system.db");
 
     printf("Database initialized successfully\n");
 

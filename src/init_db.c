@@ -1,6 +1,7 @@
 #include <sqlite3.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "import_questions.h"
 
 void init_database() {
     sqlite3 *db;
@@ -35,6 +36,7 @@ void init_database() {
                             "category TEXT CHECK(category IN ('IT','Blockchain','Science')) NOT NULL, "
                             "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
                             "max_people INTEGER, "
+                            "num_clients INTEGER NOT NULL DEFAULT 0,"
                             "status TEXT NOT NULL DEFAULT 'not_started');";
 
     const char *questions = "CREATE TABLE IF NOT EXISTS questions ("
@@ -86,6 +88,8 @@ void init_database() {
         sqlite3_close(db);
         return;
     }
+
+    import_questions("database/questions.csv", "database/exam_system.db");
 
     printf("Database initialized successfully\n");
 

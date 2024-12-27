@@ -18,8 +18,8 @@ void take_exam(int client_socket, int room_id) {
         return;
     }
 
-    // Start a transaction
-    sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
+    // Thiết lập chế độ WAL
+    sqlite3_exec(db, "PRAGMA journal_mode=WAL;", 0, 0, 0);
 
     const char *sql_questions = "SELECT q.id, q.question_text, q.option_1, q.option_2, q.option_3, q.option_4, q.correct_answer "
                                 "FROM questions q "
@@ -31,7 +31,6 @@ void take_exam(int client_socket, int room_id) {
     if (rc != SQLITE_OK) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
-        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);  // Rollback transaction in case of error
         sqlite3_close(db);
         return;
     }
@@ -59,7 +58,6 @@ void take_exam(int client_socket, int room_id) {
         int bytes_received = recv(client_socket, answer, sizeof(answer), 0);
         if (bytes_received <= 0) {
             send(client_socket, "Error receiving answer", strlen("Error receiving answer"), 0);
-            sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);  // Rollback transaction in case of error
             sqlite3_finalize(question_stmt);
             sqlite3_close(db);
             return;
@@ -67,6 +65,9 @@ void take_exam(int client_socket, int room_id) {
 
         char user_answer[10];
         snprintf(user_answer, sizeof(user_answer), "option_%c", answer[0]);
+
+        // Bắt đầu giao dịch cho việc cập nhật điểm
+        sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
 
         if (strcmp(user_answer, correct_answer) == 0) {
             score++;
@@ -78,6 +79,9 @@ void take_exam(int client_socket, int room_id) {
             return;
         }
 
+        // Commit transaction sau khi cập nhật điểm
+        sqlite3_exec(db, "COMMIT;", 0, 0, 0);
+
         rc = sqlite3_step(question_stmt);
     }
 
@@ -86,6 +90,5 @@ void take_exam(int client_socket, int room_id) {
     send(client_socket, result, strlen(result), 0);
 
     sqlite3_finalize(question_stmt);
-    sqlite3_exec(db, "COMMIT;", 0, 0, 0);  // Commit transaction after all operations
     sqlite3_close(db);
 }

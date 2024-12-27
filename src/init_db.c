@@ -22,8 +22,13 @@ void init_database() {
     const char *exam_rooms = "CREATE TABLE IF NOT EXISTS exam_rooms ("
                             "room_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                             "name TEXT NOT NULL, "
-                            "num_questions INTEGER NOT NULL, "
+                            "num_easy_questions INTEGER NOT NULL, "
+                            "num_medium_questions INTEGER NOT NULL, "
+                            "num_hard_questions INTEGER NOT NULL, "
                             "time_limit INTEGER NOT NULL, "
+                            "category TEXT CHECK(category IN ('IT','Blockchain','Science')) NOT NULL, "
+                            "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
+                            "max_people INTEGER, "
                             "status TEXT NOT NULL DEFAULT 'not_started');";
 
     const char *questions = "CREATE TABLE IF NOT EXISTS questions ("

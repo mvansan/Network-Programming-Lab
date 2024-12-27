@@ -17,14 +17,12 @@
 #define JOIN_ROOM 0x03
 #define LOGOUT 0x04
 
-#include "exam_room.h"  // Đảm bảo đã include header file chứa khai báo join_exam_room
-
 void handle_client_request(int client_socket) {
     char buffer[BUFFER_SIZE] = {0};
     read(client_socket, buffer, BUFFER_SIZE);
 
-    char command[50], username[50], password[50], name[50], category[50], difficulty[50];
-    int num_questions, time_limit, room_id;  // Khai báo room_id
+    char command[50], username[50], password[50], name[50], category[50], privacy[10];
+    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people;
 
     // In ra nội dung buffer để debug
     printf("Received buffer: %s\n", buffer);
@@ -66,29 +64,19 @@ void handle_client_request(int client_socket) {
         }
     } else if (buffer[0] == CREATE_ROOM) {
         // Xử lý tạo phòng thi
-        n = sscanf(buffer + 1, "%s %d %d %s %s", name, &num_questions, &time_limit, category, difficulty);
-        if (n != 5) {
+        n = sscanf(buffer + 1, "%s %d %d %d %d %s %s %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people);
+        if (n != 8) {
             send(client_socket, "Invalid CREATE_ROOM command format", strlen("Invalid CREATE_ROOM command format"), 0);
             return;
         }
 
-        printf("Creating exam room: %s with %d questions and %d minutes time limit, Category: %s, Difficulty: %s\n",
-               name, num_questions, time_limit, category, difficulty);
-        create_exam_room(client_socket, name, num_questions, time_limit, category, difficulty);
+        printf("Creating exam room: %s with %d easy questions, %d medium questions, %d hard questions, %d minutes time limit, Category: %s, Privacy: %s, Max People: %d\n",
+               name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people);
+        create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people);
     } else if (buffer[0] == LIST_ROOMS) {
         // Xử lý liệt kê các phòng thi
         list_exam_rooms(client_socket);
-    } else if (buffer[0] == JOIN_ROOM) {
-        // Xử lý tham gia phòng thi
-        n = sscanf(buffer + 1, "%d", &room_id);  // Đọc ID phòng thi từ buffer
-        if (n != 1) {
-            send(client_socket, "Invalid JOIN_ROOM command format", strlen("Invalid JOIN_ROOM command format"), 0);
-            return;
-        }
-
-        printf("Client requested to join exam room with ID: %d\n", room_id);
-        join_exam_room(client_socket, room_id);  // Gọi hàm join_exam_room
-    } else if (buffer[0] == LOGOUT) {
+       } else if (buffer[0] == LOGOUT) {
         // Xử lý logout
         printf("Client logged out\n");
         send(client_socket, "Logout successful", strlen("Logout successful"), 0);

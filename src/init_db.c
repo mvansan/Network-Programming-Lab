@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <import_questions.h>
 #include <unistd.h>
+#include "import_questions.h"
 
 void init_database() {
     sqlite3 *db;
@@ -37,6 +38,7 @@ void init_database() {
                             "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
                             "num_clients INTEGER NOT NULL DEFAULT 0, "
                             "max_people INTEGER, "
+                            "num_clients INTEGER NOT NULL DEFAULT 0,"
                             "status TEXT NOT NULL DEFAULT 'not_started');";
 
     const char *questions = "CREATE TABLE IF NOT EXISTS questions ("

@@ -1,11 +1,12 @@
 #include <sqlite3.h>
 #include <stdio.h>
 #include <import_questions.h>
+#include <unistd.h>
 
 void init_database() {
     sqlite3 *db;
     char *err_msg = 0;
-    
+
     int rc = sqlite3_open("database/exam_system.db", &db);
 
     if (rc != SQLITE_OK) {
@@ -14,7 +15,11 @@ void init_database() {
         return;
     }
 
-    sqlite3_busy_timeout(db, 10000);
+    rc = sqlite3_exec(db, "PRAGMA journal_mode=WAL;", 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to set journal mode: %s\n", err_msg);
+        sqlite3_free(err_msg);
+    }
 
     const char *sql = "CREATE TABLE IF NOT EXISTS users ("
                       "id INTEGER PRIMARY KEY AUTOINCREMENT, "

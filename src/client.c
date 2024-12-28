@@ -47,13 +47,14 @@ void start_exam(int sock, int room_id) {
     // Receive questions from the server and send answers
     while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
         buffer[bytes_received] = '\0';
-        printf("Received exam questions:\n%s\n", buffer);
 
         //Check if the exam is finished
         if (strstr(buffer, "Exam finished") != NULL) {
             printf("%s\n", buffer);
             break;
         }
+
+        printf("Received exam questions:\n%s\n", buffer);
 
         // Client processes each question and sends an answer
         char answer[2];
@@ -63,9 +64,7 @@ void start_exam(int sock, int room_id) {
         send(sock, answer, strlen(answer), 0); // Send the answer to the server
     }
 
-    if (bytes_received = 0) {
-        printf("Exam finished.\n");
-    } else {
+    if (bytes_received <= 0 && strstr(buffer, "Exam finished") == NULL) {
         printf("Error during exam.\n");
     }
 }

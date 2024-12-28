@@ -214,6 +214,8 @@ void join_exam_room(int client_socket, int room_id) {
         return;
     }
 
+    sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
+
     const char *sql_select = "SELECT room_id, num_clients, status, max_people FROM exam_rooms WHERE room_id = ?";
     sqlite3_stmt *stmt;
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, 0);
@@ -221,6 +223,7 @@ void join_exam_room(int client_socket, int room_id) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -230,6 +233,7 @@ void join_exam_room(int client_socket, int room_id) {
     if (rc != SQLITE_ROW) {
         send(client_socket, "Room not found", strlen("Room not found"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -241,6 +245,7 @@ void join_exam_room(int client_socket, int room_id) {
     if (strcmp(status, "not_started") != 0) {
         send(client_socket, "Room has already started or finished", strlen("Room has already started or finished"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -248,6 +253,7 @@ void join_exam_room(int client_socket, int room_id) {
     if (num_clients >= max_people) {
         send(client_socket, "Room is full", strlen("Room is full"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -258,6 +264,7 @@ void join_exam_room(int client_socket, int room_id) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -269,11 +276,13 @@ void join_exam_room(int client_socket, int room_id) {
         printf("SQL error: %s\n", err_msg);
         send(client_socket, "Failed to update room", strlen("Failed to update room"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
 
     sqlite3_finalize(stmt);
+    sqlite3_exec(db, "COMMIT;", 0, 0, 0);  // Commit transaction
 
     // Gọi hàm take_exam
     take_exam(client_socket, room_id);

@@ -4,12 +4,16 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sqlite3.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <fcntl.h>
 #include "include/init_db.h"
 #include "include/auth.h"
 #include "include/exam_room.h"
 
 #define PORT 8080
 #define BUFFER_SIZE 8000
+#define MAX_CLIENTS 30
 
 #define CREATE_ROOM 0x01
 #define LIST_ROOMS 0x02
@@ -76,7 +80,7 @@ void handle_client_request(int client_socket) {
         create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people);
     } else if (buffer[0] == LIST_ROOMS) {
         list_exam_rooms(client_socket);
-       } else if (buffer[0] == LOGOUT) {
+    } else if (buffer[0] == LOGOUT) {
         // Xử lý logout
         printf("Client logged out\n");
         send(client_socket, "Logout successful", strlen("Logout successful"), 0);
@@ -101,6 +105,14 @@ int main() {
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
+    int client_sockets[MAX_CLIENTS];
+    fd_set readfds;
+    int max_sd;
+
+    // Khởi tạo mảng client_sockets
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        client_sockets[i] = 0;
+    }
 
     init_database();
 
@@ -129,7 +141,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    if (listen(server_fd, 3) < 0) {
+    if (listen(server_fd, 10) < 0) {
         perror("Listen failed");
         close(server_fd);
         exit(EXIT_FAILURE);
@@ -138,17 +150,54 @@ int main() {
     printf("Server is listening on port %d\n", PORT);
 
     while (1) {
-        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
-            perror("Accept failed");
-            close(server_fd);
-            exit(EXIT_FAILURE);
+        FD_ZERO(&readfds);
+        FD_SET(server_fd, &readfds);
+        max_sd = server_fd;
+
+        // Thêm các socket client vào tập readfds
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            int sd = client_sockets[i];
+            if (sd > 0) {
+                FD_SET(sd, &readfds);
+            }
+            if (sd > max_sd) {
+                max_sd = sd;
+            }
         }
 
-        printf("Accepted a new client connection\n");
+        int activity = select(max_sd + 1, &readfds, NULL, NULL, NULL);
 
-        handle_client_request(new_socket);
+        if (activity < 0) {
+            perror("select error");
+            continue;
+        }
 
-        close(new_socket);
+        if (FD_ISSET(server_fd, &readfds)) {
+            if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
+                perror("Accept failed");
+                continue;
+            }
+            printf("New connection established, socket fd: %d\n", new_socket);
+
+            // Thêm socket mới vào mảng client_sockets
+            for (int i = 0; i < MAX_CLIENTS; i++) {
+                if (client_sockets[i] == 0) {
+                    client_sockets[i] = new_socket;
+                    printf("Adding to list of sockets as %d\n", i);
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            int sd = client_sockets[i];
+
+            if (FD_ISSET(sd, &readfds)) {
+                handle_client_request(sd);
+                close(sd);
+                client_sockets[i] = 0;
+            }
+        }
     }
 
     close(server_fd);

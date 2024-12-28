@@ -220,7 +220,8 @@ void join_exam_room(int client_socket, int room_id) {
         return;
     }
 
-    // Cập nhật câu lệnh SQL để sử dụng 'max_people' thay vì 'max_clients'
+    sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
+
     const char *sql_select = "SELECT room_id, num_clients, status, max_people FROM exam_rooms WHERE room_id = ?";
     sqlite3_stmt *stmt;
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, 0);
@@ -228,6 +229,7 @@ void join_exam_room(int client_socket, int room_id) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -237,35 +239,38 @@ void join_exam_room(int client_socket, int room_id) {
     if (rc != SQLITE_ROW) {
         send(client_socket, "Room not found", strlen("Room not found"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
 
     int num_clients = sqlite3_column_int(stmt, 1);
     const char *status = (const char *)sqlite3_column_text(stmt, 2);
-    int max_people = sqlite3_column_int(stmt, 3);  // Thay đổi từ max_clients thành max_people
+    int max_people = sqlite3_column_int(stmt, 3);
 
     if (strcmp(status, "not_started") != 0) {
         send(client_socket, "Room has already started or finished", strlen("Room has already started or finished"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
 
-    if (num_clients >= max_people) {  // Sử dụng max_people thay vì max_clients
+    if (num_clients >= max_people) {
         send(client_socket, "Room is full", strlen("Room is full"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
 
-    // Cập nhật câu lệnh SQL để sử dụng 'max_people' thay vì 'max_clients'
     const char *sql_update = "UPDATE exam_rooms SET num_clients = num_clients + 1 WHERE room_id = ?";
     rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, 0);
     if (rc != SQLITE_OK) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
@@ -273,15 +278,17 @@ void join_exam_room(int client_socket, int room_id) {
     sqlite3_bind_int(stmt, 1, room_id);
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
-        const char *err_msg = sqlite3_errmsg(db);  // Lấy thông báo lỗi từ cơ sở dữ liệu
-        printf("SQL error: %s\n", err_msg);  // In thông báo lỗi ra console
+        const char *err_msg = sqlite3_errmsg(db);
+        printf("SQL error: %s\n", err_msg);
         send(client_socket, "Failed to update room", strlen("Failed to update room"), 0);
         sqlite3_finalize(stmt);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
         sqlite3_close(db);
         return;
     }
 
     sqlite3_finalize(stmt);
+    sqlite3_exec(db, "COMMIT;", 0, 0, 0);  // Commit transaction
 
     // Gọi hàm take_exam
     take_exam(client_socket, room_id);

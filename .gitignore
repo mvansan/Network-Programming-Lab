@@ -4,3 +4,5 @@ exam_system.db
 import_questions
 server_app
 /build/
+database/exam_system.db-wal
+database/exam_system.db-shm

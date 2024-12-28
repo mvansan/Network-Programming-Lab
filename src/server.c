@@ -7,6 +7,7 @@
 #include <sys/select.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <pthread.h>
 #include "include/init_db.h"
 #include "include/auth.h"
 #include "include/exam_room.h"
@@ -23,13 +24,21 @@
 
 #include "exam_room.h"
 
-void handle_client_request(int client_socket) {
+// Cấu trúc dữ liệu để truyền tham số cho hàm luồng
+typedef struct {
+    int client_socket;
+} client_args;
+
+void *handle_client_request(void *args) {
+    client_args *client = (client_args *)args;
+    int client_socket = client->client_socket;
+    free(client);
+
     char buffer[BUFFER_SIZE] = {0};
     read(client_socket, buffer, BUFFER_SIZE);
 
     char command[50], username[50], password[50], name[50], category[50], privacy[10];
-    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people,
-        room_id;
+    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people, room_id;
 
     printf("Received buffer: %s\n", buffer);
 
@@ -37,14 +46,16 @@ void handle_client_request(int client_socket) {
     int n = sscanf(buffer, "%s", command);
     if (n < 1) {
         send(client_socket, "Invalid command", strlen("Invalid command"), 0);
-        return;
+        close(client_socket);
+        return NULL;
     }
 
     if (strcmp(command, "REGISTER") == 0) {
         n = sscanf(buffer, "%s %s %s", command, username, password);
         if (n != 3) {
             send(client_socket, "Invalid REGISTER command format", strlen("Invalid REGISTER command format"), 0);
-            return;
+            close(client_socket);
+            return NULL;
         }
 
         printf("Registering user: %s\n", username);
@@ -58,7 +69,8 @@ void handle_client_request(int client_socket) {
         n = sscanf(buffer, "%s %s %s", command, username, password);
         if (n != 3) {
             send(client_socket, "Invalid LOGIN command format", strlen("Invalid LOGIN command format"), 0);
-            return;
+            close(client_socket);
+            return NULL;
         }
 
         printf("Logging in user: %s\n", username);
@@ -72,7 +84,8 @@ void handle_client_request(int client_socket) {
         n = sscanf(buffer + 1, "%s %d %d %d %d %s %s %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people);
         if (n != 8) {
             send(client_socket, "Invalid CREATE_ROOM command format", strlen("Invalid CREATE_ROOM command format"), 0);
-            return;
+            close(client_socket);
+            return NULL;
         }
 
         printf("Creating exam room: %s with %d easy questions, %d medium questions, %d hard questions, %d minutes time limit, Category: %s, Privacy: %s, Max People: %d\n",
@@ -85,12 +98,13 @@ void handle_client_request(int client_socket) {
         printf("Client logged out\n");
         send(client_socket, "Logout successful", strlen("Logout successful"), 0);
         close(client_socket);
-        return;
+        return NULL;
     } else if (buffer[0] == JOIN_ROOM) {
         n = sscanf(buffer + 1, "%d", &room_id);
         if (n != 1) {
             send(client_socket, "Invalid JOIN_ROOM command format", strlen("Invalid JOIN_ROOM command format"), 0);
-            return;
+            close(client_socket);
+            return NULL;
         }
 
         printf("Client requested to join exam room with ID: %d\n", room_id);
@@ -98,6 +112,8 @@ void handle_client_request(int client_socket) {
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }
+    close(client_socket);
+    return NULL;
 }
 
 int main() {
@@ -179,24 +195,12 @@ int main() {
             }
             printf("New connection established, socket fd: %d\n", new_socket);
 
-            // Thêm socket mới vào mảng client_sockets
-            for (int i = 0; i < MAX_CLIENTS; i++) {
-                if (client_sockets[i] == 0) {
-                    client_sockets[i] = new_socket;
-                    printf("Adding to list of sockets as %d\n", i);
-                    break;
-                }
-            }
-        }
-
-        for (int i = 0; i < MAX_CLIENTS; i++) {
-            int sd = client_sockets[i];
-
-            if (FD_ISSET(sd, &readfds)) {
-                handle_client_request(sd);
-                close(sd);
-                client_sockets[i] = 0;
-            }
+            // Tạo luồng mới cho mỗi kết nối client
+            pthread_t thread_id;
+            client_args *args = malloc(sizeof(client_args));
+            args->client_socket = new_socket;
+            pthread_create(&thread_id, NULL, handle_client_request, (void*)args);
+            pthread_detach(thread_id);
         }
     }
 

@@ -12,14 +12,33 @@
 
 void create_exam_room(int client_socket, const char *name, int num_easy_questions, int num_medium_questions, int num_hard_questions, int time_limit, const char *category, const char *privacy, int max_people) {
     sqlite3 *db;
+    char *err_msg = 0;
+    int rc;
 
     // Mở cơ sở dữ liệu
-    int rc = sqlite3_open("database/exam_system.db", &db);
+    rc = sqlite3_open(DATABASE_PATH, &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
         send(client_socket, "Database connection failed", strlen("Database connection failed"), 0);
+        sqlite3_close(db);
         return;
+    }
+
+    // Bắt đầu giao dịch
+    rc = sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Cannot begin transaction: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
+        sqlite3_close(db);
+        return;
+    }
+
+    // Thiết lập chế độ WAL
+    rc = sqlite3_exec(db, "PRAGMA journal_mode=WAL;", 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to set journal mode: %s\n", err_msg);
+        sqlite3_free(err_msg);
     }
 
     const char *sql_insert = "INSERT INTO exam_rooms (name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -29,8 +48,9 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
     rc = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, 0);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
         send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
         return;
     }
 
@@ -54,8 +74,9 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
     if (rc != SQLITE_DONE) {
         fprintf(stderr, "Failed to insert data: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(stmt);
-        sqlite3_close(db);
         send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
         return;
     }
 
@@ -69,8 +90,9 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
     rc = sqlite3_prepare_v2(db, sql_select, -1, &question_stmt, 0);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
         send(client_socket, "Failed to get questions", strlen("Failed to get questions"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
         return;
     }
 
@@ -82,8 +104,9 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
     rc = sqlite3_prepare_v2(db, sql_insert_question, -1, &insert_question_stmt, 0);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement for inserting questions: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
         send(client_socket, "Failed to prepare insert question statement", strlen("Failed to prepare insert question statement"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
         return;
     }
 
@@ -129,19 +152,32 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
         sqlite3_reset(insert_question_stmt);
     }
 
-    if (rc != SQLITE_DONE) {
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         fprintf(stderr, "Failed to fetch or insert questions: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(question_stmt);
         sqlite3_finalize(insert_question_stmt);
         sqlite3_finalize(stmt);
-        sqlite3_close(db);
         send(client_socket, "Failed to retrieve or insert questions", strlen("Failed to retrieve or insert questions"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
         return;
     }
 
     sqlite3_finalize(question_stmt);
     sqlite3_finalize(insert_question_stmt);
     sqlite3_finalize(stmt);
+
+    // Commit giao dịch
+    rc = sqlite3_exec(db, "COMMIT;", 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Cannot commit transaction: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
+        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        sqlite3_close(db);
+        return;
+    }
+
     sqlite3_close(db);
 
     // Gửi thông báo phòng thi đã được tạo và các câu hỏi đã được thêm vào
@@ -162,7 +198,7 @@ void list_exam_rooms(int client_socket) {
     }
 
     // Truy vấn danh sách phòng thi
-    const char *sql_select = "SELECT room_id, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, status FROM exam_rooms;";
+    const char *sql_select = "SELECT room_id, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, status, num_clients FROM exam_rooms;";
     sqlite3_stmt *stmt;
 
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, 0);
@@ -174,10 +210,10 @@ void list_exam_rooms(int client_socket) {
     }
 
     // Duyệt qua kết quả và gửi danh sách về client
-    char response[2048] = "\nExam Room List:\n";
-    strncat(response, "-------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
-    strncat(response, "| Room ID | Name              | Questions | Time Limit | Status   |\n", sizeof(response) - strlen(response) - 1);
-    strncat(response, "-------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
+    char response[4096] = "\nExam Room List:\n";
+    strncat(response, "-----------------------------------------------------------------------------------------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
+    strncat(response, "| Room ID | Name              | Easy | Medium | Hard | Time Limit | Category  | Privacy | Max People | Status     | Clients |\n", sizeof(response) - strlen(response) - 1);
+    strncat(response, "-----------------------------------------------------------------------------------------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
 
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         int room_id = sqlite3_column_int(stmt, 0);
@@ -190,19 +226,19 @@ void list_exam_rooms(int client_socket) {
         const char *privacy = (const char *)sqlite3_column_text(stmt, 7);
         int max_people = sqlite3_column_int(stmt, 8);
         const char *status = (const char *)sqlite3_column_text(stmt, 9);
+        int num_clients = sqlite3_column_int(stmt, 10);
 
-        char room_info[256];
-        snprintf(room_info, sizeof(room_info), "Room ID: %d, Name: %s, Easy Questions: %d, Medium Questions: %d, Hard Questions: %d, Time Limit: %d, Category: %s, Privacy: %s, Max People: %d, Status: %s\n",
-                 room_id, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, status);
+        char room_info[512];
+        snprintf(room_info, sizeof(room_info), "| %-7d | %-17s | %-4d | %-6d | %-4d | %-10d | %-9s | %-7s | %-10d | %-10s | %-7d |\n",
+                 room_id, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, status, num_clients);
         strncat(response, room_info, sizeof(response) - strlen(response) - 1);
     }
 
-
-    if (strlen(response) == strlen("Exam Room List:\n")) {
+    if (strlen(response) == strlen("\nExam Room List:\n")) {
         strncat(response, "No exam rooms found.\n", sizeof(response) - strlen(response) - 1);
     }
 
-    strncat(response, "-------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
+    strncat(response, "-----------------------------------------------------------------------------------------------------------------------------------------------\n", sizeof(response) - strlen(response) - 1);
 
     // Gửi kết quả về client
     send(client_socket, response, strlen(response), 0);
@@ -218,6 +254,12 @@ void join_exam_room(int client_socket, int room_id) {
     if (rc != SQLITE_OK) {
         send(client_socket, "Database connection failed", strlen("Database connection failed"), 0);
         return;
+    }
+
+    // Thiết lập chế độ WAL
+    rc = sqlite3_exec(db, "PRAGMA journal_mode=WAL;", 0, 0, 0);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to set journal mode: %s\n", sqlite3_errmsg(db));
     }
 
     sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
@@ -290,8 +332,7 @@ void join_exam_room(int client_socket, int room_id) {
     sqlite3_finalize(stmt);
     sqlite3_exec(db, "COMMIT;", 0, 0, 0);  // Commit transaction
 
-    // Gọi hàm take_exam
-    take_exam(client_socket, room_id);
-
     sqlite3_close(db);
+
+    take_exam(client_socket, room_id);
 }

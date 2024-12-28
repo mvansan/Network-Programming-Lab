@@ -10,6 +10,36 @@
 
 #define DATABASE_PATH "database/exam_system.db"
 
+void insert_questions(const char *category, const char *difficulty, int num_questions, int room_id, sqlite3 *db, sqlite3_stmt *question_stmt, int client_socket) {
+    int rc;
+
+    sqlite3_bind_text(question_stmt, 1, category, -1, SQLITE_STATIC);
+    sqlite3_bind_text(question_stmt, 2, difficulty, -1, SQLITE_STATIC);
+    sqlite3_bind_int(question_stmt, 3, num_questions);
+
+    while ((rc = sqlite3_step(question_stmt)) == SQLITE_ROW) {
+        int question_id = sqlite3_column_int(question_stmt, 0);
+        sqlite3_stmt *insert_question_stmt;
+        const char *sql_insert_question = "INSERT INTO exam_questions (exam_room_id, question_id) VALUES (?, ?);";
+        rc = sqlite3_prepare_v2(db, sql_insert_question, -1, &insert_question_stmt, 0);
+        if (rc != SQLITE_OK) {
+            fprintf(stderr, "Failed to prepare statement for inserting questions: %s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(question_stmt);
+            sqlite3_close(db);
+            send(client_socket, "Failed to prepare insert question statement", strlen("Failed to prepare insert question statement"), 0);
+            return;
+        }
+        sqlite3_bind_int(insert_question_stmt, 1, room_id);
+        sqlite3_bind_int(insert_question_stmt, 2, question_id);
+        rc = sqlite3_step(insert_question_stmt);
+        if (rc != SQLITE_DONE) {
+            fprintf(stderr, "Failed to insert question into exam_questions: %s\n", sqlite3_errmsg(db));
+        }
+        sqlite3_finalize(insert_question_stmt);
+    }
+    sqlite3_reset(question_stmt);
+}
+
 void create_exam_room(int client_socket, const char *name, int num_easy_questions, int num_medium_questions, int num_hard_questions, int time_limit, const char *category, const char *privacy, int max_people) {
     sqlite3 *db;
     char *err_msg = 0;
@@ -82,6 +112,7 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
 
     // Lấy ID của phòng thi vừa tạo
     int room_id = sqlite3_last_insert_rowid(db);
+    sqlite3_finalize(stmt);
 
     // Lấy câu hỏi cho phòng thi từ cơ sở dữ liệu và insert vào bảng exam_questions
     sqlite3_stmt *question_stmt;
@@ -96,100 +127,35 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
         return;
     }
 
-    sqlite3_bind_text(question_stmt, 1, category, -1, SQLITE_STATIC);
+    // Insert easy questions
+    insert_questions(category, "easy", num_easy_questions, room_id, db, question_stmt, client_socket);
 
-    // Xử lý từng độ khó (easy, medium, hard) và chèn câu hỏi vào bảng exam_questions
-    const char *sql_insert_question = "INSERT INTO exam_questions (exam_room_id, question_id) VALUES (?, ?);";
-    sqlite3_stmt *insert_question_stmt;
-    rc = sqlite3_prepare_v2(db, sql_insert_question, -1, &insert_question_stmt, 0);
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement for inserting questions: %s\n", sqlite3_errmsg(db));
-        send(client_socket, "Failed to prepare insert question statement", strlen("Failed to prepare insert question statement"), 0);
-        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
-        sqlite3_close(db);
-        return;
-    }
+    // Insert medium questions
+    insert_questions(category, "medium", num_medium_questions, room_id, db, question_stmt, client_socket);
 
-    // Xử lý câu hỏi dễ
-    sqlite3_bind_text(question_stmt, 2, "easy", -1, SQLITE_STATIC);
-    sqlite3_bind_int(question_stmt, 3, num_easy_questions);
-    while ((rc = sqlite3_step(question_stmt)) == SQLITE_ROW) {
-        int question_id = sqlite3_column_int(question_stmt, 0);
-        sqlite3_bind_int(insert_question_stmt, 1, room_id);
-        sqlite3_bind_int(insert_question_stmt, 2, question_id);
-        rc = sqlite3_step(insert_question_stmt);
-        if (rc != SQLITE_DONE) {
-            fprintf(stderr, "Failed to insert question into exam_questions: %s\n", sqlite3_errmsg(db));
-        }
-        sqlite3_reset(insert_question_stmt);
-    }
-
-    // Xử lý câu hỏi trung bình
-    sqlite3_bind_text(question_stmt, 2, "medium", -1, SQLITE_STATIC);
-    sqlite3_bind_int(question_stmt, 3, num_medium_questions);
-    while ((rc = sqlite3_step(question_stmt)) == SQLITE_ROW) {
-        int question_id = sqlite3_column_int(question_stmt, 0);
-        sqlite3_bind_int(insert_question_stmt, 1, room_id);
-        sqlite3_bind_int(insert_question_stmt, 2, question_id);
-        rc = sqlite3_step(insert_question_stmt);
-        if (rc != SQLITE_DONE) {
-            fprintf(stderr, "Failed to insert question into exam_questions: %s\n", sqlite3_errmsg(db));
-        }
-        sqlite3_reset(insert_question_stmt);
-    }
-
-    // Xử lý câu hỏi khó
-    sqlite3_bind_text(question_stmt, 2, "hard", -1, SQLITE_STATIC);
-    sqlite3_bind_int(question_stmt, 3, num_hard_questions);
-    while ((rc = sqlite3_step(question_stmt)) == SQLITE_ROW) {
-        int question_id = sqlite3_column_int(question_stmt, 0);
-        sqlite3_bind_int(insert_question_stmt, 1, room_id);
-        sqlite3_bind_int(insert_question_stmt, 2, question_id);
-        rc = sqlite3_step(insert_question_stmt);
-        if (rc != SQLITE_DONE) {
-            fprintf(stderr, "Failed to insert question into exam_questions: %s\n", sqlite3_errmsg(db));
-        }
-        sqlite3_reset(insert_question_stmt);
-    }
-
-    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
-        fprintf(stderr, "Failed to fetch or insert questions: %s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(question_stmt);
-        sqlite3_finalize(insert_question_stmt);
-        sqlite3_finalize(stmt);
-        send(client_socket, "Failed to retrieve or insert questions", strlen("Failed to retrieve or insert questions"), 0);
-        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
-        sqlite3_close(db);
-        return;
-    }
+    // Insert hard questions
+    insert_questions(category, "hard", num_hard_questions, room_id, db, question_stmt, client_socket);
 
     sqlite3_finalize(question_stmt);
-    sqlite3_finalize(insert_question_stmt);
-    sqlite3_finalize(stmt);
 
-    // Commit giao dịch
-    rc = sqlite3_exec(db, "COMMIT;", 0, 0, &err_msg);
+    // Commit transaction
+    rc = sqlite3_exec(db, "COMMIT;", 0, 0, 0);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot commit transaction: %s\n", err_msg);
-        sqlite3_free(err_msg);
-        send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
-        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);
+        fprintf(stderr, "Failed to commit transaction: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        send(client_socket, "Room creation failed", strlen("Room creation failed"), 0);
         return;
     }
 
     sqlite3_close(db);
-
-    // Gửi thông báo phòng thi đã được tạo và các câu hỏi đã được thêm vào
-    send(client_socket, "Exam room created successfully with questions.", strlen("Exam room created successfully with questions."), 0);
+    send(client_socket, "Room created successfully", strlen("Room created successfully"), 0);
 }
-
 
 void list_exam_rooms(int client_socket) {
     sqlite3 *db;
 
     // Mở cơ sở dữ liệu
-    int rc = sqlite3_open("database/exam_system.db", &db);
+    int rc = sqlite3_open(DATABASE_PATH, &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);

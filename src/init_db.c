@@ -1,5 +1,6 @@
 #include <sqlite3.h>
 #include <stdio.h>
+#include <import_questions.h>
 
 void init_database() {
     sqlite3 *db;
@@ -12,6 +13,8 @@ void init_database() {
         sqlite3_close(db);
         return;
     }
+
+    sqlite3_busy_timeout(db, 10000);
 
     const char *sql = "CREATE TABLE IF NOT EXISTS users ("
                       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -27,6 +30,7 @@ void init_database() {
                             "time_limit INTEGER NOT NULL, "
                             "category TEXT CHECK(category IN ('IT','Blockchain','Science')) NOT NULL, "
                             "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
+                            "num_clients INTEGER NOT NULL DEFAULT 0, "
                             "max_people INTEGER, "
                             "status TEXT NOT NULL DEFAULT 'not_started');";
 
@@ -40,6 +44,14 @@ void init_database() {
                             "option_2 TEXT NOT NULL, "
                             "option_3 TEXT NOT NULL, "
                             "option_4 TEXT NOT NULL);";
+
+    const char *exam_questions = "CREATE TABLE IF NOT EXISTS exam_questions ("
+                                 "exam_room_id INTEGER, "
+                                 "question_id INTEGER, "
+                                 "PRIMARY KEY (exam_room_id, question_id), "
+                                 "FOREIGN KEY (exam_room_id) REFERENCES exam_rooms(room_id) ON DELETE CASCADE, "
+                                 "FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE);";
+
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
@@ -64,7 +76,18 @@ void init_database() {
         return;
     }
 
+    rc = sqlite3_exec(db, exam_questions, 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        sqlite3_close(db);
+        return;
+    }
+
+    import_questions("database/questions.csv", "database/exam_system.db");
+
     printf("Database initialized successfully\n");
 
     sqlite3_close(db);
 }
+

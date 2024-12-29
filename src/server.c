@@ -25,6 +25,7 @@
 
 void handle_client_request(int client_socket) {
     char buffer[BUFFER_SIZE] = {0};
+    printf("1\n");
     read(client_socket, buffer, BUFFER_SIZE);
 
     char command[50], username[50], password[50], name[50], category[50], privacy[10];
@@ -32,6 +33,7 @@ void handle_client_request(int client_socket) {
         room_id;
 
     printf("Received buffer: %s\n", buffer);
+
 
     // Đọc lệnh đầu tiên từ client
     int n = sscanf(buffer, "%s", command);
@@ -194,8 +196,9 @@ int main() {
 
             if (FD_ISSET(sd, &readfds)) {
                 handle_client_request(sd);
-                close(sd);
-                client_sockets[i] = 0;
+                // close(sd);
+                // client_sockets[i] = 0;
+                // printf("Client disconnected, socket fd: %d\n", sd);
             }
         }
     }

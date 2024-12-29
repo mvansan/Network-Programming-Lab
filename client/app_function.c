@@ -58,6 +58,7 @@ printf("password: %s\n", password);
     memset(buffer, 0, BUFFER_SIZE);
     read(sock, buffer, BUFFER_SIZE);
 
+
     g_print("Response: %s\n", buffer);
     if (strcmp(buffer, "Login successful") == 0) {
         render_view_room_page(NULL);
@@ -188,7 +189,7 @@ void render_view_room_page (GtkWidget *widget) {
 GtkWidget *title_name = gtk_label_new("Name");
     GtkWidget *title_time = gtk_label_new("Time");
     GtkWidget *title_topic = gtk_label_new("Topic");
-    GtkWidget *title_num_questions = gtk_label_new("Number of Questions");
+    // GtkWidget *title_num_questions = gtk_label_new("Number of Questions");
     GtkWidget *title_easy = gtk_label_new("Easy");
     GtkWidget *title_medium = gtk_label_new("Medium");
     GtkWidget *title_hard = gtk_label_new("Hard");
@@ -199,7 +200,7 @@ GtkWidget *title_name = gtk_label_new("Name");
     gtk_grid_attach(GTK_GRID(grid), title_name, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), title_time, 1, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), title_topic, 2, 0, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), title_num_questions, 3, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(grid), title_num_questions, 3, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), title_easy, 4, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), title_medium, 5, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), title_hard, 6, 0, 1, 1);
@@ -229,8 +230,8 @@ void render_create_room_dialog(GtkWidget* widget) {
     GtkWidget *time_entry;
     GtkWidget *topic_label;
     GtkWidget *topic_entry;
-    GtkWidget *num_questions_label;
-    GtkWidget *num_questions_entry;
+    // GtkWidget *num_questions_label;
+    // GtkWidget *num_questions_entry;
     GtkWidget *easy_label;
     GtkWidget *easy_entry;
     GtkWidget *medium_label;
@@ -251,8 +252,8 @@ void render_create_room_dialog(GtkWidget* widget) {
     time_entry = gtk_entry_new();
     topic_label = gtk_label_new("Topic");
     topic_entry = gtk_entry_new();
-    num_questions_label = gtk_label_new("Number of Questions");
-    num_questions_entry = gtk_entry_new();
+    // num_questions_label = gtk_label_new("Number of Questions");
+    // num_questions_entry = gtk_entry_new();
     easy_label = gtk_label_new("Easy");
     easy_entry = gtk_entry_new();
     medium_label = gtk_label_new("Medium");
@@ -270,8 +271,8 @@ void render_create_room_dialog(GtkWidget* widget) {
     gtk_grid_attach(GTK_GRID(grid), time_entry, 1, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), topic_label, 0, 2, 1,1);
     gtk_grid_attach(GTK_GRID(grid), topic_entry, 1, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), num_questions_label, 0, 3, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), num_questions_entry, 1, 3, 1, 1);
+    // gtk_grid_attach(GTK_GRID(grid), num_questions_label, 0, 3, 1, 1);
+    // gtk_grid_attach(GTK_GRID(grid), num_questions_entry, 1, 3, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), easy_label, 0, 4, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), easy_entry, 1, 4, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), medium_label, 0, 5, 1, 1);
@@ -284,20 +285,17 @@ void render_create_room_dialog(GtkWidget* widget) {
     gtk_grid_attach(GTK_GRID(grid), num_candidates_entry, 1, 8, 1, 1);
 
     gtk_container_add(GTK_CONTAINER(content_area), grid);
-
-
     gtk_widget_show_all(content_area);
     gtk_widget_show_all(dialog);
-    gpointer *data = g_new(gpointer, 9);
+    gpointer *data = g_new(gpointer, 8);
     data[0] = name_entry;
-    data[1] = time_entry;
-    data[2] = topic_entry;
-    data[3] = num_questions_entry;
-    data[4] = easy_entry;
-    data[5] = medium_entry;
-    data[6] = hard_entry;
-    data[7] = privacy_entry;
-    data[8] = num_candidates_entry;
+    data[2] = easy_entry;
+    data[3] = medium_entry;
+    data[4] = hard_entry;
+    data[5] = time_entry;
+    data[1] = topic_entry;
+    data[6] = privacy_entry;
+    data[7] = num_candidates_entry;
 
     g_signal_connect(dialog, "response", G_CALLBACK(on_create_room_response), data);
 }
@@ -305,19 +303,20 @@ void render_create_room_dialog(GtkWidget* widget) {
 void on_create_room_response(GtkDialog *dialog, gint response_id, gpointer *room_data) {
     if (response_id == GTK_RESPONSE_ACCEPT) {
        const char * room_name =  gtk_entry_get_text(GTK_ENTRY(room_data[0]));
-         const char * time =  gtk_entry_get_text(GTK_ENTRY(room_data[1]));
-            const char * topic =  gtk_entry_get_text(GTK_ENTRY(room_data[2]));
-            const char * num_questions =  gtk_entry_get_text(GTK_ENTRY(room_data[3]));
-            const char * easy =  gtk_entry_get_text(GTK_ENTRY(room_data[4]));
-            const char * medium =  gtk_entry_get_text(GTK_ENTRY(room_data[5]));
-            const char * hard =  gtk_entry_get_text(GTK_ENTRY(room_data[6]));
-            const char * privacy =  gtk_entry_get_text(GTK_ENTRY(room_data[7]));
-            const char * num_candidates =  gtk_entry_get_text(GTK_ENTRY(room_data[8]));
+            const char * easy =  gtk_entry_get_text(GTK_ENTRY(room_data[2]));
+            const char * medium =  gtk_entry_get_text(GTK_ENTRY(room_data[3]));
+            const char * hard =  gtk_entry_get_text(GTK_ENTRY(room_data[4]));
+         const char * time =  gtk_entry_get_text(GTK_ENTRY(room_data[5]));
+            const char * topic =  gtk_entry_get_text(GTK_ENTRY(room_data[1]));
+            const char * privacy =  gtk_entry_get_text(GTK_ENTRY(room_data[6]));
+            // const char * num_questions =  gtk_entry_get_text(GTK_ENTRY(room_data[3]));
+            const char * num_candidates =  gtk_entry_get_text(GTK_ENTRY(room_data[7]));
             memset(buffer, 0, BUFFER_SIZE);
             buffer[0] = 0x01;
-            sprintf(buffer + 1, "%s %s %s %s %s %s %s %s %s", room_name, time, topic, num_questions, easy, medium, hard, privacy, num_candidates);
+            sprintf(buffer + 1, "%s %s %s %s %s %s %s %s ", room_name,easy, medium, hard, time, topic, privacy, num_candidates);
             send(sock, buffer, BUFFER_SIZE, 0);
-       g_print("Room name: %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n ", room_name, time, topic, num_questions, easy, medium, hard, privacy, num_candidates);
+        // g_print("Room name: %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n  ", room_name, easy, medium, hard, time, topic, privacy, num_candidates);
+       g_print("Room name: %s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n  ", room_name, easy, medium, hard, time, topic, privacy, num_candidates);
        gtk_widget_destroy(GTK_WIDGET(dialog));
     } else {
         gtk_widget_destroy(GTK_WIDGET(dialog));
@@ -325,6 +324,7 @@ void on_create_room_response(GtkDialog *dialog, gint response_id, gpointer *room
     g_free(room_data);
     
 }
+//nho e
 
 void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *header_bar;
@@ -383,5 +383,6 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all(window);
     create_app_socket(&sock, &serv_addr);
 
+    g_print("%d\n", sock);
 
 }

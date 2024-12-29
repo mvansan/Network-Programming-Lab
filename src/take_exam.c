@@ -18,10 +18,10 @@ void take_exam(int client_socket, int room_id) {
         return;
     }
 
-    // Start a transaction
-    sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
+    // Thiết lập chế độ WAL
+    sqlite3_exec(db, "PRAGMA journal_mode=WAL;", 0, 0, 0);
 
-    const char *sql_questions = "SELECT q.id, q.question_text, q.option_1, q.option_2, q.option_3, q.option_4, q.correct_answer "
+    const char *sql_questions = "SELECT q.id, q.question_text, q.option_1, q.option_2, q.option_3, q.option_4, q.correct_answer, q.difficulty "
                                 "FROM questions q "
                                 "JOIN exam_questions eq ON q.id = eq.question_id "
                                 "WHERE eq.exam_room_id = ?";
@@ -31,7 +31,6 @@ void take_exam(int client_socket, int room_id) {
     if (rc != SQLITE_OK) {
         const char *err_msg = sqlite3_errmsg(db);
         send(client_socket, err_msg, strlen(err_msg), 0);
-        sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);  // Rollback transaction in case of error
         sqlite3_close(db);
         return;
     }
@@ -49,6 +48,7 @@ void take_exam(int client_socket, int room_id) {
         const char *option_3 = (const char *)sqlite3_column_text(question_stmt, 4);
         const char *option_4 = (const char *)sqlite3_column_text(question_stmt, 5);
         const char *correct_answer = (const char *)sqlite3_column_text(question_stmt, 6);
+        const char *difficulty = (const char *)sqlite3_column_text(question_stmt, 7);
 
         char question_str[1024];
         snprintf(question_str, sizeof(question_str), "%d. %s\n1. %s\n2. %s\n3. %s\n4. %s\n\n",
@@ -59,7 +59,6 @@ void take_exam(int client_socket, int room_id) {
         int bytes_received = recv(client_socket, answer, sizeof(answer), 0);
         if (bytes_received <= 0) {
             send(client_socket, "Error receiving answer", strlen("Error receiving answer"), 0);
-            sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);  // Rollback transaction in case of error
             sqlite3_finalize(question_stmt);
             sqlite3_close(db);
             return;
@@ -68,8 +67,17 @@ void take_exam(int client_socket, int room_id) {
         char user_answer[10];
         snprintf(user_answer, sizeof(user_answer), "option_%c", answer[0]);
 
+        // Bắt đầu giao dịch cho việc cập nhật điểm
+        sqlite3_exec(db, "BEGIN TRANSACTION;", 0, 0, 0);
+
         if (strcmp(user_answer, correct_answer) == 0) {
-            score++;
+            if (strcmp(difficulty, "easy") == 0) {
+                score += 1;
+            } else if (strcmp(difficulty, "medium") == 0) {
+                score += 2;
+            } else if (strcmp(difficulty, "hard") == 0) {
+                score += 3;
+            }
         } else if (answer[0] < '1' || answer[0] > '4') {
             send(client_socket, "Invalid answer", strlen("Invalid answer"), 0);
             sqlite3_exec(db, "ROLLBACK;", 0, 0, 0);  // Rollback transaction in case of invalid answer
@@ -77,6 +85,9 @@ void take_exam(int client_socket, int room_id) {
             sqlite3_close(db);
             return;
         }
+
+        // Commit transaction sau khi cập nhật điểm
+        sqlite3_exec(db, "COMMIT;", 0, 0, 0);
 
         rc = sqlite3_step(question_stmt);
     }
@@ -86,6 +97,5 @@ void take_exam(int client_socket, int room_id) {
     send(client_socket, result, strlen(result), 0);
 
     sqlite3_finalize(question_stmt);
-    sqlite3_exec(db, "COMMIT;", 0, 0, 0);  // Commit transaction after all operations
     sqlite3_close(db);
 }

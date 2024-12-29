@@ -36,31 +36,88 @@ int connect_to_server(struct sockaddr_in *serv_addr) {
 
 void start_exam(int sock, int room_id) {
     unsigned char message[BUFFER_SIZE];
-    message[0] = JOIN_EXAM_ROOM;
-    snprintf((char *)message + 1, sizeof(message) - 1, "%d", room_id); // Send room_id
+    message[0] = START_EXAM;  // Sử dụng mã 0x05 cho bắt đầu thi
+    snprintf((char *)message + 1, sizeof(message) - 1, "%d", room_id);
 
-    send_request(sock, (char *)message); // Send JOIN_EXAM_ROOM request to server
+    send_request(sock, (char *)message);  // Gửi yêu cầu START_EXAM
 
     char buffer[BUFFER_SIZE] = {0};
     int bytes_received;
 
-    // Receive questions from the server and send answers
+    // Nhận câu hỏi từ server và gửi câu trả lời
     while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
         buffer[bytes_received] = '\0';
-        printf("Received exam questions:\n%s\n", buffer);
 
-        // Client processes each question and sends an answer
-        char answer[2];
-        printf("Enter your answer (1-4): ");
-        scanf("%s", answer);  // User enters answer
+        if (strstr(buffer, "Exam finished") != NULL) {
+            printf("%s\n", buffer);
+            break;
+        }
 
-        send(sock, answer, strlen(answer), 0); // Send the answer to the server
+        printf("%s\n", buffer);
+
+        if (strstr(buffer, "Enter your answer (1-4): ") != NULL) {
+            char answer[2];
+            scanf("%s", answer);
+            send(sock, answer, strlen(answer), 0);  // Gửi câu trả lời
+        }
     }
 
-    if (bytes_received == 0) {
-        printf("Exam finished.\n");
-    } else {
+    if (bytes_received <= 0) {
         printf("Error during exam.\n");
+    }
+}
+
+void join_room(int sock, int room_id) {
+    unsigned char message[BUFFER_SIZE];
+    message[0] = JOIN_EXAM_ROOM;  // Sử dụng mã 0x03 cho tham gia phòng
+    snprintf((char *)message + 1, sizeof(message) - 1, "%d", room_id);
+
+    send_request(sock, (char *)message);  // Gửi yêu cầu JOIN_EXAM_ROOM
+
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes_received;
+
+    while (1) {
+        // Lắng nghe trạng thái từ server
+        bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0);
+        if (bytes_received <= 0) {
+            printf("Disconnected from server.\n");
+            break;
+        }
+
+        buffer[bytes_received] = '\0';
+
+        if (strstr(buffer, "Waiting for the exam to start...") != NULL) {
+            printf("%s\n", buffer);
+        } else if (strstr(buffer, "Exam started") != NULL) {
+            printf("Exam started! Answer the questions below.\n");
+            break; // Chuyển sang chế độ thi
+        } else {
+            printf("Unexpected server response: %s\n", buffer);
+            break;
+        }
+    }
+
+    // Nhận câu hỏi và gửi câu trả lời
+    while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
+        buffer[bytes_received] = '\0';
+
+        if (strstr(buffer, "Exam finished") != NULL) {
+            printf("%s\n", buffer);
+            break;
+        }
+
+        printf("%s\n", buffer);
+
+        if (strstr(buffer, "Enter your answer (1-4): ") != NULL) {
+            char answer[2];
+            scanf("%s", answer);
+            send(sock, answer, strlen(answer), 0);  // Gửi câu trả lời
+        }
+    }
+
+    if (bytes_received <= 0) {
+        printf("Error or disconnected during the exam.\n");
     }
 }
 
@@ -128,7 +185,7 @@ int main() {
             return -1;
         }
 
-        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Start Exam\n6. Logout\nChoose an option: ");
+        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Join Room\n6. Start Exam\n7. Logout\nChoose an option: ");
         scanf("%d", &choice);
 
         if (choice == 3) {
@@ -156,27 +213,29 @@ int main() {
                 scanf("%d", &max_people);
             }
 
-            time_limit *= 60;
-
             unsigned char message[BUFFER_SIZE];
-            message[0] = CREATE_EXAM_ROOM;  // Sử dụng mã 0x01 cho tạo phòng thi
-
+            message[0] = CREATE_EXAM_ROOM;
             snprintf((char *)message + 1, sizeof(message) - 1, "%s %d %d %d %d %s %s %d", name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people);
 
             send_request(sock, (char *)message);
         } else if (choice == 4) {
             unsigned char message[BUFFER_SIZE];
-            message[0] = VIEW_EXAM_ROOMS;  // Sử dụng mã 0x02 cho xem danh sách phòng thi
+            message[0] = VIEW_EXAM_ROOMS;
 
             send_request(sock, (char *)message);
         } else if (choice == 5) {
             int room_id;
+            printf("Enter the room ID to join: ");
+            scanf("%d", &room_id);
+            join_room(sock, room_id);  // Xử lý tham gia phòng
+        } else if (choice == 6) {
+            int room_id;
             printf("Enter the room ID to start the exam: ");
             scanf("%d", &room_id);
-            start_exam(sock, room_id);  // Gọi hàm start_exam để bắt đầu thi
-        } else if (choice == 6) {
+            start_exam(sock, room_id);  // Xử lý bắt đầu thi
+        } else if (choice == 7) {
             unsigned char message[BUFFER_SIZE];
-            message[0] = LOGOUT;  // Sử dụng mã 0x04 cho logout
+            message[0] = LOGOUT;
 
             send_request(sock, (char *)message);
             printf("Logged out successfully.\n");

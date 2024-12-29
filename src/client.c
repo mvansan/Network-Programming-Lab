@@ -48,20 +48,21 @@ void start_exam(int sock, int room_id) {
     while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
         buffer[bytes_received] = '\0';
 
-        //Check if the exam is finished
+        // Check if the exam is finished
         if (strstr(buffer, "Exam finished") != NULL) {
             printf("%s\n", buffer);
             break;
         }
 
-        printf("Received exam questions:\n%s\n", buffer);
+        printf("%s\n", buffer);
 
         // Client processes each question and sends an answer
-        char answer[2];
-        printf("Enter your answer (1-4): ");
-        scanf("%s", answer);  // User enters answer
+        if (strstr(buffer, "Enter your answer (1-4): ") != NULL) {
+            char answer[2];
+            scanf("%s", answer);  // User enters answer
 
-        send(sock, answer, strlen(answer), 0); // Send the answer to the server
+            send(sock, answer, strlen(answer), 0); // Send the answer to the server
+        }
     }
 
     if (bytes_received <= 0 && strstr(buffer, "Exam finished") == NULL) {
@@ -160,8 +161,6 @@ int main() {
                 printf("Enter maximum number of people: ");
                 scanf("%d", &max_people);
             }
-
-            time_limit *= 60;
 
             unsigned char message[BUFFER_SIZE];
             message[0] = CREATE_EXAM_ROOM;  // Sử dụng mã 0x01 cho tạo phòng thi

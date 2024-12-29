@@ -27,24 +27,22 @@ void init_database() {
                               "username TEXT NOT NULL UNIQUE, "
                               "password TEXT NOT NULL);";
 
-const char *exam_rooms = "CREATE TABLE IF NOT EXISTS exam_rooms ("
-                         "room_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                         "name TEXT NOT NULL, "
-                         "num_easy_questions INTEGER NOT NULL, "
-                         "num_medium_questions INTEGER NOT NULL, "
-                         "num_hard_questions INTEGER NOT NULL, "
-                         "time_limit INTEGER NOT NULL, "
-                         "category TEXT CHECK(category IN ('IT','Blockchain','Science')) NOT NULL, "
-                         "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
-                         "num_clients INTEGER NOT NULL DEFAULT 0, "
-                         "max_people INTEGER, "
-                         "status TEXT CHECK(status IN ('pending', 'in_progress', 'finished')) NOT NULL DEFAULT 'pending', "
-                         "waiting_clients TEXT DEFAULT '', "
-                         "userID INTEGER NOT NULL, "
-                         "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE"
-                         ");";
-
-
+    const char *exam_rooms = "CREATE TABLE IF NOT EXISTS exam_rooms ("
+                             "room_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                             "name TEXT NOT NULL, "
+                             "num_easy_questions INTEGER NOT NULL, "
+                             "num_medium_questions INTEGER NOT NULL, "
+                             "num_hard_questions INTEGER NOT NULL, "
+                             "time_limit INTEGER NOT NULL, "
+                             "category TEXT CHECK(category IN ('IT','Blockchain','Science')) NOT NULL, "
+                             "privacy TEXT CHECK(privacy IN ('public','private')) NOT NULL, "
+                             "num_clients INTEGER NOT NULL DEFAULT 0, "
+                             "max_people INTEGER, "
+                             "status TEXT CHECK(status IN ('pending', 'in_progress', 'finished')) NOT NULL DEFAULT 'pending', "
+                             "waiting_clients TEXT DEFAULT '', "
+                             "userID INTEGER NOT NULL, "
+                             "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE"
+                             ");";
 
     const char *questions = "CREATE TABLE IF NOT EXISTS questions ("
                                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "

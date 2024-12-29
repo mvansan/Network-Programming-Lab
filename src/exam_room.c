@@ -304,6 +304,7 @@ void join_exam_room(int client_socket, int room_id) {
                 send(client_socket, "Exam started! Answer the questions below.", strlen("Exam started! Answer the questions below."), 0);
                 sqlite3_finalize(stmt);
                 sqlite3_close(db);
+                take_exam(client_socket, room_id);
                 return;  // Bắt đầu thi
             }
         }
@@ -311,7 +312,6 @@ void join_exam_room(int client_socket, int room_id) {
         sqlite3_finalize(stmt);
     }
 }
-
 
 void start_exam_room(int client_socket, int room_id) {
     sqlite3 *db;
@@ -349,10 +349,32 @@ void start_exam_room(int client_socket, int room_id) {
         return;
     }
 
-    // Cập nhật trạng thái phòng thi sang "in_progress"
+    // Thêm chủ phòng vào danh sách chờ
+    char updated_waiting_clients[1024];
+    snprintf(updated_waiting_clients, sizeof(updated_waiting_clients), "%s,%d", waiting_clients, client_socket);
+
     sqlite3_finalize(stmt);
-    const char *sql_update = "UPDATE exam_rooms SET status = 'in_progress' WHERE room_id = ?;";
-    rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, 0);
+    const char *sql_update_clients = "UPDATE exam_rooms SET waiting_clients = ? WHERE room_id = ?;";
+    rc = sqlite3_prepare_v2(db, sql_update_clients, -1, &stmt, 0);
+    if (rc != SQLITE_OK) {
+        send(client_socket, "Failed to update waiting clients", strlen("Failed to update waiting clients"), 0);
+        sqlite3_close(db);
+        return;
+    }
+    sqlite3_bind_text(stmt, 1, updated_waiting_clients, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 2, room_id);
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    if (rc != SQLITE_DONE) {
+        send(client_socket, "Failed to update waiting clients", strlen("Failed to update waiting clients"), 0);
+        sqlite3_close(db);
+        return;
+    }
+
+    // Cập nhật trạng thái phòng thi sang "in_progress"
+    const char *sql_update_status = "UPDATE exam_rooms SET status = 'in_progress' WHERE room_id = ?;";
+    rc = sqlite3_prepare_v2(db, sql_update_status, -1, &stmt, 0);
     if (rc != SQLITE_OK) {
         send(client_socket, "Failed to update room status", strlen("Failed to update room status"), 0);
         sqlite3_close(db);
@@ -373,10 +395,13 @@ void start_exam_room(int client_socket, int room_id) {
     while (client_tokens != NULL) {
         int client_fd = atoi(client_tokens);
         send(client_fd, "Exam started! Answer the questions below.", strlen("Exam started! Answer the questions below."), 0);
-        take_exam(client_fd, room_id); // Gọi hàm take_exam
+        take_exam(client_fd, room_id); // Gọi hàm take_exam để gửi câu hỏi
         client_tokens = strtok(NULL, ",");
     }
 
     send(client_socket, "Exam room started successfully", strlen("Exam room started successfully"), 0);
     sqlite3_close(db);
+
+    // Gọi hàm take_exam để chủ phòng cũng có thể làm bài thi
+    take_exam(client_socket, room_id);
 }

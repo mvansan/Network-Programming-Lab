@@ -48,7 +48,6 @@ void start_exam(int sock, int room_id) {
     while ((bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0)) > 0) {
         buffer[bytes_received] = '\0';
 
-        //Check if the exam is finished
         if (strstr(buffer, "Exam finished") != NULL) {
             printf("%s\n", buffer);
             break;
@@ -56,12 +55,14 @@ void start_exam(int sock, int room_id) {
 
         printf("%s\n", buffer);
 
-        // Client processes each question and sends an answer
-        char answer[2];
-        printf("Enter your answer (1-4): ");
-        scanf("%s", answer);  // User enters answer
+        // Client xử lý từng câu hỏi và gửi câu trả lời
+        if (strstr(buffer, "Enter your answer (1-4): ") != NULL) {
+            char answer[2];
+            printf("Enter your answer (1-4): ");
+            scanf("%s", answer);  // User nhập câu trả lời
 
-        send(sock, answer, strlen(answer), 0); // Send the answer to the server
+            send(sock, answer, strlen(answer), 0); // Gửi câu trả lời đến server
+        }
     }
 
     if (bytes_received <= 0) {

@@ -1,5 +1,3 @@
-// --- server.c ---
-// Thêm xử lý cho trạng thái "pending" và quyền start phòng thi
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +8,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <pthread.h>
+
 #include "include/init_db.h"
 #include "include/auth.h"
 #include "include/exam_room.h"
@@ -24,11 +23,88 @@
 #define LOGOUT 0x04
 #define START_EXAM 0x05
 
-#include "exam_room.h"
-
 typedef struct {
     int client_socket;
 } client_args;
+
+typedef struct {
+    int client_socket;
+    int userID;
+} client_session;
+
+client_session sessions[MAX_CLIENTS];
+pthread_mutex_t session_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+void init_sessions() {
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        sessions[i].client_socket = -1;
+        sessions[i].userID = -1;
+    }
+}
+
+void store_user_session(int client_socket, int userID) {
+    pthread_mutex_lock(&session_mutex);
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (sessions[i].client_socket == -1) {
+            sessions[i].client_socket = client_socket;
+            sessions[i].userID = userID;
+            break;
+        }
+    }
+    pthread_mutex_unlock(&session_mutex);
+}
+
+int get_user_session(int client_socket) {
+    pthread_mutex_lock(&session_mutex);
+    int userID = -1;
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (sessions[i].client_socket == client_socket) {
+            userID = sessions[i].userID;
+            break;
+        }
+    }
+    pthread_mutex_unlock(&session_mutex);
+    return userID;
+}
+
+void remove_user_session(int client_socket) {
+    pthread_mutex_lock(&session_mutex);
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (sessions[i].client_socket == client_socket) {
+            sessions[i].client_socket = -1;
+            sessions[i].userID = -1;
+            break;
+        }
+    }
+    pthread_mutex_unlock(&session_mutex);
+}
+
+void handle_login(int client_socket, const char *username, const char *password) {
+    int userID = login_user(username, password);
+    if (userID > 0) { // Đăng nhập thành công nếu userID > 0
+        store_user_session(client_socket, userID); // Lưu userID vào phiên đăng nhập
+        char response[BUFFER_SIZE];
+        snprintf(response, sizeof(response), "Login successful ID: %d", userID);
+        send(client_socket, response, strlen(response), 0);
+    } else {
+        send(client_socket, "Login failed", strlen("Login failed"), 0);
+    }
+}
+
+void handle_create_exam_room(int client_socket, const char *request) {
+    char name[50], category[20], privacy[10];
+    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people;
+
+    sscanf(request, "%s %d %d %d %d %s %s %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people);
+
+    int userID = get_user_session(client_socket); // Lấy userID từ phiên đăng nhập
+
+    if (userID > 0) {
+        create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, userID);
+    } else {
+        send(client_socket, "User not logged in", strlen("User not logged in"), 0);
+    }
+}
 
 void *handle_client_request(void *args) {
     client_args *client = (client_args *)args;
@@ -40,9 +116,6 @@ void *handle_client_request(void *args) {
 
     char command[50], username[50], password[50], name[50], category[50], privacy[10];
     int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people, room_id;
-
-    // Khai báo userID để lưu trạng thái đăng nhập
-    int userID = -1;
 
     int n = sscanf(buffer, "%s", command);
     if (n < 1) {
@@ -73,14 +146,7 @@ void *handle_client_request(void *args) {
             return NULL;
         }
 
-        userID = login_user(username, password); // Gọi hàm login_user để lấy userID
-        if (userID > 0) { // Đăng nhập thành công nếu userID > 0
-            char response[BUFFER_SIZE];
-            snprintf(response, sizeof(response), "Login successful ID: %d", userID);
-            send(client_socket, response, strlen(response), 0);
-        } else {
-            send(client_socket, "Login failed", strlen("Login failed"), 0);
-        }
+        handle_login(client_socket, username, password); // Gọi hàm xử lý đăng nhập
     } else if (buffer[0] == CREATE_ROOM) {
         n = sscanf(buffer + 1, "%s %d %d %d %d %s %s %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people);
         if (n != 8) {
@@ -89,7 +155,7 @@ void *handle_client_request(void *args) {
             return NULL;
         }
 
-        create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, userID);
+        handle_create_exam_room(client_socket, buffer + 1); // Gọi hàm xử lý tạo phòng thi
     } else if (buffer[0] == LIST_ROOMS) {
         list_exam_rooms(client_socket);
     } else if (buffer[0] == JOIN_ROOM) {
@@ -129,6 +195,7 @@ int main() {
         client_sockets[i] = 0;
     }
 
+    init_sessions(); // Khởi tạo mảng sessions
     init_database();
 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {

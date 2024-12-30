@@ -23,6 +23,7 @@
 #define LOGOUT 0x04
 #define START_EXAM 0x05
 #define LIST_USER_ROOMS 0x06
+#define VIEW_HISTORY 0x07
 
 typedef struct {
     int client_socket;
@@ -167,7 +168,7 @@ void *handle_client_request(void *args) {
             return NULL;
         }
 
-        join_exam_room(client_socket, room_id);
+        join_exam_room(client_socket, room_id, get_user_session(client_socket));
     } else if (buffer[0] == START_EXAM) {
         n = sscanf(buffer + 1, "%d", &room_id);
         if (n != 1) {
@@ -181,6 +182,12 @@ void *handle_client_request(void *args) {
     } else if (buffer[0] == LIST_USER_ROOMS) {
         int userID = get_user_session(client_socket);
         list_user_exam_rooms(client_socket, userID);
+    } else if (buffer[0] == VIEW_HISTORY) {
+        int userID = get_user_session(client_socket);
+        view_exam_history(client_socket, userID);
+    } else if (strcmp(command, "LOGOUT") == 0) {
+        remove_user_session(client_socket);
+        send(client_socket, "Logged out", strlen("Logged out"), 0);
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }

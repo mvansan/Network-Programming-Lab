@@ -63,6 +63,14 @@ void init_database() {
                                        "FOREIGN KEY (exam_room_id) REFERENCES exam_rooms(room_id) ON DELETE CASCADE, "
                                        "FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE);";
 
+    const char *exam_results = "CREATE TABLE IF NOT EXISTS exam_results ("
+                                   "room_id INTEGER, "
+                                   "userID INTEGER, "
+                                   "score INTEGER, "
+                                   "PRIMARY KEY (room_id, userID), "
+                                   "FOREIGN KEY (room_id) REFERENCES exam_rooms(room_id) ON DELETE CASCADE, "
+                                   "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE); ";
+
     rc = sqlite3_exec(db, users, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
@@ -88,6 +96,14 @@ void init_database() {
     }
 
     rc = sqlite3_exec(db, exam_questions, 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        sqlite3_close(db);
+        return;
+    }
+
+    rc = sqlite3_exec(db, exam_results, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", err_msg);
         sqlite3_free(err_msg);

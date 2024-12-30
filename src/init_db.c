@@ -41,6 +41,7 @@ void init_database() {
                              "status TEXT CHECK(status IN ('pending', 'in_progress', 'finished')) NOT NULL DEFAULT 'pending', "
                              "waiting_clients TEXT DEFAULT '', "
                              "userID INTEGER NOT NULL, "
+                             "room_limit INTEGER DEFAULT NULL, "
                              "FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE"
                              ");";
 

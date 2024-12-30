@@ -59,8 +59,7 @@ void start_exam(int sock, int room_id) {
         // Client xử lý từng câu hỏi và gửi câu trả lời
         if (strstr(buffer, "Enter your answer (1-4): ") != NULL) {
             char answer[2];
-            printf("Enter your answer (1-4): ");
-            scanf("%s", answer);  // User nhập câu trả lời
+            scanf("%s", answer);
 
             send(sock, answer, strlen(answer), 0); // Gửi câu trả lời đến server
         }
@@ -234,15 +233,6 @@ int main() {
             join_room(sock, room_id);  // Xử lý tham gia phòng
         } else if (choice == 6) {
             int room_id;
-            unsigned char message[BUFFER_SIZE];
-            message[0] = LIST_USER_ROOMS;
-            
-            send_request(sock, (char *)message);
-            
-            int bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0);
-            buffer[bytes_received] = '\0';
-            printf("Received: %s\n", buffer);
-
             printf("Enter the room ID to start the exam: ");
             scanf("%d", &room_id);
             start_exam(sock, room_id);  // Xử lý bắt đầu thi

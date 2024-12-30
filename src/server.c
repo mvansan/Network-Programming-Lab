@@ -22,6 +22,7 @@
 #define JOIN_ROOM 0x03
 #define LOGOUT 0x04
 #define START_EXAM 0x05
+#define LIST_USER_ROOMS 0x06
 
 typedef struct {
     int client_socket;
@@ -175,7 +176,11 @@ void *handle_client_request(void *args) {
             return NULL;
         }
 
-        start_exam_room(client_socket, room_id);
+        int userID = get_user_session(client_socket);
+        start_exam_room(client_socket, room_id, userID);
+    } else if (buffer[0] == LIST_USER_ROOMS) {
+        int userID = get_user_session(client_socket);
+        list_user_exam_rooms(client_socket, userID);
     } else {
         send(client_socket, "Unknown command", strlen("Unknown command"), 0);
     }

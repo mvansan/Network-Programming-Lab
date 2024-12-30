@@ -208,7 +208,7 @@ void list_exam_rooms(int client_socket) {
     sqlite3_close(db);
 }
 
-void join_exam_room(int client_socket, int room_id) {
+void join_exam_room(int client_socket, int room_id, int userID) {
     sqlite3 *db;
     int rc = sqlite3_open(DATABASE_PATH, &db);
     if (rc != SQLITE_OK) {
@@ -304,7 +304,7 @@ void join_exam_room(int client_socket, int room_id) {
                 send(client_socket, "Exam started! Answer the questions below.", strlen("Exam started! Answer the questions below."), 0);
                 sqlite3_finalize(stmt);
                 sqlite3_close(db);
-                take_exam(client_socket, room_id);
+                take_exam(client_socket, room_id, userID);
                 return;  // Bắt đầu thi
             }
         }
@@ -403,7 +403,7 @@ void start_exam_room(int client_socket, int room_id, int userID) {
     while (client_tokens != NULL) {
         int client_fd = atoi(client_tokens);
         send(client_fd, "Exam started! Answer the questions below.", strlen("Exam started! Answer the questions below."), 0);
-        take_exam(client_fd, room_id); // Gọi hàm take_exam để gửi câu hỏi
+        take_exam(client_fd, room_id, userID); // Gọi hàm take_exam để gửi câu hỏi
         client_tokens = strtok(NULL, ",");
     }
 
@@ -411,7 +411,7 @@ void start_exam_room(int client_socket, int room_id, int userID) {
     sqlite3_close(db);
 
     // Gọi hàm take_exam để chủ phòng cũng có thể làm bài thi
-    take_exam(client_socket, room_id);
+    take_exam(client_socket, room_id, userID);
 }
 
 void list_user_exam_rooms(int client_socket, int userID) {
@@ -447,6 +447,47 @@ void list_user_exam_rooms(int client_socket, int userID) {
         snprintf(room_info, sizeof(room_info), "Room ID: %d, Name: %s, Time Limit: %d, Category: %s, Privacy: %s, Max People: %d, Status: %s, Num Clients: %d\n",
                  room_id, name, time_limit, category, privacy, max_people, status, num_clients);
         strncat(response, room_info, sizeof(response) - strlen(response) - 1);
+    }
+
+    send(client_socket, response, strlen(response), 0);
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+}
+
+void view_exam_history(int client_socket, int userID) {
+    sqlite3 *db;
+    int rc = sqlite3_open(DATABASE_PATH, &db);
+    if (rc != SQLITE_OK) {
+        send(client_socket, "Database connection failed", strlen("Database connection failed"), 0);
+        return;
+    }
+
+    const char *sql_select = "SELECT er.room_id, er.score, r.name, r.time_limit, r.category, r.privacy "
+                             "FROM exam_results er "
+                             "JOIN exam_rooms r ON er.room_id = r.room_id "
+                             "WHERE er.userID = ?;";
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, 0);
+    if (rc != SQLITE_OK) {
+        send(client_socket, "Failed to prepare select statement", strlen("Failed to prepare select statement"), 0);
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, userID);
+    char response[4096] = "Your Exam History:\n";
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        int room_id = sqlite3_column_int(stmt, 0);
+        int score = sqlite3_column_int(stmt, 1);
+        const char *name = (const char *)sqlite3_column_text(stmt, 2);
+        int time_limit = sqlite3_column_int(stmt, 3);
+        const char *category = (const char *)sqlite3_column_text(stmt, 4);
+        const char *privacy = (const char *)sqlite3_column_text(stmt, 5);
+
+        char history_entry[512];
+        snprintf(history_entry, sizeof(history_entry), "Room ID: %d, Name: %s, Score: %d, Time Limit: %d, Category: %s, Privacy: %s\n",
+                 room_id, name, score, time_limit, category, privacy);
+        strncat(response, history_entry, sizeof(response) - strlen(response) - 1);
     }
 
     send(client_socket, response, strlen(response), 0);

@@ -193,7 +193,7 @@ int main() {
 
         if (choice == 3) {
             char name[50];
-            int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people = 0;
+            int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people = 0, room_limit =0;
             char category[20], privacy[10];
 
             printf("Enter room name: ");
@@ -215,10 +215,14 @@ int main() {
                 printf("Enter maximum number of people: ");
                 scanf("%d", &max_people);
             }
+         if (strcmp(privacy, "private") == 0) {
+                printf("Enter limit: ");
+                scanf("%d", &room_limit);
+            }
 
             unsigned char message[BUFFER_SIZE];
             message[0] = CREATE_EXAM_ROOM;
-            snprintf((char *)message + 1, sizeof(message) - 1, "%s %d %d %d %d %s %s %d", name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people);
+            snprintf((char *)message + 1, sizeof(message) - 1, "%s %d %d %d %d %s %s %d %d", name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, room_limit);
 
             send_request(sock, (char *)message);
         } else if (choice == 4) {

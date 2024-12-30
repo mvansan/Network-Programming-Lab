@@ -93,14 +93,13 @@ void handle_login(int client_socket, const char *username, const char *password)
 
 void handle_create_exam_room(int client_socket, const char *request) {
     char name[50], category[20], privacy[10];
-    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people;
+    int num_easy_questions, num_medium_questions, num_hard_questions, time_limit, max_people, room_limit;
 
-    sscanf(request, "%s %d %d %d %d %s %s %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people);
+    sscanf(request, "%s %d %d %d %d %s %s %d %d", name, &num_easy_questions, &num_medium_questions, &num_hard_questions, &time_limit, category, privacy, &max_people, &room_limit);
 
     int userID = get_user_session(client_socket); // Lấy userID từ phiên đăng nhập
-
     if (userID > 0) {
-        create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, userID);
+        create_exam_room(client_socket, name, num_easy_questions, num_medium_questions, num_hard_questions, time_limit, category, privacy, max_people, userID, room_limit);
     } else {
         send(client_socket, "User not logged in", strlen("User not logged in"), 0);
     }
@@ -157,7 +156,8 @@ void *handle_client_request(void *args) {
 
         handle_create_exam_room(client_socket, buffer + 1); // Gọi hàm xử lý tạo phòng thi
     } else if (buffer[0] == LIST_ROOMS) {
-        list_exam_rooms(client_socket);
+        int userID = get_user_session(client_socket);
+        list_exam_rooms(client_socket, userID);
     } else if (buffer[0] == JOIN_ROOM) {
         n = sscanf(buffer + 1, "%d", &room_id);
         if (n != 1) {

@@ -7,6 +7,7 @@ void create_exam_room(int client_socket, const char *name, int num_easy_question
 void list_exam_rooms(int client_socket);
 void join_exam_room(int client_socket, int id);
 void insert_questions(const char *category, const char *difficulty, int num_questions, int room_id, sqlite3 *db, sqlite3_stmt *question_stmt, int client_socket);
-void start_exam_room(int client_socket, int room_id);
+void start_exam_room(int client_socket, int room_id, int userID);
+void list_user_exam_rooms(int client_socket, int userID);
 
 #endif

@@ -13,6 +13,7 @@
 #define JOIN_EXAM_ROOM   0x03
 #define LOGOUT           0x04
 #define START_EXAM       0x05
+#define LIST_USER_ROOMS  0x06
 
 void send_request(int sock, const char *message) {
     send(sock, message, strlen(message), 0);
@@ -237,6 +238,15 @@ int main() {
             join_room(sock, room_id);  // Xử lý tham gia phòng
         } else if (choice == 6) {
             int room_id;
+            unsigned char message[BUFFER_SIZE];
+            message[0] = LIST_USER_ROOMS;
+            
+            send_request(sock, (char *)message);
+            
+            int bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0);
+            buffer[bytes_received] = '\0';
+            printf("Received: %s\n", buffer);
+
             printf("Enter the room ID to start the exam: ");
             scanf("%d", &room_id);
             start_exam(sock, room_id);  // Xử lý bắt đầu thi

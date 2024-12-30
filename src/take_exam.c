@@ -7,10 +7,12 @@
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <time.h>
+#include <auth.h>
+#include <auth.h>
 
 #define DATABASE_PATH "database/exam_system.db"
 
-void take_exam(int client_socket, int room_id) {
+void take_exam(int client_socket, int room_id, int userID) {
     sqlite3 *db;
     int rc = sqlite3_open(DATABASE_PATH, &db);
     if (rc != SQLITE_OK) {
@@ -141,6 +143,22 @@ void take_exam(int client_socket, int room_id) {
     char result[256];
     snprintf(result, sizeof(result), "Exam finished. Your score is: %d\n", score);
     send(client_socket, result, strlen(result), 0);
+
+    const char *sql_insert_result = "INSERT OR REPLACE INTO exam_results (room_id, userID, score) VALUES (?, ?, ?);";
+    sqlite3_stmt *insert_result_stmt;
+    rc = sqlite3_prepare_v2(db, sql_insert_result, -1, &insert_result_stmt, 0);
+    if (rc != SQLITE_OK) {
+        const char *err_msg = sqlite3_errmsg(db);
+        send(client_socket, err_msg, strlen(err_msg), 0);
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_int(insert_result_stmt, 1, room_id);
+    sqlite3_bind_int(insert_result_stmt, 2, userID);
+    sqlite3_bind_int(insert_result_stmt, 3, score);
+    sqlite3_step(insert_result_stmt);
+    sqlite3_finalize(insert_result_stmt);
 
     sqlite3_finalize(question_stmt);
     sqlite3_close(db);

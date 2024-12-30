@@ -14,6 +14,7 @@
 #define LOGOUT           0x04
 #define START_EXAM       0x05
 #define LIST_USER_ROOMS  0x06
+#define VIEW_HISTORY     0x07
 
 void send_request(int sock, const char *message) {
     send(sock, message, strlen(message), 0);
@@ -125,6 +126,18 @@ void join_room(int sock, int room_id) {
     }
 }
 
+void view_history(int sock) {
+    unsigned char message[BUFFER_SIZE];
+    message[0] = VIEW_HISTORY;  // Ensure this matches the server's command handling
+
+    send_request(sock, (char *)message);
+
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes_received = recv(sock, buffer, sizeof(buffer) - 1, 0);
+    buffer[bytes_received] = '\0';
+    printf("Received: %s\n", buffer);
+}
+
 int main() {
     struct sockaddr_in serv_addr;
     char buffer[BUFFER_SIZE] = {0};
@@ -189,7 +202,7 @@ int main() {
             return -1;
         }
 
-        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Join Room\n6. Start Exam\n7. Logout\nChoose an option: ");
+        printf("3. Create Exam Room\n4. View Exam Rooms\n5. Join Room\n6. Start Exam\n7. View Exam History\n8. Logouut\nChoose an option: ");
         scanf("%d", &choice);
 
         if (choice == 3) {
@@ -247,6 +260,8 @@ int main() {
             scanf("%d", &room_id);
             start_exam(sock, room_id);  // Xử lý bắt đầu thi
         } else if (choice == 7) {
+            view_history(sock);
+        } else if (choice == 8) {
             unsigned char message[BUFFER_SIZE];
             message[0] = LOGOUT;
 
